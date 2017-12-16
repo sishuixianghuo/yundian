@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/personal_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/image_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@drawable/navbar_ic_back" />
+
+        <RadioGroup
+            android:id="@+id/rg_order_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_shangpin"
+                style="@style/ProductInfoStyle"
+                android:checked="true"
+                android:text="商品" />
+
+            <RadioButton
+                android:id="@+id/rb_pingjia"
+                style="@style/ProductInfoStyle"
+                android:text="评价" />
+
+            <RadioButton
+                android:id="@+id/rb_changjia"
+                style="@style/ProductInfoStyle"
+                android:text="厂家" />
+
+            <RadioButton
+                android:id="@+id/rb_shouhou"
+                style="@style/ProductInfoStyle"
+                android:text="售后" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/e6e6e6" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/e6e6e6" />
+
+        <TextView
+            android:id="@+id/text_quanxuan"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/shoppingcart_list_ic_uncheck"
+            android:drawablePadding="7dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:text="全选"
+            android:textColor="@color/c424242"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/text_xiadingdan"
+            android:layout_toRightOf="@id/text_quanxuan"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="合计:"
+                android:textColor="@color/c424242"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="¥ asdf asdf asdf "
+                android:textColor="@color/e60012"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_xiadingdan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/e60012"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="下订单(1)"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_below="@+id/personal_top_layout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.yundian.android.widgets.MyImageView
+                android:id="@+id/pro_iamge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:src="@drawable/q7" />
+            <TextView
+                android:layout_below="@+id/pro_iamge"
+                android:id="@+id/pro_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

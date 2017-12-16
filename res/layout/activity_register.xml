@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/personal_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/image_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/navbar_ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/image_return"
+            android:text="云电商城帐户注册"
+            android:textStyle="bold"
+            android:textColor="@color/c262626"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_login"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/e6e6e6" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
+
+            <TextView
+                android:id="@+id/text_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="账号"
+                android:textColor="@color/c3a3a3a"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/edit_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@+id/image_edit_username_delete"
+                android:layout_toRightOf="@+id/text_set_password_1"
+                android:background="@null"
+                android:hint="邮箱"
+                android:imeOptions="actionDone"
+                android:paddingBottom="6dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/c262626"
+                android:textColorHighlight="@color/e60012"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/image_edit_username_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:visibility="invisible"
+                android:padding="10dp"
+                android:src="@drawable/input_ic_empty" />
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/edit_username"
+                android:background="@color/e6e6e6" />
+
+            <TextView
+                android:id="@+id/text_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_1"
+                android:layout_marginTop="23dp"
+                android:paddingTop="10dp"
+                android:text="昵称"
+                android:textColor="@color/c3a3a3a"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/edit_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="23dp"
+                android:layout_toLeftOf="@+id/image_edit_nickname_delete"
+                android:layout_toRightOf="@+id/text_set_password_1"
+                android:background="@null"
+                android:hint="请输入昵称"
+                android:imeOptions="actionDone"
+                android:paddingBottom="6dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/c262626"
+                android:textColorHighlight="@color/e60012"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/image_edit_nickname_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/view_1"
+                android:visibility="invisible"
+                android:layout_marginTop="23dp"
+                android:padding="10dp"
+                android:src="@drawable/input_ic_empty" />
+
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/edit_nickname"
+                android:background="@color/e6e6e6" />
+
+            <TextView
+                android:id="@+id/text_set_password_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_2"
+                android:layout_marginTop="23dp"
+                android:paddingTop="10dp"
+                android:text="设置密码"
+                android:textColor="@color/c3a3a3a"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/edit_set_password_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="23dp"
+                android:layout_toLeftOf="@+id/image_edit_set_password_delete_1"
+                android:layout_toRightOf="@+id/text_set_password_1"
+                android:background="@null"
+                android:hint="大于6位的字母和数字"
+                android:password="true"
+                android:paddingBottom="6dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/c262626"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/image_edit_set_password_delete_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/view_2"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="23dp"
+                android:visibility="invisible"
+                android:padding="10dp"
+                android:src="@drawable/input_ic_empty" />
+
+            <View
+                android:id="@+id/view_3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/edit_set_password_1"
+                android:background="@color/e6e6e6" />
+
+            <TextView
+                android:id="@+id/text_set_password_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_3"
+                android:layout_marginTop="23dp"
+                android:paddingTop="10dp"
+                android:text="重输密码"
+                android:textColor="@color/c3a3a3a"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/edit_set_password_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="23dp"
+                android:layout_toLeftOf="@+id/image_edit_set_password_delete_2"
+                android:layout_toRightOf="@+id/text_set_password_1"
+                android:background="@null"
+                android:hint="再次输入密码"
+                android:password="true"
+                android:paddingBottom="6dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/c262626"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/image_edit_set_password_delete_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/view_3"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="23dp"
+                android:padding="10dp"
+                android:visibility="invisible"
+                android:src="@drawable/input_ic_empty" />
+
+            <View
+                android:id="@+id/view_4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/edit_set_password_2"
+                android:background="@color/e6e6e6" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/style_login_button_off"
+            android:text="完成注册"
+            android:enabled="false"
+            android:textColor="@color/b4b4b4"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

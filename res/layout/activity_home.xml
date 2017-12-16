@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/android_layout_bg" />
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.0"
+            android:visibility="gone" />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:background="@color/d4d4d4"/>
+        <RadioGroup
+            android:id="@+id/home_radio_button_group"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/home_tab_main"
+                style="@style/home_tab_bottom"
+                android:checked="true"
+                android:text="云电"
+                android:textColor="@color/text_home_tab_main"
+                android:textSize="15dp"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/button_home_tab_main" />
+
+            <RadioButton
+                android:id="@+id/home_tab_category"
+                style="@style/home_tab_bottom"
+                android:text="分类"
+                android:textColor="@color/text_home_tab_main"
+                android:textSize="15dp"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/button_home_tab_category" />
+
+            <RadioButton
+                android:id="@+id/home_tab_cart"
+                style="@style/home_tab_bottom"
+                android:text="购物车"
+                android:textColor="@color/text_home_tab_main"
+                android:textSize="15dp"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/button_home_tab_cart" />
+
+            <RadioButton
+                android:id="@+id/home_tab_personal"
+                style="@style/home_tab_bottom"
+                android:text="我的"
+                android:textColor="@color/text_home_tab_main"
+                android:textSize="15dp"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/button_home_tab_personal" />
+        </RadioGroup>
+    </LinearLayout>
+
+</TabHost>

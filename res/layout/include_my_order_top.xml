@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="200dp"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/ItemImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/ItemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ItemImage"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/image_1"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/q7" />
+
+    <TextView
+        android:id="@+id/ItemText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_1"
+        android:text="挖掘技术哪,中国山东找蓝翔!"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="@color/c444444" />
+    
+    <TextView 
+        android:id="@+id/text_price"
+        android:layout_below="@+id/ItemText"
+        android:drawablePadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/e60012"
+        android:text="¥ 12,345,678.90"
+        android:drawableRight="@drawable/info_functionbar_ic_shoppingcart"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        />
+
+</RelativeLayout>

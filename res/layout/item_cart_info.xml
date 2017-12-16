@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/image_xuanzhong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="13dp"
+            android:src="@drawable/shoppingcart_list_ic_uncheck" />
+
+        <ImageView
+            android:id="@+id/image_xiaoguotu"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/image_xuanzhong"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_item_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/image_xiaoguotu"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="德州吊装哪家强,荣昇吊装口碑佳,首选山东荣昇吊装有限公司afaf af "
+            android:textColor="@color/c444444"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/text_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_item_info"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/image_xiaoguotu"
+            android:text="¥ 7,000,000.00"
+            android:textColor="@color/e60012"
+            android:textSize="13dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="13dp"
+            android:orientation="horizontal" >
+            
+            <Button
+                android:id="@+id/button_reduce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_cart_item_quantity_reduce"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/text_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="999"
+                android:textColor="@color/c262626"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_cart_item_quantity_increase"
+                android:padding="5dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
