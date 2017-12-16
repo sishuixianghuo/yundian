@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yundian.android.R;
 import com.yundian.android.adapter.ImageAndTextListAdapter;
 import com.yundian.android.bean.ImageAndText;
@@ -289,7 +288,8 @@ public class Activity_HomePage extends BaseActivity implements OnClickListener {
 
         @Override
         public void displayImage(String imageURL, ImageView imageView) {
-            ImageLoader.getInstance().displayImage(imageURL, imageView);// 使用ImageLoader对图片进行加装！
+//            ImageLoader.getInstance().displayImage(imageURL, imageView);// 使用ImageLoader对图片进行加装！
+            loadImage(imageURL,imageView);
         }
     };
 

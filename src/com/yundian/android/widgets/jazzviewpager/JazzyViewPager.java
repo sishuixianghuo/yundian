@@ -1,11 +1,5 @@
 package com.yundian.android.widgets.jazzviewpager;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
-import com.nineoldandroids.view.ViewHelper;
-import com.yundian.android.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Camera;
@@ -14,9 +8,13 @@ import android.graphics.Matrix;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.yundian.android.R;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class JazzyViewPager extends ViewPager {
 
@@ -151,24 +149,16 @@ public class JazzyViewPager extends ViewPager {
 	}
 
 	private void logState(View v, String title) {
-		Log.v(TAG,
-				title + ": ROT (" + ViewHelper.getRotation(v) + ", "
-						+ ViewHelper.getRotationX(v) + ", "
-						+ ViewHelper.getRotationY(v) + "), TRANS ("
-						+ ViewHelper.getTranslationX(v) + ", "
-						+ ViewHelper.getTranslationY(v) + "), SCALE ("
-						+ ViewHelper.getScaleX(v) + ", "
-						+ ViewHelper.getScaleY(v) + "), ALPHA "
-						+ ViewHelper.getAlpha(v));
+
 	}
 
 	protected void animateScroll(int position, float positionOffset) {
 		if (mState != State.IDLE) {
 			mRot = (float) (1 - Math.cos(2 * Math.PI * positionOffset)) / 2 * 30.0f;
-			ViewHelper.setRotationY(this, mState == State.GOING_RIGHT ? mRot
+			setRotationY( mState == State.GOING_RIGHT ? mRot
 					: -mRot);
-			ViewHelper.setPivotX(this, getMeasuredWidth() * 0.5f);
-			ViewHelper.setPivotY(this, getMeasuredHeight() * 0.5f);
+			setPivotX( getMeasuredWidth() * 0.5f);
+			setPivotY( getMeasuredHeight() * 0.5f);
 		}
 	}
 
@@ -178,20 +168,20 @@ public class JazzyViewPager extends ViewPager {
 				mRot = 30.0f * positionOffset;
 				mTrans = getOffsetXForRotation(mRot, left.getMeasuredWidth(),
 						left.getMeasuredHeight());
-				ViewHelper.setPivotX(left, left.getMeasuredWidth() / 2);
-				ViewHelper.setPivotY(left, left.getMeasuredHeight() / 2);
-				ViewHelper.setTranslationX(left, mTrans);
-				ViewHelper.setRotationY(left, mRot);
+				left.setPivotX(left.getMeasuredWidth() / 2);
+				left.setPivotY( left.getMeasuredHeight() / 2);
+				left.setTranslationX( mTrans);
+				left.setRotationY( mRot);
 				logState(left, "Left");
 			}
 			if (right != null) {
 				mRot = -30.0f * (1 - positionOffset);
 				mTrans = getOffsetXForRotation(mRot, right.getMeasuredWidth(),
 						right.getMeasuredHeight());
-				ViewHelper.setPivotX(right, right.getMeasuredWidth() * 0.5f);
-				ViewHelper.setPivotY(right, right.getMeasuredHeight() * 0.5f);
-				ViewHelper.setTranslationX(right, mTrans);
-				ViewHelper.setRotationY(right, mRot);
+				right.setPivotX(right.getMeasuredWidth() * 0.5f);
+				right.setPivotY(right.getMeasuredHeight() * 0.5f);
+				right.setTranslationX( mTrans);
+				right.setRotationY( mRot);
 				logState(right, "Right");
 			}
 		}
@@ -202,15 +192,15 @@ public class JazzyViewPager extends ViewPager {
 		if (mState != State.IDLE) {
 			if (left != null) {
 				mRot = (in ? 90.0f : -90.0f) * positionOffset;
-				ViewHelper.setPivotX(left, left.getMeasuredWidth());
-				ViewHelper.setPivotY(left, left.getMeasuredHeight() * 0.5f);
-				ViewHelper.setRotationY(left, mRot);
+				left.setPivotX( left.getMeasuredWidth());
+				left.setPivotY( left.getMeasuredHeight() * 0.5f);
+				left.setRotationY(mRot);
 			}
 			if (right != null) {
 				mRot = -(in ? 90.0f : -90.0f) * (1 - positionOffset);
-				ViewHelper.setPivotX(right, 0);
-				ViewHelper.setPivotY(right, right.getMeasuredHeight() * 0.5f);
-				ViewHelper.setRotationY(right, mRot);
+				right.setPivotX( 0);
+				right.setPivotY(right.getMeasuredHeight() * 0.5f);
+				right.setRotationY(mRot);
 			}
 		}
 	}
@@ -218,14 +208,14 @@ public class JazzyViewPager extends ViewPager {
 	private void animateAccordion(View left, View right, float positionOffset) {
 		if (mState != State.IDLE) {
 			if (left != null) {
-				ViewHelper.setPivotX(left, left.getMeasuredWidth());
-				ViewHelper.setPivotY(left, 0);
-				ViewHelper.setScaleX(left, 1 - positionOffset);
+				left.setPivotX( left.getMeasuredWidth());
+				left.setPivotY( 0);
+				left.setScaleX( 1 - positionOffset);
 			}
 			if (right != null) {
-				ViewHelper.setPivotX(right, 0);
-				ViewHelper.setPivotY(right, 0);
-				ViewHelper.setScaleX(right, positionOffset);
+				right.setPivotX(0);
+				right.setPivotY( 0);
+				right.setScaleX( positionOffset);
 			}
 		}
 	}
@@ -236,18 +226,18 @@ public class JazzyViewPager extends ViewPager {
 			if (left != null) {
 				mScale = in ? ZOOM_MAX + (1 - ZOOM_MAX) * (1 - positionOffset)
 						: 1 + ZOOM_MAX - ZOOM_MAX * (1 - positionOffset);
-				ViewHelper.setPivotX(left, left.getMeasuredWidth() * 0.5f);
-				ViewHelper.setPivotY(left, left.getMeasuredHeight() * 0.5f);
-				ViewHelper.setScaleX(left, mScale);
-				ViewHelper.setScaleY(left, mScale);
+				left.setPivotX( left.getMeasuredWidth() * 0.5f);
+				left.setPivotY( left.getMeasuredHeight() * 0.5f);
+				left.setScaleX( mScale);
+				left.setScaleY( mScale);
 			}
 			if (right != null) {
 				mScale = in ? ZOOM_MAX + (1 - ZOOM_MAX) * positionOffset : 1
 						+ ZOOM_MAX - ZOOM_MAX * positionOffset;
-				ViewHelper.setPivotX(right, right.getMeasuredWidth() * 0.5f);
-				ViewHelper.setPivotY(right, right.getMeasuredHeight() * 0.5f);
-				ViewHelper.setScaleX(right, mScale);
-				ViewHelper.setScaleY(right, mScale);
+				right.setPivotX( right.getMeasuredWidth() * 0.5f);
+				right.setPivotY(right.getMeasuredHeight() * 0.5f);
+				right.setScaleX( mScale);
+				right.setScaleY( mScale);
 			}
 		}
 	}
@@ -260,20 +250,20 @@ public class JazzyViewPager extends ViewPager {
 				mTrans = (up ? -1 : 1)
 						* (float) (getMeasuredHeight() - getMeasuredHeight()
 								* Math.cos(mRot * Math.PI / 180.0f));
-				ViewHelper.setPivotX(left, left.getMeasuredWidth() * 0.5f);
-				ViewHelper.setPivotY(left, up ? 0 : left.getMeasuredHeight());
-				ViewHelper.setTranslationY(left, mTrans);
-				ViewHelper.setRotation(left, mRot);
+				left.setPivotX(left.getMeasuredWidth() * 0.5f);
+				left.setPivotY(up ? 0 : left.getMeasuredHeight());
+				left.setTranslationY( mTrans);
+				left.setRotation( mRot);
 			}
 			if (right != null) {
 				mRot = (up ? 1 : -1) * (-ROT_MAX + ROT_MAX * positionOffset);
 				mTrans = (up ? -1 : 1)
 						* (float) (getMeasuredHeight() - getMeasuredHeight()
 								* Math.cos(mRot * Math.PI / 180.0f));
-				ViewHelper.setPivotX(right, right.getMeasuredWidth() * 0.5f);
-				ViewHelper.setPivotY(right, up ? 0 : right.getMeasuredHeight());
-				ViewHelper.setTranslationY(right, mTrans);
-				ViewHelper.setRotation(right, mRot);
+				right.setPivotX( right.getMeasuredWidth() * 0.5f);
+				right.setPivotY( up ? 0 : right.getMeasuredHeight());
+				right.setTranslationY( mTrans);
+				right.setRotation( mRot);
 			}
 		}
 	}
@@ -289,10 +279,10 @@ public class JazzyViewPager extends ViewPager {
 					if (left.getVisibility() == View.INVISIBLE)
 						left.setVisibility(View.VISIBLE);
 					mTrans = positionOffsetPixels;
-					ViewHelper.setPivotX(left, left.getMeasuredWidth() * 0.5f);
-					ViewHelper.setPivotY(left, left.getMeasuredHeight() * 0.5f);
-					ViewHelper.setTranslationX(left, mTrans);
-					ViewHelper.setRotationY(left, mRot);
+					left.setPivotX( left.getMeasuredWidth() * 0.5f);
+					left.setPivotY( left.getMeasuredHeight() * 0.5f);
+					left.setTranslationX( mTrans);
+					left.setRotationY(mRot);
 				}
 			}
 			if (right != null) {
@@ -304,12 +294,12 @@ public class JazzyViewPager extends ViewPager {
 						right.setVisibility(View.VISIBLE);
 					mTrans = -getWidth() - getPageMargin()
 							+ positionOffsetPixels;
-					ViewHelper
-							.setPivotX(right, right.getMeasuredWidth() * 0.5f);
-					ViewHelper.setPivotY(right,
+					right
+							.setPivotX(right.getMeasuredWidth() * 0.5f);
+					right.setPivotY(
 							right.getMeasuredHeight() * 0.5f);
-					ViewHelper.setTranslationX(right, mTrans);
-					ViewHelper.setRotationY(right, mRot);
+					right.setTranslationX( mTrans);
+					right.setRotationY( mRot);
 				}
 			}
 		}
@@ -326,10 +316,10 @@ public class JazzyViewPager extends ViewPager {
 					if (left.getVisibility() == View.INVISIBLE)
 						left.setVisibility(View.VISIBLE);
 					mTrans = positionOffsetPixels;
-					ViewHelper.setPivotX(left, left.getMeasuredWidth() * 0.5f);
-					ViewHelper.setPivotY(left, left.getMeasuredHeight() * 0.5f);
-					ViewHelper.setTranslationX(left, mTrans);
-					ViewHelper.setRotationX(left, mRot);
+					left.setPivotX(left.getMeasuredWidth() * 0.5f);
+					left.setPivotY( left.getMeasuredHeight() * 0.5f);
+					left.setTranslationX( mTrans);
+					left.setRotationX( mRot);
 				}
 			}
 			if (right != null) {
@@ -341,12 +331,12 @@ public class JazzyViewPager extends ViewPager {
 						right.setVisibility(View.VISIBLE);
 					mTrans = -getWidth() - getPageMargin()
 							+ positionOffsetPixels;
-					ViewHelper
-							.setPivotX(right, right.getMeasuredWidth() * 0.5f);
-					ViewHelper.setPivotY(right,
+					right
+							.setPivotX( right.getMeasuredWidth() * 0.5f);
+					right.setPivotY(
 							right.getMeasuredHeight() * 0.5f);
-					ViewHelper.setTranslationX(right, mTrans);
-					ViewHelper.setRotationX(right, mRot);
+					right.setTranslationX( mTrans);
+					right.setRotationX( mRot);
 				}
 			}
 		}
@@ -358,9 +348,9 @@ public class JazzyViewPager extends ViewPager {
 			if (right != null) {
 				mScale = (1 - SCALE_MAX) * positionOffset + SCALE_MAX;
 				mTrans = -getWidth() - getPageMargin() + positionOffsetPixels;
-				ViewHelper.setScaleX(right, mScale);
-				ViewHelper.setScaleY(right, mScale);
-				ViewHelper.setTranslationX(right, mTrans);
+				right.setScaleX( mScale);
+				right.setScaleY( mScale);
+				right.setTranslationX(mTrans);
 			}
 			if (left != null) {
 				left.bringToFront();
@@ -389,10 +379,10 @@ public class JazzyViewPager extends ViewPager {
 
 	protected void animateFade(View left, View right, float positionOffset) {
 		if (left != null) {
-			ViewHelper.setAlpha(left, 1 - positionOffset);
+			left.setAlpha( 1 - positionOffset);
 		}
 		if (right != null) {
-			ViewHelper.setAlpha(right, positionOffset);
+			right.setAlpha( positionOffset);
 		}
 	}
 

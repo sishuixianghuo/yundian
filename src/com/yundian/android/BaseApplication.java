@@ -1,11 +1,11 @@
 package com.yundian.android;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.support.multidex.MultiDex;
 
-import com.lzy.okgo.OkGo;
-import com.yundian.android.config.Constants;
-import com.yundian.android.image.ImageLoaderConfig;
+import com.yundian.android.net.RestApi;
 
 
 public class BaseApplication extends Application {
@@ -27,9 +27,7 @@ public class BaseApplication extends Application {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		mAppApplication = this;
-		ImageLoaderConfig.initImageLoader(this, Constants.BASE_IMAGE_CACHE);
-
-		OkGo.getInstance().init(this);
+		RestApi.initOkGO(this);
 	}
 
 	@Override
@@ -42,5 +40,11 @@ public class BaseApplication extends Application {
 	public void onTerminate() {
 		// TODO Auto-generated method stub
 		super.onTerminate();
+	}
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		MultiDex.install(base);
 	}
 }

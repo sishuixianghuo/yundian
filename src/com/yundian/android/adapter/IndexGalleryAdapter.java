@@ -1,7 +1,5 @@
 package com.yundian.android.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.yundian.android.R;
 import com.yundian.android.entity.IndexGalleryItemData;
+
+import java.util.List;
 
 public class IndexGalleryAdapter extends BaseAdapter {
 
@@ -64,9 +65,13 @@ public class IndexGalleryAdapter extends BaseAdapter {
 			resetViewHolder(viewHolder);
 		}
 
-		ImageLoader.getInstance().displayImage(listData.get(pos).getImageUrl(),
-				viewHolder.imageView);
-
+		Glide.with(convertView.getContext())
+				.load(listData.get(pos).getImageUrl())
+				.placeholder(R.drawable.app_ic)
+				.error(R.drawable.app_ic)
+				.dontAnimate()
+				.centerCrop()
+				.into(viewHolder.imageView);
 		viewHolder.textView.setText(listData.get(pos).getPrice());
 
 		return convertView;
