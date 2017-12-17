@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_banner" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dcdcdc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="品牌"
+
+            android:textColor="@color/c262626"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="21dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/d4d4d4" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:gravity="center"
+            android:text="用途"
+            android:textColor="@color/c262626"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="21dp"
+            android:layout_gravity="center_vertical"
+
+            android:background="@color/d4d4d4" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="排序"
+
+
+            android:textColor="@color/c262626"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dcdcdc" />
+</LinearLayout>

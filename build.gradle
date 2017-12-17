@@ -12,23 +12,6 @@ buildscript {
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
 
     }
-
-    ext.versions = [
-            version_code     : 3,
-            version_name     : "1.0.4",
-            minSDK           : 11,
-            targetSDK        : 21,
-            compileVersion   : 23,
-            buildToolsVersion: "24.0.2",
-    ]
-
-    ext.libsVersion = [
-            supportAnnotations : "24.2.0",
-            appcompat          : "24.2.0",
-            supportV4          : "24.2.0",
-            supportRecyclerview: "24.2.0",
-            supportDesign      : "24.2.0",
-    ]
 }
 apply plugin: 'com.android.application'
 
@@ -52,6 +35,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+
 }
 
 android {

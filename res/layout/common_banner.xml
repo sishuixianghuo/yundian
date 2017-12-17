@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_rl_banner_inner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.yundian.android.widgets.BannerViewPager
+        android:id="@+id/common_banner_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/common_banner_relayout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/common_banner_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:orientation="horizontal" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

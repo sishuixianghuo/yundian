@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:tag="@string/tag">
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="1dp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/page_1"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_1"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/foot_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="减速机（配套碎石厂各种皮带机"
+                android:textColor="@color/c444444"
+                android:textSize="34px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:maxLines="1"
+                android:text="￥35,800,000"
+                android:textColor="@color/e60012"
+                android:textSize="42px" />
+
+            <ImageView
+                android:layout_width="41dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/home_page_shoping_car_bg"
+                android:scaleType="center"
+                android:src="@drawable/home_list_shoppingcart" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="1dp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/page_2"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_2"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/foot_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="减速机（配套碎石厂各种皮带机"
+                android:textColor="@color/c444444"
+                android:textSize="34px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:maxLines="1"
+                android:text="￥35,800,000"
+                android:textColor="@color/e60012"
+                android:textSize="42px" />
+
+            <ImageView
+                android:layout_width="41dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/home_page_shoping_car_bg"
+                android:scaleType="center"
+                android:src="@drawable/home_list_shoppingcart" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="1dp" />
+</LinearLayout>
