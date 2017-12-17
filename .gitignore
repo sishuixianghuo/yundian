@@ -36,6 +36,7 @@ captures/
 
 # Intellij
 *.iml
+**/**.iml
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -56,3 +57,6 @@ freeline.py
 freeline/
 freeline_project_description.json
 
+gradle/
+projectFilesBackup/
+src/com/yundian/android/image/

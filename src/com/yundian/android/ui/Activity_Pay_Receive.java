@@ -65,7 +65,7 @@ public class Activity_Pay_Receive extends BaseActivity implements  OnClickListen
 
     public static Intent getIntent_Common(Context context,int type) {
         Intent intent = new Intent(context, Activity_Pay_Receive.class);
-        LogUtils.e(TAG,"context : " + context.toString());
+        LogUtils.e("BaseActivity","context : " + context.toString());
         mType = type;
         return intent;
     }

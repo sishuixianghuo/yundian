@@ -9,11 +9,28 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+
     }
+
+    ext.versions = [
+            version_code     : 3,
+            version_name     : "1.0.4",
+            minSDK           : 11,
+            targetSDK        : 21,
+            compileVersion   : 23,
+            buildToolsVersion: "24.0.2",
+    ]
+
+    ext.libsVersion = [
+            supportAnnotations : "24.2.0",
+            appcompat          : "24.2.0",
+            supportV4          : "24.2.0",
+            supportRecyclerview: "24.2.0",
+            supportDesign      : "24.2.0",
+    ]
 }
 apply plugin: 'com.android.application'
-
-//apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
@@ -29,13 +46,16 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'com.android.support:support-v4:24.2.0'
     compile 'com.android.support:multidex:1.0.1'
-
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
 }
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion '25.0.0'
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false

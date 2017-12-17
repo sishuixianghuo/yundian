@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.lzy.okgo.OkGo;
 import com.yundian.android.AppManager;
 import com.yundian.android.R;
 import com.yundian.android.task.AsyncCallable;
@@ -25,9 +26,12 @@ import com.yundian.android.task.ProgressCallable;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public abstract class BaseActivity extends Activity {
 
-    public static final String TAG = BaseActivity.class.getSimpleName();
+    public String TAG = getClass().getSimpleName();
+    protected String httpTag = getClass().getName();
 
     protected Handler mHandler = null;
     protected InputMethodManager imm;
@@ -48,11 +52,20 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        TAG = getClass().getSimpleName();
         AppManager.getInstance().addActivity(this);
         tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
     }
 
+    public CompositeDisposable composite = new CompositeDisposable();    // 管理订阅者者
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        composite.dispose();
+        OkGo.getInstance().cancelTag(httpTag);
+    }
 
     /**
      * 绑定控件id
@@ -111,7 +124,7 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected void DisPlay(String content) {
-        Toast.makeText(this, content, 1).show();
+        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -284,5 +297,4 @@ public abstract class BaseActivity extends Activity {
     protected <T> void doAsync(final int pTitleResID, final int pMessageResID, final AsyncCallable<T> pAsyncCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
         EMobileTask.doAsync(this, pTitleResID, pMessageResID, pAsyncCallable, pCallback, pExceptionCallback);
     }
-
 }
