@@ -4,12 +4,15 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
+import android.util.DisplayMetrics;
 
 import com.yundian.android.net.RestApi;
 
 
 public class BaseApplication extends Application {
 	private static BaseApplication mAppApplication;
+	private DisplayMetrics metrics = new DisplayMetrics();
+
 	/**
 	 * 获取Application
 	 */
@@ -47,4 +50,9 @@ public class BaseApplication extends Application {
 		super.attachBaseContext(base);
 		MultiDex.install(base);
 	}
+
+	public DisplayMetrics getMetrics() {
+		return metrics;
+	}
+
 }

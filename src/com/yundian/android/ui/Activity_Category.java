@@ -3,17 +3,23 @@ package com.yundian.android.ui;
 import android.app.Dialog;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.entity.BaseResponse;
 import com.yundian.android.entity.CategoryInfo;
@@ -22,6 +28,7 @@ import com.yundian.android.net.HttpServer;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +46,8 @@ public class Activity_Category extends BaseActivity {
     @BindView(R.id.sub_class)
     RecyclerView subRecycleView;
     private Dialog mWeiboDialog;
+    RecyclerView.Adapter topClassAdapter;
+    RecyclerView.Adapter subClassAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,15 @@ public class Activity_Category extends BaseActivity {
                 for (int i = 0; i < parent.getChildCount(); i++) {
                     View v = parent.getChildAt(i);
                     c.drawLine(0, v.getY() + v.getHeight(), parent.getWidth(), v.getY() + v.getHeight(), paint);
+                }
+            }
+        });
+        subRecycleView.setLayoutManager(new GridLayoutManager(this,1));
+        subRecycleView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                if (view instanceof LinearLayout) {
+                    outRect.top = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, BaseApplication.getApp().getMetrics());
                 }
             }
         });
@@ -75,8 +93,26 @@ public class Activity_Category extends BaseActivity {
 
             @Override
             public void onSuccess(Response<BaseResponse<List<CategoryInfo>>> response) {
-                WeiboDialogUtils.closeDialog(mWeiboDialog);
+
+                // 处理数据之后在set 一级标题
+                for(CategoryInfo info : response.body().getInfo()) {
+                    // 二级
+                    List<List<CategoryInfo.SubCategory>> datas = new ArrayList<>();
+                    for(CategoryInfo.SubCategory item: info.getInfo()) {
+                        List<CategoryInfo.SubCategory> subCategories = new ArrayList<>();
+                        subCategories.add(item);
+                        datas.add(subCategories);
+                        int count = 0;
+                        do {
+                            datas.add(item.getInfo().subList(count, count + 3 < item.getInfo().size() ? count + 3 : item.getInfo().size()));
+                            count += 3;
+                        } while (count < item.getInfo().size());
+                    }
+                    info.setDirs(datas);
+                }
                 setData(response.body());
+                setSubClassData(response.body().getInfo().get(0));
+                WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
             @Override
@@ -95,11 +131,11 @@ public class Activity_Category extends BaseActivity {
             return;
         }
 
-        recyclerView.setAdapter(new RecyclerView.Adapter<ItemHolder>() {
+        recyclerView.setAdapter(topClassAdapter = new RecyclerView.Adapter<ItemHolder>() {
             View view;
+
             @Override
             public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
                 ItemHolder holder = new ItemHolder(LayoutInflater.from(Activity_Category.this).
                         inflate(R.layout.category_item, parent, false));
                 return holder;
@@ -111,7 +147,7 @@ public class Activity_Category extends BaseActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (view != null ) {
+                        if (view != null) {
                             view.setSelected(false);
                         }
                         v.setSelected(true);
@@ -132,30 +168,109 @@ public class Activity_Category extends BaseActivity {
 
     }
 
+    private void setSubClassData(final CategoryInfo subClassData) {
+        Log.e(TAG,"setSubClassData "+subClassData.getDirs().size());
+        subRecycleView.setAdapter(subClassAdapter = new RecyclerView.Adapter<ItemHolder>() {
 
-    private void setSubClassData(CategoryInfo subClassData) {
+            @Override
+            public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                Log.e(TAG,"setSubClassData onCreateViewHolder ");
+                // 三级条目
+                if (viewType == 0) {
+                    ItemHolder holder = new ItemHolder(LayoutInflater.from(Activity_Category.this).
+                            inflate(R.layout.category_sub_item, parent, false));
+                    return holder;
+                }
+                // 二级标题
+                View view = LayoutInflater.from(Activity_Category.this).
+                        inflate(R.layout.category_sub_item_title, parent, false);
+                view.setMinimumWidth(4000);
+                ItemHolder holder = new ItemHolder(view);
+                return holder;
+            }
 
+            @Override
+            public void onBindViewHolder(ItemHolder holder, final int position) {
+                Log.e(TAG,"setSubClassData onBindViewHolder ");
+                if (subClassData.getDirs().get(position).get(0).getInfo() == null) {
+                    holder.item1.setText(subClassData.getDirs().get(position).get(0).getName());
+                    holder.item1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DisplayToast(subClassData.getDirs().get(position).get(0).getName());
+                        }
+                    });
+                    if (subClassData.getDirs().get(position).size() >= 2) {
+                        holder.item2.setVisibility(View.VISIBLE);
+                        holder.item2.setText(subClassData.getDirs().get(position).get(1).getName());
+                        holder.item2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DisplayToast(subClassData.getDirs().get(position).get(1).getName());
+                            }
+                        });
+                    } else {
+                        holder.item2.setVisibility(View.INVISIBLE);
+                        holder.item2.setOnClickListener(null);
+                    }
+                    if (subClassData.getDirs().get(position).size() == 3) {
+                        holder.item3.setVisibility(View.VISIBLE);
+                        holder.item3.setText(subClassData.getDirs().get(position).get(2).getName());
+                        holder.item3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DisplayToast(subClassData.getDirs().get(position).get(2).getName());
+                            }
+                        });
+                    } else {
+                        holder.item3.setVisibility(View.INVISIBLE);
+                        holder.item3.setOnClickListener(null);
+                    }
+                } else {
+                    ((TextView) holder.itemView).setText(subClassData.getDirs().get(position).get(0).getName());
+                }
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                Log.e(TAG,"getItemViewType");
+                if (subClassData.getDirs().get(position).get(0).getInfo() == null) {
+                    return 0;
+                }
+                return 1;
+            }
+
+            @Override
+            public int getItemCount() {
+                Log.e(TAG,"getItemCount"+subClassData.getDirs().size());
+                return subClassData.getDirs().size();
+            }
+        });
     }
 
     static class ItemHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.item1)
+        TextView item1;
+        @BindView(R.id.item2)
+        TextView item2;
+        @BindView(R.id.item3)
+        TextView item3;
+
         public ItemHolder(View itemView) {
             super(itemView);
+            if (itemView instanceof LinearLayout) {
+                ButterKnife.bind(this, itemView);
+            }
         }
     }
 
 
     @Override
-    protected void findViewById() {
-
-
-    }
+    protected void findViewById() {}
 
     @Override
-    protected void initView() {
-
-
-    }
+    protected void initView() {}
 
 
 }

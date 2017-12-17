@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.lzy.okgo.OkGo;
 import com.yundian.android.AppManager;
+import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.task.AsyncCallable;
 import com.yundian.android.task.Callback;
@@ -53,6 +54,7 @@ public abstract class BaseActivity extends Activity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         TAG = getClass().getSimpleName();
+        getWindowManager().getDefaultDisplay().getMetrics(BaseApplication.getApp().getMetrics());
         AppManager.getInstance().addActivity(this);
         tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -226,7 +228,6 @@ public abstract class BaseActivity extends Activity {
      * @param <T>
      * @param pTitleResID
      * @param pMessageResID
-     * @param pErrorMessageResID
      * @param pCallable
      * @param pCallback
      */
@@ -241,7 +242,6 @@ public abstract class BaseActivity extends Activity {
      * @param <T>
      * @param pTitleResID
      * @param pMessageResID
-     * @param pErrorMessageResID
      * @param pCallable
      * @param pCallback
      * @param pExceptionCallback
@@ -256,9 +256,7 @@ public abstract class BaseActivity extends Activity {
      *
      * @param <T>
      * @param pTitleResID
-     * @param pMessageResID
-     * @param pErrorMessageResID
-     * @param pAsyncCallable
+
      * @param pCallback
      */
     protected <T> void doProgressAsync(final int pTitleResID, final ProgressCallable<T> pCallable, final Callback<T> pCallback) {
@@ -271,9 +269,7 @@ public abstract class BaseActivity extends Activity {
      *
      * @param <T>
      * @param pTitleResID
-     * @param pMessageResID
-     * @param pErrorMessageResID
-     * @param pAsyncCallable
+
      * @param pCallback
      * @param pExceptionCallback
      */
@@ -289,7 +285,6 @@ public abstract class BaseActivity extends Activity {
      * @param <T>
      * @param pTitleResID
      * @param pMessageResID
-     * @param pErrorMessageResID
      * @param pAsyncCallable
      * @param pCallback
      * @param pExceptionCallback
