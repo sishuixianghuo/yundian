@@ -1,4 +1,4 @@
-package com.yundian.android.entity;
+package com.yundian.android.bean;
 
 import java.io.Serializable;
 
@@ -13,8 +13,8 @@ public class BaseResponse<T> implements Serializable {
     private String name;
     private T info;
 
-    public int getState() {
-        return state;
+    public boolean isOK() {
+        return state==1;
     }
 
     public void setState(int state) {
@@ -43,5 +43,15 @@ public class BaseResponse<T> implements Serializable {
 
     public void setInfo(T info) {
         this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseResponse{" +
+                "state=" + state +
+                ", msg='" + msg + '\'' +
+                ", name='" + name + '\'' +
+                ", info=" + info +
+                '}';
     }
 }

@@ -13,19 +13,19 @@
         android:background="@color/dcdcdc" />
 
     <LinearLayout
+        android:id="@+id/page_contain"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:visibility="gone"
         android:background="@color/white">
 
-        <TextView
+        <com.yundian.android.widgets.HomePageSelectView
+            android:id="@+id/page_first"
             android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="品牌"
-
-            android:textColor="@color/c262626"
-            android:textStyle="bold" />
+            android:gravity="center" />
 
         <View
             android:layout_width="1px"
@@ -33,15 +33,13 @@
             android:layout_gravity="center_vertical"
             android:background="@color/d4d4d4" />
 
-        <TextView
+        <com.yundian.android.widgets.HomePageSelectView
+            android:id="@+id/page_second"
             android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-
-            android:gravity="center"
-            android:text="用途"
-            android:textColor="@color/c262626"
-            android:textStyle="bold" />
+            android:gravity="center" />
 
         <View
             android:layout_width="1px"
@@ -50,16 +48,15 @@
 
             android:background="@color/d4d4d4" />
 
-        <TextView
+        <com.yundian.android.widgets.HomePageSelectView
+            android:id="@+id/page_third"
             android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="排序"
 
+            android:gravity="center" />
 
-            android:textColor="@color/c262626"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <View

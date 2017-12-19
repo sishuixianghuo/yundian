@@ -21,8 +21,8 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
-import com.yundian.android.entity.BaseResponse;
-import com.yundian.android.entity.CategoryInfo;
+import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.CategoryInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
 import com.yundian.android.widgets.WeiboDialogUtils;
@@ -76,14 +76,20 @@ public class Activity_Category extends BaseActivity {
                 }
             }
         });
-        up();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (topClassAdapter == null ||topClassAdapter.getItemCount() == 0) {
+            up();
+        }
     }
 
     private void up() {
-
         Type type = new TypeToken<BaseResponse<List<CategoryInfo>>>() {
         }.getType();
-
         HttpServer.getCategory(httpTag, new GenericCallBack<BaseResponse<List<CategoryInfo>>>(type) {
 
             @Override

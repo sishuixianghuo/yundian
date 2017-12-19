@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/personal_top_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/image_return"
@@ -25,16 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="云电商城登陆"
-            android:textStyle="bold"
             android:textColor="@color/c262626"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_login"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="31dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" >
+            android:paddingRight="20dp">
 
             <TextView
                 android:id="@+id/text_user"
@@ -62,10 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="33dp"
-                android:layout_toRightOf="@+id/text_user"
                 android:layout_toLeftOf="@+id/image_edit_username_delete"
+                android:layout_toRightOf="@+id/text_user"
                 android:background="@null"
                 android:hint="邮箱"
+                tools:text="123"
                 android:imeOptions="actionDone"
                 android:paddingBottom="6dp"
                 android:paddingTop="10dp"
@@ -73,15 +75,16 @@
                 android:textColor="@color/c262626"
                 android:textColorHighlight="@color/e60012"
                 android:textSize="17sp" />
+
             <ImageView
                 android:id="@+id/image_edit_username_delete"
-                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:visibility="gone"
-                android:src="@drawable/input_ic_empty" />
+                android:padding="10dp"
+                android:src="@drawable/input_ic_empty"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -95,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" >
+            android:paddingRight="20dp">
 
             <TextView
                 android:id="@+id/text_password"
@@ -111,39 +114,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="33dp"
-                android:layout_toRightOf="@+id/text_password"
                 android:layout_toLeftOf="@+id/image_edit_password_delete"
+                android:layout_toRightOf="@+id/text_password"
                 android:background="@null"
+                tools:text="1249324345"
                 android:hint="请输入密码"
-                android:password="true"
                 android:paddingBottom="6dp"
                 android:paddingTop="10dp"
+                android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/c262626"
                 android:textSize="17sp" />
 
             <ImageView
                 android:id="@+id/image_edit_password_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/text_edit_password_delete"
                 android:padding="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:visibility="gone"
-                android:src="@drawable/input_ic_empty" />
+                android:src="@drawable/input_ic_empty"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/text_edit_password_delete"
-                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:padding="10dp"
                 android:text="忘记密码"
                 android:textColor="@color/e42626"
-                android:textSize="13sp"/>
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -171,7 +175,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="13dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Button
                 android:layout_width="0dp"

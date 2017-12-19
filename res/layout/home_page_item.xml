@@ -29,24 +29,28 @@
             android:padding="8dp">
 
             <TextView
+                android:id="@+id/pdc_name_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:text="减速机（配套碎石厂各种皮带机"
                 android:textColor="@color/c444444"
-                android:textSize="34px"
+                android:textSize="13dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/pdc_price_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:maxLines="1"
                 android:text="￥35,800,000"
                 android:textColor="@color/e60012"
-                android:textSize="42px" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/pdc_cart_1"
                 android:layout_width="41dp"
                 android:layout_height="24dp"
                 android:layout_alignParentBottom="true"
@@ -81,25 +85,28 @@
             android:padding="8dp">
 
             <TextView
-
+                android:id="@+id/pdc_name_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:text="减速机（配套碎石厂各种皮带机"
                 android:textColor="@color/c444444"
-                android:textSize="34px"
+                android:textSize="13dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/pdc_price_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:maxLines="1"
                 android:text="￥35,800,000"
                 android:textColor="@color/e60012"
-                android:textSize="42px" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/pdc_cart_2"
                 android:layout_width="41dp"
                 android:layout_height="24dp"
                 android:layout_alignParentBottom="true"

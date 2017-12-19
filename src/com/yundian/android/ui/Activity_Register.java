@@ -11,12 +11,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.model.Response;
 import com.yundian.android.R;
-import com.yundian.android.URLs;
-import com.yundian.android.utils.LogUtils;
+import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.net.GenericCallBack;
+import com.yundian.android.net.HttpServer;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
 /**
@@ -26,7 +26,6 @@ import com.yundian.android.widgets.WeiboDialogUtils;
  */
 public class Activity_Register extends BaseActivity implements OnClickListener {
     private Button mButtonRegister;
-    private Dialog mDialog;
     private Dialog mWeiboDialog;
     private EditText edit_username;
     private EditText edit_nickname;
@@ -38,21 +37,7 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
     private View view_3;
     private View view_4;
 
-    private boolean edit1,edit2,edit3,edit4 = false;
-
-//    private Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            switch (msg.what) {
-//                case 1:
-//                    DialogThridUtils.closeDialog(mDialog);
-//                    WeiboDialogUtils.closeDialog(mWeiboDialog);
-//                    break;
-//            }
-//        }
-//    };
-
+    private boolean edit1, edit2, edit3, edit4 = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,19 +95,19 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
                 // 有中文的正则匹配邮箱
                 String str1 = "^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
                 edit1 = false;
-                if(s.toString().length() == 0) {
+                if (s.toString().length() == 0) {
                     view_1.setBackgroundResource(R.color.e6e6e6);
-                }else if (!edit_username.getText().toString().trim().matches(str1)) {
+                } else if (!edit_username.getText().toString().trim().matches(str1)) {
                     view_1.setBackgroundResource(R.color.e60012);
-                }else{
+                } else {
                     view_1.setBackgroundResource(R.color.c76c626);
                     edit1 = true;
                 }
-                if (edit1&&edit2&&edit3&&edit4){
+                if (edit1 && edit2 && edit3 && edit4) {
                     mButtonRegister.setBackgroundResource(R.drawable.style_register_button);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.white));
                     mButtonRegister.setEnabled(true);
-                }else{
+                } else {
                     mButtonRegister.setBackgroundResource(R.drawable.style_login_button_off);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.b4b4b4));
                     mButtonRegister.setEnabled(false);
@@ -146,19 +131,19 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
             public void afterTextChanged(Editable s) {
                 String str = "[a-zA-Z0-9\u4e00-\u9fa5\\s]{2,10}";
                 edit2 = false;
-                if(s.toString().length() == 0) {
+                if (s.toString().length() == 0) {
                     view_2.setBackgroundResource(R.color.e6e6e6);
-                }else if (!edit_nickname.getText().toString().trim().matches(str)) {
+                } else if (!edit_nickname.getText().toString().trim().matches(str)) {
                     view_2.setBackgroundResource(R.color.e60012);
-                }else{
+                } else {
                     view_2.setBackgroundResource(R.color.c76c626);
                     edit2 = true;
                 }
-                if (edit1&&edit2&&edit3&&edit4){
+                if (edit1 && edit2 && edit3 && edit4) {
                     mButtonRegister.setBackgroundResource(R.drawable.style_register_button);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.white));
                     mButtonRegister.setEnabled(true);
-                }else{
+                } else {
                     mButtonRegister.setBackgroundResource(R.drawable.style_login_button_off);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.b4b4b4));
                     mButtonRegister.setEnabled(false);
@@ -182,19 +167,19 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
             public void afterTextChanged(Editable s) {
                 String str = "[a-zA-Z0-9\u4e00-\u9fa5\\s]{6,20}";
                 edit3 = false;
-                if(s.toString().length() == 0) {
+                if (s.toString().length() == 0) {
                     view_3.setBackgroundResource(R.color.e6e6e6);
-                }else if (!edit_set_password_1.getText().toString().trim().matches(str)) {
+                } else if (!edit_set_password_1.getText().toString().trim().matches(str)) {
                     view_3.setBackgroundResource(R.color.e60012);
-                }else{
+                } else {
                     view_3.setBackgroundResource(R.color.c76c626);
                     edit3 = true;
                 }
-                if (edit1&&edit2&&edit3&&edit4){
+                if (edit1 && edit2 && edit3 && edit4) {
                     mButtonRegister.setBackgroundResource(R.drawable.style_register_button);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.white));
                     mButtonRegister.setEnabled(true);
-                }else{
+                } else {
                     mButtonRegister.setBackgroundResource(R.drawable.style_login_button_off);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.b4b4b4));
                     mButtonRegister.setEnabled(false);
@@ -218,21 +203,21 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
             public void afterTextChanged(Editable s) {
                 String str = "[a-zA-Z0-9\u4e00-\u9fa5\\s]{6,20}";
                 edit4 = false;
-                if(s.toString().length() == 0) {
+                if (s.toString().length() == 0) {
                     view_4.setBackgroundResource(R.color.e6e6e6);
-                }else if (!edit_set_password_2.getText().toString().trim().matches(str)) {
+                } else if (!edit_set_password_2.getText().toString().trim().matches(str)) {
                     view_4.setBackgroundResource(R.color.e60012);
-                }else{
-                    if(edit_set_password_1.getText().toString().trim().equals(edit_set_password_2.getText().toString().trim()))
-                    view_4.setBackgroundResource(R.color.c76c626);
+                } else {
+                    if (edit_set_password_1.getText().toString().trim().equals(edit_set_password_2.getText().toString().trim()))
+                        view_4.setBackgroundResource(R.color.c76c626);
                     edit4 = true;
 
                 }
-                if (edit1&&edit2&&edit3&&edit4){
+                if (edit1 && edit2 && edit3 && edit4) {
                     mButtonRegister.setBackgroundResource(R.drawable.style_register_button);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.white));
                     mButtonRegister.setEnabled(true);
-                }else{
+                } else {
                     mButtonRegister.setBackgroundResource(R.drawable.style_login_button_off);
                     mButtonRegister.setTextColor(getResources().getColor(R.color.b4b4b4));
                     mButtonRegister.setEnabled(false);
@@ -252,35 +237,46 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
                         finish();
                     }
                 });
-//                        mHandler.sendEmptyMessageDelayed(1, 2000);
-//
-//                btn_show_thrid_loading.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mDialog = DialogThridUtils.showWaitDialog(MainActivity.this, "加载中...", false, true);
-//                        mHandler.sendEmptyMessageDelayed(1, 2000);
-//                    }
-//                });
-                OkGo.<String>post(URLs.URL_REGISTER)
-                        .tag(this)
-                        .params("strUserName", "paramValue1")
-                        .params("strUserPwd", "paramValue1")
-                        .params("strNickName", "paramValue1")
-                        .params("strPhone", "paramValue1")
-                        .execute(new StringCallback() {
+                HttpServer.register(TAG, edit_username.getText().toString().trim(), edit_nickname.getText().toString().trim(),
+                        edit_set_password_1.getText().toString().trim(), edit_set_password_2.getText().toString().trim(), new GenericCallBack<BaseResponse<Object>>(new TypeToken<BaseResponse<Object>>() {
+                        }.getType()) {
                             @Override
-                            public void onSuccess(Response<String> response) {
-                                LogUtils.e(TAG, "response code: " + response.code() + " , message: " + response.message() + " , isSuccessful: " + response.isSuccessful());
+                            public void onSuccess(Response<BaseResponse<Object>> response) {
                                 WeiboDialogUtils.closeDialog(mWeiboDialog);
-                                finish();
+                                if (response.body().isOK()) {
+                                    DisplayToast("请登录");
+                                    finish();
+                                } else {
+                                    DisplayToast(response.body().getMsg());
+                                }
                             }
-
                             @Override
-                            public void onError(Response<String> response) {
+                            public void onError(Response<BaseResponse<Object>> response) {
                                 super.onError(response);
+                                DisPlay(response.getException().getMessage());
                                 WeiboDialogUtils.closeDialog(mWeiboDialog);
                             }
                         });
+//                OkGo.<String>post(URLs.URL_REGISTER)
+//                        .tag(this)
+//                        .params("strUserName", "paramValue1")
+//                        .params("strUserPwd", "paramValue1")
+//                        .params("strNickName", "paramValue1")
+//                        .params("strPhone", "paramValue1")
+//                        .execute(new StringCallback() {
+//                            @Override
+//                            public void onSuccess(Response<String> response) {
+//                                LogUtils.e(TAG, "response code: " + response.code() + " , message: " + response.message() + " , isSuccessful: " + response.isSuccessful());
+//                                WeiboDialogUtils.closeDialog(mWeiboDialog);
+//                                finish();
+//                            }
+//
+//                            @Override
+//                            public void onError(Response<String> response) {
+//                                super.onError(response);
+//                                WeiboDialogUtils.closeDialog(mWeiboDialog);
+//                            }
+//                        });
                 break;
             default:
                 break;

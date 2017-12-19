@@ -1,4 +1,4 @@
-package com.yundian.android.entity;
+package com.yundian.android.bean;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -65,6 +65,15 @@ public class CategoryInfo implements Serializable {
         public void setInfo(List<SubCategory> info) {
             this.info = info;
         }
+
+        @Override
+        public String toString() {
+            return "SubCategory{" +
+                    "name='" + name + '\'' +
+                    ", id=" + id +
+                    ", info=" + info +
+                    '}';
+        }
     }
 
     private static List<SubCategory> subs = new ArrayList<SubCategory>(){
@@ -118,5 +127,15 @@ public class CategoryInfo implements Serializable {
 
     public void setDirs(List<List<SubCategory>> dirs) {
         this.dirs = dirs;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryInfo{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", info=" + info +
+                ", dirs=" + dirs +
+                '}';
     }
 }
