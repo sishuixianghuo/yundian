@@ -153,7 +153,7 @@ public class Activity_HomePage extends BaseActivity {
                 } else {
                     int index = position * 2 - 2;
                     ProductInfo info = productInfos.get(index);
-                    setItemData(holder, info, (index + 1) < productInfos.size() ? productInfos.get(index + 1) : null);
+                    setItemData(holder, info, (index + 1) < productInfos.size() ? productInfos.get(index + 1) : null, Activity_HomePage.this);
                 }
 
             }
@@ -172,6 +172,7 @@ public class Activity_HomePage extends BaseActivity {
                 return (productInfos.size() + 1) / 2 + 1;
             }
         });
+
 
     }
 
@@ -298,7 +299,7 @@ public class Activity_HomePage extends BaseActivity {
 
         Type type = new TypeToken<BaseResponse<List<ProductInfo>>>() {
         }.getType();
-        HttpServer.getHomePageItem(TAG, null, indexPage, 0, new GenericCallBack<BaseResponse<List<ProductInfo>>>(type) {
+        HttpServer.getHomePageItem(TAG, 0, indexPage, 0, null,new GenericCallBack<BaseResponse<List<ProductInfo>>>(type) {
             @Override
             public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
                 if (response.body().isOK()) {
@@ -326,14 +327,14 @@ public class Activity_HomePage extends BaseActivity {
         });
     }
 
-    private void setItemData(ViewHolder holder, ProductInfo info, ProductInfo info2) {
-        loadImage(String.format("%s%s", HttpServer.HOST_IMG, info.getG_photo()), holder.image_1);
+    public static void setItemData(ViewHolder holder, ProductInfo info, ProductInfo info2, BaseActivity activity) {
+        activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info.getG_photo()), holder.image_1);
         holder.pdc_name_1.setText(info.getG_mc());
         holder.pdc_price_1.setText(String.valueOf(info.getG_mPrice()));
         if (info2 != null) {
             holder.image_2.setVisibility(View.VISIBLE);
             holder.foot_2.setVisibility(View.VISIBLE);
-            loadImage(String.format("%s%s", HttpServer.HOST_IMG, info2.getG_photo()), holder.image_2);
+            activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info2.getG_photo()), holder.image_2);
             holder.pdc_name_2.setText(info2.getG_mc());
             holder.pdc_price_2.setText(String.valueOf(info2.getG_mPrice()));
         } else {
@@ -343,7 +344,7 @@ public class Activity_HomePage extends BaseActivity {
         }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+   public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.page_1)
         View page_1;

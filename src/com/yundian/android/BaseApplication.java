@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.yundian.android.bean.UserInfo;
@@ -77,6 +78,12 @@ public class BaseApplication extends Application {
     public void setToken(String token) {
         this.token = token;
         RestApi.setToken(token);
+        if (TextUtils.isEmpty(token)) {
+            SettingUtils.remove(SettingUtils.TOKEN);
+        } else {
+            SettingUtils.set(SettingUtils.TOKEN, token);
+        }
+
     }
 
     public UserInfo getInfo() {

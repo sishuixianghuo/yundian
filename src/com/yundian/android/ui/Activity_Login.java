@@ -57,7 +57,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
     private ImageView image_edit_username_delete;
     private ImageView image_edit_password_delete;
 
-    private TextView text_edit_password_delete;
+//    private TextView text_edit_password_delete;
     private Dialog dialog;
 
 
@@ -75,7 +75,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
         button_login = (Button) findViewById(R.id.button_login);
         image_edit_username_delete = (ImageView) findViewById(R.id.image_edit_username_delete);
         image_edit_password_delete = (ImageView) findViewById(R.id.image_edit_password_delete);
-        text_edit_password_delete = (TextView) findViewById(R.id.text_edit_password_delete);
+//        text_edit_password_delete = (TextView) findViewById(R.id.text_edit_password_delete);
         edit_username = (EditText) findViewById(R.id.edit_username);
         edit_password = (EditText) findViewById(R.id.edit_password);
 
@@ -83,7 +83,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
         button_login.setOnClickListener(this);
         image_edit_username_delete.setOnClickListener(this);
         image_edit_password_delete.setOnClickListener(this);
-        text_edit_password_delete.setOnClickListener(this);
+//        text_edit_password_delete.setOnClickListener(this);
         edit_username.setOnClickListener(this);
         edit_password.setOnClickListener(this);
 
@@ -149,6 +149,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
                         Log.e(TAG, "BaseResponse = " + userInfo.getInfo());
                         if (userInfo.isOK() && userInfo.getInfo().size() == 1) {
                             BaseApplication.getApp().setInfo(userInfo.getInfo().get(0));
+                            finish();
                         } else {
                             DisPlay(userInfo.getMsg());
                         }
@@ -224,16 +225,16 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
             if (!TextUtils.isEmpty(edit_username.getText().toString().trim())) {
                 image_edit_username_delete.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(edit_password.getText().toString().trim())) {
-                    text_edit_password_delete.setVisibility(View.VISIBLE);
+//                    text_edit_password_delete.setVisibility(View.VISIBLE);
                     image_edit_password_delete.setVisibility(View.GONE);
                 } else {
-                    text_edit_password_delete.setVisibility(View.GONE);
+//                    text_edit_password_delete.setVisibility(View.GONE);
                     image_edit_password_delete.setVisibility(View.VISIBLE);
                 }
             } else {
                 image_edit_username_delete.setVisibility(View.GONE);
                 image_edit_password_delete.setVisibility(View.GONE);
-                text_edit_password_delete.setVisibility(View.GONE);
+//                text_edit_password_delete.setVisibility(View.GONE);
             }
             btnBg();
         }

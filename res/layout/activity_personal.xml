@@ -20,6 +20,7 @@
             android:visibility="visible" >
 
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -317,6 +318,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="1px"
                 android:text="退出当前账号"
+                android:onClick="logout"
                 android:textColor="@color/e60012"
                 android:textSize="17sp" />
 

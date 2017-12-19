@@ -2,85 +2,124 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" 
-    android:orientation="vertical"
-    >
+    android:background="@color/f6f6f6"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/search_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/android_title_bg"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
-        
-        <com.yundian.android.widgets.AutoClearEditText
-            android:id="@+id/search_edit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/search_box"
-            android:drawableRight="@drawable/app_icon_voice"
-            android:focusable="true"
-            android:hint="@string/index_search_edit_hint"
-            android:padding="6dp"
-            android:singleLine="true"
-            android:textColor="@color/darkgray"
-            android:textSize="@dimen/micro_text_size" />
-
-        <ImageButton
-            android:id="@+id/search_button"
+        <ImageView
+            android:id="@+id/image_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/app_home_title_r_button_selector"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@drawable/android_search_icon" />
+            android:layout_centerVertical="true"
+            android:onClick="back"
+            android:padding="15dp"
+            android:src="@drawable/navbar_ic_back" />
+
+        <RelativeLayout
+            android:id="@+id/personal_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/style_search_seek">
+
+            <EditText
+                android:id="@+id/edit_seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/button_seek"
+                android:background="@null"
+                android:hint="挖掘机"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="#a9a9a9"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/button_seek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp"
+                android:src="@drawable/home_navbar_ic_search" />
+
+            <ImageView
+                android:id="@+id/empty_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/searchlist_ic_delete" />
+        </RelativeLayout>
     </LinearLayout>
 
-     <ListView
-        android:id="@+id/search_list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/search_top_layout"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:listSelector="@null"
-        android:scrollbars="none"
-        android:visibility="gone" /> 
+        android:background="@color/f6f6f6">
 
-<LinearLayout
-        android:id="@+id/layout_login"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlAccentColor="@android:color/white"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlPrimaryColor="#444444">
+            <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+            <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    
-    
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:layout_gravity="center"
-        android:background="@drawable/joy_icon" />
-        
-          <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingTop="20dp"
-           android:layout_gravity="center"
-            android:text="@string/search_info"
-            />
-        
-    </LinearLayout>
-        
-      
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <!-- 禁止加载更多 -->
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-        
+        <LinearLayout
+            android:id="@+id/layout_login"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/joy_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:paddingTop="20dp"
+                android:text="@string/search_info" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
 </LinearLayout>

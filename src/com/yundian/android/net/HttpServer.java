@@ -48,12 +48,12 @@ public final class HttpServer {
      * @param shopid 如果查某个店铺下面的商品。shop_id为商家ID号。ipage为页码，其它可以不填。
      * @param <T>
      */
-    public static <T> void getHomePageItem(String tag, String pid, int page, int shopid, GenericCallBack<T> callback) {
+    public static <T> void getHomePageItem(String tag, int pid, int page, int shopid, String key, GenericCallBack<T> callback) {
         HttpParams params = new HttpParams();
-        params.put("strP", TextUtils.isEmpty(pid) ? "" : pid);
+        params.put("strP", pid<0?"":String.valueOf(pid));
         params.put("strS", "");
         params.put("strT", "");
-        params.put("keyword", "");
+        params.put("keyword", TextUtils.isEmpty(key)?"":key);
         params.put("IPage", page);
         params.put("shopid", shopid);
 
@@ -112,14 +112,24 @@ public final class HttpServer {
     }
 
 
-    //获取用户信息同步
+    //获取注册账号
     public static <T> void register(String tag, String email, String nick, String pwd, String phone, GenericCallBack<T> callback) {
         HttpParams params = new HttpParams();
         params.put("strUserName", email);
         params.put("strUserPwd", pwd);
         params.put("strNickName", nick);
-        params.put("strPhone", phone);
+        params.put("strPhone", "");
         OkGo.<T>post(USER_REG).params(params).tag(tag).execute(callback);
     }
 
+
+    //更新用户信息接口比较错乱
+    public static <T> void updateUser(String tag, UserInfo info, GenericCallBack<T> callback) {
+        HttpParams params = new HttpParams();
+        params.put("strUserName", info.getEmail());
+//        params.put("strUserPwd", pwd);
+//        params.put("strNickName", nick);
+        params.put("strPhone", "");
+        OkGo.<T>post(USER_REG).params(params).tag(tag).execute(callback);
+    }
 }
