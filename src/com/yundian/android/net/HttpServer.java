@@ -50,10 +50,10 @@ public final class HttpServer {
      */
     public static <T> void getHomePageItem(String tag, int pid, int page, int shopid, String key, GenericCallBack<T> callback) {
         HttpParams params = new HttpParams();
-        params.put("strP", pid<0?"":String.valueOf(pid));
+        params.put("strP", pid < 0 ? "" : String.valueOf(pid));
         params.put("strS", "");
         params.put("strT", "");
-        params.put("keyword", TextUtils.isEmpty(key)?"":key);
+        params.put("keyword", TextUtils.isEmpty(key) ? "" : key);
         params.put("IPage", page);
         params.put("shopid", shopid);
 
@@ -65,13 +65,7 @@ public final class HttpServer {
     public static <T> void getProductInfo(String tag, int pid, GenericCallBack<T> callback) {
         HttpParams params = new HttpParams();
         params.put("strP", pid);
-        params.put("strS", "");
-        params.put("strT", "");
-        params.put("keyword", "");
-        params.put("IPage", 0);
-        params.put("shopid", 0);
-
-        OkGo.<T>post(GET_PRODUCT).params(params).
+        OkGo.<T>post(GET_PRODUCT_INFO).params(params).
                 tag(tag).execute(callback);
     }
 

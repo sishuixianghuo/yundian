@@ -1,6 +1,5 @@
 package com.yundian.android.ui;
 
-import android.app.Dialog;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -45,7 +44,6 @@ public class Activity_Category extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.sub_class)
     RecyclerView subRecycleView;
-    private Dialog mWeiboDialog;
     RecyclerView.Adapter topClassAdapter;
     RecyclerView.Adapter subClassAdapter;
 
@@ -67,7 +65,7 @@ public class Activity_Category extends BaseActivity {
                 }
             }
         });
-        subRecycleView.setLayoutManager(new GridLayoutManager(this,1));
+        subRecycleView.setLayoutManager(new GridLayoutManager(this, 1));
         subRecycleView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -82,7 +80,7 @@ public class Activity_Category extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (topClassAdapter == null ||topClassAdapter.getItemCount() == 0) {
+        if (topClassAdapter == null || topClassAdapter.getItemCount() == 0) {
             up();
         }
     }
@@ -100,24 +98,31 @@ public class Activity_Category extends BaseActivity {
             @Override
             public void onSuccess(Response<BaseResponse<List<CategoryInfo>>> response) {
 
-                // 处理数据之后在set 一级标题
-                for(CategoryInfo info : response.body().getInfo()) {
-                    // 二级
-                    List<List<CategoryInfo.SubCategory>> datas = new ArrayList<>();
-                    for(CategoryInfo.SubCategory item: info.getInfo()) {
-                        List<CategoryInfo.SubCategory> subCategories = new ArrayList<>();
-                        subCategories.add(item);
-                        datas.add(subCategories);
-                        int count = 0;
-                        do {
-                            datas.add(item.getInfo().subList(count, count + 3 < item.getInfo().size() ? count + 3 : item.getInfo().size()));
-                            count += 3;
-                        } while (count < item.getInfo().size());
+                if(response.body().isOK()) {
+                    // 处理数据之后在set 一级标题
+                    for (CategoryInfo info : response.body().getInfo()) {
+                        // 二级
+                        List<List<CategoryInfo.SubCategory>> datas = new ArrayList<>();
+                        for (CategoryInfo.SubCategory item : info.getInfo()) {
+                            List<CategoryInfo.SubCategory> subCategories = new ArrayList<>();
+                            subCategories.add(item);
+                            datas.add(subCategories);
+                            // 三级分类
+                            if (item.getInfo() != null) {
+                                int count = 0;
+                                do {
+                                    datas.add(item.getInfo().subList(count, count + 3 < item.getInfo().size() ? count + 3 : item.getInfo().size()));
+                                    count += 3;
+                                } while (count < item.getInfo().size());
+                            }
+                        }
+                        info.setDirs(datas);
                     }
-                    info.setDirs(datas);
+                    setData(response.body());
+                    setSubClassData(response.body().getInfo().get(0));
+                } else {
+                    DisPlay(response.body().getMsg());
                 }
-                setData(response.body());
-                setSubClassData(response.body().getInfo().get(0));
                 WeiboDialogUtils.closeDialog(mWeiboDialog);
             }
 
@@ -175,12 +180,12 @@ public class Activity_Category extends BaseActivity {
     }
 
     private void setSubClassData(final CategoryInfo subClassData) {
-        Log.e(TAG,"setSubClassData "+subClassData.getDirs().size());
+        Log.e(TAG, "setSubClassData " + subClassData.getDirs().size());
         subRecycleView.setAdapter(subClassAdapter = new RecyclerView.Adapter<ItemHolder>() {
 
             @Override
             public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                Log.e(TAG,"setSubClassData onCreateViewHolder ");
+                Log.e(TAG, "setSubClassData onCreateViewHolder ");
                 // 三级条目
                 if (viewType == 0) {
                     ItemHolder holder = new ItemHolder(LayoutInflater.from(Activity_Category.this).
@@ -197,24 +202,16 @@ public class Activity_Category extends BaseActivity {
 
             @Override
             public void onBindViewHolder(ItemHolder holder, final int position) {
-                Log.e(TAG,"setSubClassData onBindViewHolder ");
+                Log.e(TAG, "setSubClassData onBindViewHolder ");
                 if (subClassData.getDirs().get(position).get(0).getInfo() == null) {
                     holder.item1.setText(subClassData.getDirs().get(position).get(0).getName());
-                    holder.item1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            DisplayToast(subClassData.getDirs().get(position).get(0).getName());
-                        }
-                    });
+                    holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(0).getId(),subClassData.getDirs().get(position).get(0).getName()));
+
                     if (subClassData.getDirs().get(position).size() >= 2) {
                         holder.item2.setVisibility(View.VISIBLE);
                         holder.item2.setText(subClassData.getDirs().get(position).get(1).getName());
-                        holder.item2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DisplayToast(subClassData.getDirs().get(position).get(1).getName());
-                            }
-                        });
+                        holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(1).getId(),subClassData.getDirs().get(position).get(1).getName()));
+
                     } else {
                         holder.item2.setVisibility(View.INVISIBLE);
                         holder.item2.setOnClickListener(null);
@@ -222,24 +219,20 @@ public class Activity_Category extends BaseActivity {
                     if (subClassData.getDirs().get(position).size() == 3) {
                         holder.item3.setVisibility(View.VISIBLE);
                         holder.item3.setText(subClassData.getDirs().get(position).get(2).getName());
-                        holder.item3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DisplayToast(subClassData.getDirs().get(position).get(2).getName());
-                            }
-                        });
+                        holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(2).getId(),subClassData.getDirs().get(position).get(2).getName()));
                     } else {
                         holder.item3.setVisibility(View.INVISIBLE);
                         holder.item3.setOnClickListener(null);
                     }
                 } else {
                     ((TextView) holder.itemView).setText(subClassData.getDirs().get(position).get(0).getName());
+                    holder.itemView.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(0).getId(),subClassData.getDirs().get(position).get(0).getName()));
                 }
             }
 
             @Override
             public int getItemViewType(int position) {
-                Log.e(TAG,"getItemViewType");
+                Log.e(TAG, "getItemViewType");
                 if (subClassData.getDirs().get(position).get(0).getInfo() == null) {
                     return 0;
                 }
@@ -248,10 +241,25 @@ public class Activity_Category extends BaseActivity {
 
             @Override
             public int getItemCount() {
-                Log.e(TAG,"getItemCount"+subClassData.getDirs().size());
+                Log.e(TAG, "getItemCount" + subClassData.getDirs().size());
                 return subClassData.getDirs().size();
             }
         });
+    }
+
+    static class CategoryClick implements View.OnClickListener {
+        int id;
+        String title;
+
+        public CategoryClick(int id, String title) {
+            this.id = id;
+            this.title = title;
+        }
+
+        @Override
+        public void onClick(View v) {
+            SearchActivity.startAct(id, title, (BaseActivity) v.getContext());
+        }
     }
 
     static class ItemHolder extends RecyclerView.ViewHolder {
@@ -273,10 +281,12 @@ public class Activity_Category extends BaseActivity {
 
 
     @Override
-    protected void findViewById() {}
+    protected void findViewById() {
+    }
 
     @Override
-    protected void initView() {}
+    protected void initView() {
+    }
 
 
 }

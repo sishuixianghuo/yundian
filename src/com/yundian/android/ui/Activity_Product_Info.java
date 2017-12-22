@@ -1,102 +1,166 @@
 package com.yundian.android.ui;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.model.Response;
 import com.yundian.android.R;
-import com.yundian.android.URLs;
-import com.yundian.android.utils.SettingUtils;
+import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.ProductDetail;
+import com.yundian.android.fragment.EmptyFragment;
+import com.yundian.android.fragment.ProductFragment;
+import com.yundian.android.fragment.TestFragment;
+import com.yundian.android.net.GenericCallBack;
+import com.yundian.android.net.HttpServer;
+import com.yundian.android.widgets.PageHorizontalScrollView;
+import com.yundian.android.widgets.WeiboDialogUtils;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 产品详情
  *
  * @author ShaoZhen-PC
  */
-public class Activity_Product_Info extends BaseActivity implements OnClickListener {
+public class Activity_Product_Info extends BaseActivity {
 
-    private ImageView image_return;
 
-    private TextView text_email;
-    private TextView text_name;
-    private TextView text_phone;
-    private RelativeLayout rl_email;
-    private RelativeLayout rl_name;
-    private RelativeLayout rl_phone;
+    private int pid;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
+    @BindView(R.id.user_scrollview)
+    PageHorizontalScrollView scrollview;
+
+
+    private List<Fragment> fragments;
+    private String[] titleList = new String[]{"商品", "评价", "厂家", "售后"};
+    public ProductDetail detail;
+    private ProductFragment pay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
-//        findViewById();
-//        initView();
 
+        ButterKnife.bind(this);
+        pid = getIntent().getIntExtra(SearchActivity.PID, -1);
+        if (pid <= 0) {
+            finish();
+        } else {
+            request();
+        }
+
+        if (fragments == null || fragments.isEmpty()) {
+            fragments = new ArrayList<>();
+            Bundle args = new Bundle();
+            args.putInt(SearchActivity.PID, pid);
+            pay = new ProductFragment();
+            pay.setArguments(args);
+            TestFragment free = new TestFragment();
+            free.setArguments(args);
+            EmptyFragment selling = new EmptyFragment();
+            selling.setArguments(args);
+            EmptyFragment shouhou = new EmptyFragment();
+            shouhou.setArguments(args);
+            fragments.add(pay);
+            fragments.add(free);
+            fragments.add(selling);
+            fragments.add(shouhou);
+            viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int position) {
+                    return fragments.get(position);
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return titleList[position];
+                }
+
+                @Override
+                public int getCount() {
+                    return fragments.size();
+                }
+            });
+            scrollview.setViewPager(viewPager);
+            scrollview.setTextSize(50);
+            scrollview.setTabPaddingLeftRight(24);
+        }
     }
 
     @Override
     protected void findViewById() {
-//        image_return = (ImageView) this.findViewById(R.id.image_return);
-//        text_email = (TextView) this.findViewById(R.id.text_email);
-//        text_name = (TextView) this.findViewById(R.id.text_name);
-//        text_phone = (TextView) this.findViewById(R.id.text_phone);
-//        rl_email = (RelativeLayout) this.findViewById(R.id.rl_email);
-//        rl_name = (RelativeLayout) this.findViewById(R.id.rl_name);
-//        rl_phone = (RelativeLayout) this.findViewById(R.id.rl_phone);
+
     }
 
     @Override
     protected void initView() {
-//        image_return.setOnClickListener(this);
-//        text_email.setOnClickListener(this);
-//        text_name.setOnClickListener(this);
-//        text_phone.setOnClickListener(this);
-//        rl_email.setOnClickListener(this);
-//        rl_name.setOnClickListener(this);
-//        rl_phone.setOnClickListener(this);
-//        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL,""));
-//        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME,""));
-//        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE,""));
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-//        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL,""));
-//        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME,""));
-//        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE,""));
+    public void back(View v) {
+        finish();
     }
 
-    @Override
-    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.image_return:
-//                finish();
-//                break;
-//            case R.id.rl_email:
-//                startActivity(Activity_Add_Main_Info.getIntent_Common(this,1));
-//                break;
-//            case R.id.rl_name:
-//                startActivity(Activity_Add_Main_Info.getIntent_Common(this,2));
-//                break;
-//            case R.id.rl_phone:
-//                startActivity(Activity_Add_Main_Info.getIntent_Common(this,3));
-//                break;
-//            default:
-//                break;
-//        }
+    private void request() {
+        mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, "加载中");
+        Type type = new TypeToken<BaseResponse<List<ProductDetail>>>() {
+        }.getType();
+        HttpServer.getProductInfo(TAG, pid, new GenericCallBack<BaseResponse<List<ProductDetail>>>(type) {
+            @Override
+            public void onSuccess(Response<BaseResponse<List<ProductDetail>>> response) {
+                Log.e(TAG, response.body().getInfo().get(0).toString());
+                if (response.body().isOK()) {
+                    detail = response.body().getInfo().get(0);
+                    pay.setData(detail);
+                } else {
+                    DisplayToast(response.body().getMsg());
+                }
+                mWeiboDialog.dismiss();
+            }
+
+            @Override
+            public void onError(Response<BaseResponse<List<ProductDetail>>> response) {
+                super.onError(response);
+                DisplayToast(response.getException().getMessage());
+                mWeiboDialog.dismiss();
+            }
+        });
 
     }
 
-    public static Intent getIntent_Common(Context context) {
-        Intent intent = new Intent(context, Activity_Product_Info.class);
-        return intent;
+    public void contact(View v) {
+        DisplayToast("拔打电话");
     }
 
+    public void shop(View v) {
+        DisplayToast("跳转店铺");
+    }
+
+    public void buy(View v) {
+        DisplayToast("加入购物车" + pay.count);
+    }
+
+    public void cart(View v) {
+        DisplayToast("去购物车");
+    }
+
+    public static void startActivity(int pid, Activity activity) {
+        Intent intent = new Intent(activity, Activity_Product_Info.class);
+        intent.putExtra(SearchActivity.PID, pid);
+        activity.startActivity(intent);
+    }
 }
        

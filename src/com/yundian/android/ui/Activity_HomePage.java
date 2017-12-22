@@ -1,6 +1,5 @@
 package com.yundian.android.ui;
 
-import android.app.Dialog;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -66,8 +65,7 @@ public class Activity_HomePage extends BaseActivity {
     private PopupWindow popupWindow;
     RecyclerView.Adapter adapter;
     private List<ProductInfo> productInfos = new CopyOnWriteArrayList<>();
-    private Dialog mWeiboDialog;
-    private int indexPage = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +98,6 @@ public class Activity_HomePage extends BaseActivity {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 indexPage++;
-//                DisPlay("setOnLoadmoreListener");
-//                refreshlayout.finishLoadmore(1500);
                 requestInfo();
             }
         });

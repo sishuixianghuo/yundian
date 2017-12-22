@@ -5,37 +5,7 @@
     android:background="@color/f6f6f6"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/personal_top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/e60012">
-
-        <EditText
-            android:id="@+id/edit_seek"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/button_seek"
-            android:background="@drawable/style_category_seek"
-            android:padding="5dp"
-            android:textColor="@color/b6b6b6"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:id="@+id/button_seek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:padding="10dp"
-            android:src="@drawable/home_navbar_ic_search" />
-    </RelativeLayout>
-
+    <include layout="@layout/title_bar"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

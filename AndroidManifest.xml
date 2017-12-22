@@ -52,28 +52,23 @@
         <activity
             android:name=".ui.HomeActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme"
+
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.Activity_Main"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_HomePage"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Category"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Cart"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Personal"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.SearchActivity"
             android:launchMode="singleTop"
@@ -92,80 +87,62 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name=".ui.Activity_Register"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Product_Info"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.RegisterBormalActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_My_Order"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.MoreActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.IndexShakeActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.IndexClothingActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.IndexDigtalActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.IndexDaily"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Site_Manage"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Main_Info"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Revise_Password"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Cascade_Address"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".ui.Activity_Pay_Receive"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Add_Main_Info"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Add_Site"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.IndexEbookActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".zxing.CaptureActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".zxing.CaptureResultActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTop" />
 
         <!-- ↓↓↓↓↓银联相关↓↓↓↓↓ -->
         <activity

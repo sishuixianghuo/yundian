@@ -19,4 +19,6 @@
     <dimen name="index_gallery_height">120dp</dimen>
     <!-- 首页Gallery高度 -->
 
+    <dimen name="default_margin_min">2dp</dimen>
+
 </resources>

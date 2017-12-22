@@ -2,14 +2,17 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 禁止 -->
-    <!-- <item android:drawable="@drawable/buy_ic_minus_n" android:state_selected="false"  /> -->
+     <item android:drawable="@drawable/buy_ic_minus_n" android:state_enabled="false"  />
     <!-- 按下 -->
-    <item android:drawable="@drawable/buy_ic_plus_touch" android:state_pressed="true"/>
+    <item android:drawable="@drawable/buy_ic_plus_touch" android:state_pressed="true" />
     <!-- 没有焦点 没有按下 -->
-    <item android:drawable="@drawable/buy_ic_plus_valid" android:state_focused="false" android:state_pressed="false"/>
+    <item android:drawable="@drawable/buy_ic_plus_valid" android:state_focused="false" android:state_pressed="false" />
     <!-- 有焦点 -->
-    <item android:drawable="@drawable/buy_ic_plus_touch" android:state_focused="true"/>
+    <item android:drawable="@drawable/buy_ic_plus_touch" android:state_focused="true" />
     <!-- 没焦点 -->
-    <item android:drawable="@drawable/buy_ic_plus_valid" android:state_focused="false"/>
+    <item android:drawable="@drawable/buy_ic_plus_valid" android:state_focused="false" />
+
+    <item android:drawable="@drawable/buy_ic_plus_valid" />
+
 
 </selector>

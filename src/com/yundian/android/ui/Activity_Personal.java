@@ -13,7 +13,7 @@ import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.bean.UserInfo;
 import com.yundian.android.utils.CommonTools;
-import com.yundian.android.utils.ExitView;
+
 
 /**
  * 我的
@@ -24,7 +24,6 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
 
     private Button mLoginButton;
     private Intent mIntent = null;
-    private ExitView exit;
     private LinearLayout Ly_login;
     private int LOGIN_CODE = 100;
     private RelativeLayout rl_site_manage;

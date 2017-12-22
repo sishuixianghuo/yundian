@@ -1,7 +1,6 @@
 package com.yundian.android.ui;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -40,6 +39,9 @@ import butterknife.ButterKnife;
 
 public class SearchActivity extends BaseActivity {
 
+    public static final String PID = "pid";
+    public static final String KEY_WORD = "key_word";
+
     @BindView(R.id.empty_image)
     View empty_image;
 
@@ -55,9 +57,7 @@ public class SearchActivity extends BaseActivity {
 
     @BindView(R.id.layout_login)
     View layout_login;
-    private int indexPage = 0;
     private RecyclerView.Adapter<Activity_HomePage.ViewHolder> adapter;
-    private Dialog mWeiboDialog;
     private List<ProductInfo> productInfos = new CopyOnWriteArrayList<>();
     private String keywrod;
     private int pid;
@@ -160,6 +160,7 @@ public class SearchActivity extends BaseActivity {
                 mEdit_search.setText("");
             }
         });
+        mEdit_search.setText(keywrod);
     }
 
     @Override
@@ -221,12 +222,17 @@ public class SearchActivity extends BaseActivity {
         });
     }
 
-    public static final String PID = "pid";
-    public static final String KEY_WORD = "key_word";
 
     public static void startAct(int pid, Activity activity) {
         Intent intent = new Intent(activity, SearchActivity.class);
         intent.putExtra(PID, pid);
+        activity.startActivity(intent);
+    }
+
+    public static void startAct(int pid, String title, Activity activity) {
+        Intent intent = new Intent(activity, SearchActivity.class);
+        intent.putExtra(PID, pid);
+        intent.putExtra(KEY_WORD, title);
         activity.startActivity(intent);
     }
 

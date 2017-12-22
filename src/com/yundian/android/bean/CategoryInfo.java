@@ -3,7 +3,6 @@ package com.yundian.android.bean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,12 +18,24 @@ public class CategoryInfo implements Serializable {
     private int id;
     private List<SubCategory> info;
     private List<List<SubCategory>> dirs;
+    // 这段代码不要删 模拟数据用的 用来显示三级分类的
+//    private final static String[] items = new String[]{
+//
+//            "刹车盘", "离合器", "车灯", "倒车镜", "电子扇", "其他", "减震器", "散热器", "节温器", "雨刮器", "悬挂", "球头",
+//            "扣手", "扶手", "储物盒", "修理包", "挡泥板轴", "杆轴", "承十字", "节泵", "方向机", "电瓶", "油底壳", "气缸", "活塞", "飞轮", "气门", "齿轮", "链条"
+//    };
+//    private static List<SubCategory> subs = new ArrayList<SubCategory>() {
+//        {
+//            for (final String item : items) {
+//                add(new SubCategory() {
+//                    {
+//                        setName(item);
+//                    }
+//                });
+//            }
+//        }
+//    };
 
-    private final static String[] items = new String[]{
-
-            "刹车盘", "离合器", "车灯", "倒车镜", "电子扇", "其他", "减震器", "散热器", "节温器", "雨刮器", "悬挂", "球头",
-            "扣手", "扶手", "储物盒", "修理包", "挡泥板轴", "杆轴", "承十字", "节泵", "方向机", "电瓶", "油底壳", "气缸", "活塞", "飞轮", "气门", "齿轮", "链条"
-    };
 
     public static class SubCategory implements Serializable {
 
@@ -32,7 +43,7 @@ public class CategoryInfo implements Serializable {
         String name;
         @SerializedName("P_ID")
         int id;
-        List<SubCategory> info = subs;
+        List<SubCategory> info;
 
         public SubCategory() {
         }
@@ -75,18 +86,6 @@ public class CategoryInfo implements Serializable {
                     '}';
         }
     }
-
-    private static List<SubCategory> subs = new ArrayList<SubCategory>(){
-        {
-            for (final String item:items) {
-                add(new SubCategory(){
-                    {
-                        setName(item);
-                    }
-                });
-            }
-        }
-    };
 
 
     public CategoryInfo(String name, int id) {

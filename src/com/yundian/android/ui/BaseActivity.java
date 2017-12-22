@@ -1,6 +1,6 @@
 package com.yundian.android.ui;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import com.lzy.okgo.OkGo;
 import com.yundian.android.AppManager;
 import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
+import com.yundian.android.net.HttpServer;
 import com.yundian.android.task.AsyncCallable;
 import com.yundian.android.task.Callback;
 import com.yundian.android.task.EMobileTask;
@@ -29,7 +32,7 @@ import java.util.concurrent.Callable;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public String TAG = getClass().getSimpleName();
     protected String httpTag = getClass().getName();
@@ -38,10 +41,22 @@ public abstract class BaseActivity extends Activity {
     protected InputMethodManager imm;
     private TelephonyManager tManager;
 
+    public Dialog mWeiboDialog;
+    protected int indexPage = 1;
 
     public void loadImage(String url, ImageView view) {
         Glide.with(this)
                 .load(url)
+                .placeholder(R.drawable.app_ic)
+                .error(R.drawable.app_ic)
+                .dontAnimate()
+                .centerCrop()
+                .into(view);
+    }
+
+    public void loadImageNoHost(String url, ImageView view) {
+        Glide.with(this)
+                .load(String.format("%s%s", HttpServer.HOST_IMG, url))
                 .placeholder(R.drawable.app_ic)
                 .error(R.drawable.app_ic)
                 .dontAnimate()
@@ -152,6 +167,10 @@ public abstract class BaseActivity extends Activity {
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
+    public void DisplayToast(@StringRes int id) {
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+    }
+
     protected void hideOrShowSoftInput(boolean isShowSoft, EditText editText) {
         if (isShowSoft) {
             imm.showSoftInput(editText, 0);
@@ -162,6 +181,7 @@ public abstract class BaseActivity extends Activity {
 
     //获得当前程序版本信息
     protected String getVersionName() throws Exception {
+        finish();
         // 获取packagemanager的实例
         PackageManager packageManager = getPackageManager();
         // getPackageName()是你当前类的包名，0代表是获取版本信息
@@ -204,7 +224,6 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected String getCountry() {
-
         return Locale.getDefault().getCountry();
     }
 
@@ -256,7 +275,6 @@ public abstract class BaseActivity extends Activity {
      *
      * @param <T>
      * @param pTitleResID
-
      * @param pCallback
      */
     protected <T> void doProgressAsync(final int pTitleResID, final ProgressCallable<T> pCallable, final Callback<T> pCallback) {
@@ -269,7 +287,6 @@ public abstract class BaseActivity extends Activity {
      *
      * @param <T>
      * @param pTitleResID
-
      * @param pCallback
      * @param pExceptionCallback
      */

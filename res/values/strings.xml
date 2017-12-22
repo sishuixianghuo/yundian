@@ -146,4 +146,6 @@
     <string name="title_activity__product__info">Activity_Product_Info</string>
     <!-- JazzyViewPager -->
     <string name="tag">tag</string>
+
+    <string name="function_not_imp">该功能未开放</string>
 </resources>

@@ -81,6 +81,8 @@ public class RestApi {
                     .setOkHttpClient(builder.build())
                     //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
                     .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
+                    // 设置重连次数具体看源码
+                    .setRetryCount(0)
                     .addCommonHeaders(headers)
                     .addCommonParams(params);
 
