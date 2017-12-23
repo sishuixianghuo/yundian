@@ -29,6 +29,7 @@ public final class HttpServer {
     public static final String USER_LOGIN = HOST + "/WebService.asmx/Login";
     public static final String USER_REG = HOST + "/WebService.asmx/Reg";
     public static final String GET_USER_INFO = HOST + "/WebService.asmx/getUserInfo";
+    public static final String GET_STORE_INFO = HOST + "/WebService.asmx/getShopInfo";
 
     private HttpServer() {
         throw new RuntimeException("禁止创建对象");
@@ -147,5 +148,11 @@ public final class HttpServer {
 //        params.put("strNickName", nick);
         params.put("strPhone", "");
         OkGo.<T>post(USER_REG).params(params).tag(tag).execute(callback);
+    }
+
+
+    //获取店铺信息
+    public static <T> void getShopInfo(String tag, int pid, GenericCallBack<T> callback) {
+        OkGo.<T>post(GET_STORE_INFO).params("ShopID", pid).tag(tag).execute(callback);
     }
 }

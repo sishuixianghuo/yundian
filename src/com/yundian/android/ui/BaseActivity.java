@@ -59,6 +59,15 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(view);
     }
+    public void loadImageNoHostWithError(String url, ImageView view) {
+        Glide.with(this)
+                .load(String.format("%s%s", HttpServer.HOST_IMG, url))
+                .placeholder(R.drawable.store_icon)
+                .error(R.drawable.store_icon)
+                .dontAnimate()
+                .centerCrop()
+                .into(view);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,11 +316,16 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param pdt
      */
     public void addWithDelPdt2Bag(ProductInfo pdt, boolean isAdd) {
+        if (pdt.getG_mPrice() < 2) {
+            DisplayToast(R.string.contact_store);
+            return;
+        }
+        DisplayToast(R.string.put_to_bag);
         if (BaseApplication.getApp().getShoppingBag().contains(pdt)) {
             for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
                 if (info.equals(pdt)) {
                     if (isAdd) {
-                        info.amount++;
+                        info.amount += pdt.amount;
                     } else {
                         info.amount--;
                     }
@@ -322,7 +336,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             }
         }
-        pdt.amount = 1;
         BaseApplication.getApp().getShoppingBag().add(pdt);
     }
 }

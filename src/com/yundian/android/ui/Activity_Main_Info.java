@@ -58,18 +58,18 @@ public class Activity_Main_Info extends BaseActivity implements OnClickListener 
         rl_email.setOnClickListener(this);
         rl_name.setOnClickListener(this);
         rl_phone.setOnClickListener(this);
-        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL,""));
-        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME,""));
-        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE,""));
+        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL, ""));
+        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME, ""));
+        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE, ""));
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
-        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL,""));
-        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME,""));
-        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE,""));
+        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL, ""));
+        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME, ""));
+        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE, ""));
     }
 
     @Override
@@ -79,13 +79,13 @@ public class Activity_Main_Info extends BaseActivity implements OnClickListener 
                 finish();
                 break;
             case R.id.rl_email:
-                startActivity(Activity_Add_Main_Info.getIntent_Common(this,1));
+                startActivity(Activity_Add_Main_Info.getIntent_Common(this, 1));
                 break;
             case R.id.rl_name:
-                startActivity(Activity_Add_Main_Info.getIntent_Common(this,2));
+                startActivity(Activity_Add_Main_Info.getIntent_Common(this, 2));
                 break;
             case R.id.rl_phone:
-                startActivity(Activity_Add_Main_Info.getIntent_Common(this,3));
+                startActivity(Activity_Add_Main_Info.getIntent_Common(this, 3));
                 break;
             default:
                 break;

@@ -14,6 +14,7 @@ import com.lzy.okgo.model.Response;
 import com.yundian.android.R;
 import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.ProductDetail;
+import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.fragment.EmptyFragment;
 import com.yundian.android.fragment.ProductFragment;
 import com.yundian.android.fragment.TestFragment;
@@ -34,7 +35,7 @@ import butterknife.ButterKnife;
  *
  * @author ShaoZhen-PC
  */
-public class Activity_Product_Info extends BaseActivity {
+public class ActivityPdtDetail extends BaseActivity {
 
 
     private int pid;
@@ -49,6 +50,7 @@ public class Activity_Product_Info extends BaseActivity {
     private String[] titleList = new String[]{"商品", "评价", "厂家", "售后"};
     public ProductDetail detail;
     private ProductFragment pay;
+    private int amount = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class Activity_Product_Info extends BaseActivity {
                     return fragments.size();
                 }
             });
+            viewPager.setOffscreenPageLimit(4);
             scrollview.setViewPager(viewPager);
             scrollview.setTextSize(50);
             scrollview.setTabPaddingLeftRight(24);
@@ -146,19 +149,24 @@ public class Activity_Product_Info extends BaseActivity {
     }
 
     public void shop(View v) {
-        DisplayToast("跳转店铺");
+//        DisplayToast("跳转店铺");
+        ActivityStore.startAct(detail.getProduct_SupplierID(), this);
     }
 
     public void buy(View v) {
-        DisplayToast("加入购物车" + pay.count);
+        ProductInfo info = detail.getPdt();
+        info.amount = amount;
+        addWithDelPdt2Bag(info, true);
     }
 
+
     public void cart(View v) {
-        DisplayToast("去购物车");
+//        DisplayToast("去购物车");
+        openActivity(Activity_Cart.class);
     }
 
     public static void startActivity(int pid, Activity activity) {
-        Intent intent = new Intent(activity, Activity_Product_Info.class);
+        Intent intent = new Intent(activity, ActivityPdtDetail.class);
         intent.putExtra(SearchActivity.PID, pid);
         activity.startActivity(intent);
     }

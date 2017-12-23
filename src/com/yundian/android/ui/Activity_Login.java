@@ -57,7 +57,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
     private ImageView image_edit_username_delete;
     private ImageView image_edit_password_delete;
 
-//    private TextView text_edit_password_delete;
+    //    private TextView text_edit_password_delete;
     private Dialog dialog;
 
 
@@ -78,6 +78,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
 //        text_edit_password_delete = (TextView) findViewById(R.id.text_edit_password_delete);
         edit_username = (EditText) findViewById(R.id.edit_username);
         edit_password = (EditText) findViewById(R.id.edit_password);
+        ((TextView) findViewById(R.id.title)).setText("云店商城登陆");
 
         button_register.setOnClickListener(this);
         button_login.setOnClickListener(this);
@@ -161,6 +162,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
                         DisPlay(t.getMessage());
                         WeiboDialogUtils.closeDialog(dialog);
                     }
+
                     @Override
                     public void onComplete() {
                         WeiboDialogUtils.closeDialog(dialog);
@@ -245,7 +247,7 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
             button_login.setTextColor(Color.WHITE);
             button_login.setBackgroundResource(R.drawable.style_login_button_on);
         } else {
-            button_login.setTextColor(getColor(R.color.b4b4b4));
+            button_login.setTextColor(getResources().getColor(R.color.b4b4b4));
             button_login.setBackgroundResource(R.drawable.style_login_button_off);
         }
     }

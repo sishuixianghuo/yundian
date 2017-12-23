@@ -51,8 +51,7 @@
         </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:launchMode="singleTop"
-
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.Activity_Main"
@@ -84,7 +83,7 @@
             android:name=".ui.Activity_Register"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.Activity_Product_Info"
+            android:name=".ui.ActivityPdtDetail"
             android:launchMode="singleTop" />
         <activity
             android:name=".ui.RegisterBormalActivity"
@@ -129,6 +128,8 @@
         <activity
             android:name=".ui.Activity_Add_Site"
             android:launchMode="singleTop" />
+
+        <activity android:name=".ui.ActivityStore" />
         <activity
             android:name=".ui.IndexEbookActivity"
             android:launchMode="singleTop" />

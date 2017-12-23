@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f6f6f6"
+    android:orientation="vertical">
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlAccentColor="@android:color/white"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlPrimaryColor="#444444">
+        <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+        <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!-- 禁止加载更多 -->
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:background="#88FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="店铺介绍"
+            android:textColor="@color/c3a3a3a"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/c3a3a3a"
+            android:textSize="20dp" />
+    </LinearLayout>
+</RelativeLayout>

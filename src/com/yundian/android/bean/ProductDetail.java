@@ -264,6 +264,15 @@ public class ProductDetail implements Serializable {
         Product_Xh = product_Xh;
     }
 
+
+    public ProductInfo getPdt() {
+        ProductInfo info = new ProductInfo();
+        info.setG_ID(getProduct_ID());
+        info.setG_mc(getProduct_Name());
+        info.setG_mPrice(getProduct_Price());
+        return info;
+    }
+
     @Override
     public String toString() {
         return "ProductDetail{" +

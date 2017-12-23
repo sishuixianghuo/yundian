@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/image_return"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/navbar_ic_back"
+        android:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/image_return"
+        android:gravity="center"
+        android:textColor="@color/c262626"
+        android:textSize="17sp"
+        android:textStyle="bold"
+
+        tools:text="店铺简介" />
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="@color/c262626"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        tools:text="云电商城登陆" />
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/navbar_ic_more" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/e6e6e6" />
+
+
+</RelativeLayout>

@@ -148,4 +148,8 @@
     <string name="tag">tag</string>
 
     <string name="function_not_imp">该功能未开放</string>
+    <string name="price_negotiable">价格面议</string>
+    <string name="put_to_bag">已加入购物车</string>
+    <string name="contact_store">请联系店家</string>
+    <string name="loading">加载中...</string>
 </resources>

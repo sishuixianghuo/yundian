@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="177dp"
+    android:background="@drawable/shop_banner_n"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_above="@+id/infos"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/shop_navbar_ic_back" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/store_class"
+            android:layout_toRightOf="@+id/back"
+            android:background="@drawable/shop_searchbar_bg_input"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/edit_seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/button_seek"
+                android:background="@null"
+                android:hint="挖掘机"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="#a9a9a9"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/button_seek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp"
+                android:src="@drawable/home_navbar_ic_search" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/store_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_toLeftOf="@+id/more"
+            android:src="@drawable/shop_banner_ic_classification" />
+
+
+        <ImageView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/shop_banner_ic_more" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/infos"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/store_icon" />
+
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            tools:text="五金电器化" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

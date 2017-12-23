@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 public class CommonTools {
 
 
+    public static final float THRESHOLD_PRICE = 2.0f;
+
     /**
      * 短暂显示Toast消息
      *

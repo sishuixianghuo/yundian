@@ -57,6 +57,7 @@ public class ProductFragment extends Fragment {
     View increase;
 
     public int count = 1;
+    private ProductDetail data;
 
     @Nullable
     @Override
@@ -78,10 +79,11 @@ public class ProductFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
+        if (data != null) setData(data);
     }
 
     public void setData(final ProductDetail info) {
+        data = info;
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) image.getLayoutParams();
         params.weight = image.getWidth();
         params.height = image.getWidth();
@@ -90,8 +92,12 @@ public class ProductFragment extends Fragment {
         pdt_name.setText(info.getProduct_Name());
         time.setText(String.format("更新时间 :  %s  |  浏览: %d", CommonTools.getDate(CommonTools.getLong(info.getProduct_Addtime())), info.getProduct_Hits()));
         stock.setText(String.format("库存: %d件", info.getProduct_StockAmount()));
-        price.setText(String.format("￥%.2f", info.getProduct_Price()));
-        //                 android:textColor="@color/c3a3a3a"
+        if (info.getProduct_Price() < CommonTools.THRESHOLD_PRICE) {
+            price.setText(R.string.price_negotiable);
+        } else {
+            price.setText(String.format("￥%.2f", info.getProduct_Price()));
+        }
+
         StringBuilder sb = new StringBuilder("<big> <font color=#9f9f9f >商品名称 : </font> <font color=#3a3a3a >" + info.getProduct_Name() + "</font>  <br>");
         sb.append(" <font color=#9f9f9f >商品品牌 : </font> <font color=#3a3a3a >" + info.getBrand_Name() + "</font> <br>");
         sb.append(" <font color=#9f9f9f >商品型号 : </font> <font color=#3a3a3a >" + info.getProduct_Xh() + "</font> <br>");
@@ -99,11 +105,7 @@ public class ProductFragment extends Fragment {
         sb.append(" <font color=#9f9f9f >商品编号 : </font> <font color=#3a3a3a >" + info.getProduct_Code() + "</font> <br>");
         sb.append(" <font color=#9f9f9f >商品体积 : </font> <font color=#3a3a3a >" + info.getProduct_Tiji() + "</font> <br>");
         sb.append(" <font color=#9f9f9f >商品重量 : </font> <font color=#3a3a3a >" + info.getProduct_Weight() + "</font> <br> </big>");
-//        sb.append(info.getProduct_Intro());
         pdt_args.setText(Html.fromHtml(sb.toString()));
-//        pdt_args.setText(Html.fromHtml(" 天卡<font color=#9e9e9e>%s</font>点&nbsp;&nbsp;&nbsp;周卡<font color=#9e9e9e>%s</font>点&nbsp;&nbsp;&nbsp;月卡<font color=#9e9e9e>%s</font>点"));
-
-
         if (info.getProduct_StockAmount() > 0) {
             reduce.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -31,6 +31,7 @@ import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.CommonTools;
 import com.yundian.android.widgets.ADInfo;
 import com.yundian.android.widgets.BannerViewPager;
 import com.yundian.android.widgets.HomePageSelectView;
@@ -325,19 +326,23 @@ public class Activity_HomePage extends BaseActivity {
 
     public static void setItemData(ViewHolder holder, final ProductInfo info, final ProductInfo info2, final BaseActivity activity) {
         activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info.getG_photo()), holder.image_1);
-        holder.pdc_name_1.setText(info.getG_mc());
+        if (info.getG_mPrice() < CommonTools.THRESHOLD_PRICE) {
+            holder.pdc_price_1.setText(R.string.price_negotiable);
+        } else {
+            holder.pdc_name_1.setText(info.getG_mc());
+        }
+
         holder.pdc_price_1.setText(String.valueOf(info.getG_mPrice()));
         holder.pdc_cart_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.DisplayToast("加入购物车");
                 activity.addWithDelPdt2Bag(info, true);
             }
         });
         holder.page_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Activity_Product_Info.startActivity(info.getG_ID(), activity);
+                ActivityPdtDetail.startActivity(info.getG_ID(), activity);
             }
         });
         if (info2 != null) {
@@ -345,18 +350,21 @@ public class Activity_HomePage extends BaseActivity {
             holder.foot_2.setVisibility(View.VISIBLE);
             activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info2.getG_photo()), holder.image_2);
             holder.pdc_name_2.setText(info2.getG_mc());
-            holder.pdc_price_2.setText(String.valueOf(info2.getG_mPrice()));
+            if (info2.getG_mPrice() < CommonTools.THRESHOLD_PRICE) {
+                holder.pdc_price_2.setText(R.string.price_negotiable);
+            } else {
+                holder.pdc_price_2.setText(String.valueOf(info2.getG_mPrice()));
+            }
             holder.pdc_cart_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.DisplayToast("加入购物车");
                     activity.addWithDelPdt2Bag(info2, true);
                 }
             });
             holder.page_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Activity_Product_Info.startActivity(info2.getG_ID(), activity);
+                    ActivityPdtDetail.startActivity(info2.getG_ID(), activity);
                 }
             });
         } else {

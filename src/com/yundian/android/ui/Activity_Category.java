@@ -256,7 +256,6 @@ public class Activity_Category extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            activity.DisplayToast("12313");
             SearchActivity.startAct(info.getId(), info.getName(), activity);
         }
     }
