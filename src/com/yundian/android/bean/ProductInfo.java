@@ -20,6 +20,12 @@ public class ProductInfo implements Serializable {
     //时间
     private String g_time;
 
+    public int amount = 1;
+    // 正常情况下
+    public boolean isSelected = false;
+    // 编辑模式下 应该是 remove 移除
+    public boolean isMove = false;
+
 
     public int getG_ID() {
         return g_ID;
@@ -67,6 +73,22 @@ public class ProductInfo implements Serializable {
 
     public void setG_time(String g_time) {
         this.g_time = g_time;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductInfo that = (ProductInfo) o;
+
+        return g_ID == that.g_ID;
+    }
+
+    @Override
+    public int hashCode() {
+        return g_ID;
     }
 
     @Override

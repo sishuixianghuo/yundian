@@ -98,7 +98,7 @@ public class Activity_Category extends BaseActivity {
             @Override
             public void onSuccess(Response<BaseResponse<List<CategoryInfo>>> response) {
 
-                if(response.body().isOK()) {
+                if (response.body().isOK()) {
                     // 处理数据之后在set 一级标题
                     for (CategoryInfo info : response.body().getInfo()) {
                         // 二级
@@ -180,12 +180,10 @@ public class Activity_Category extends BaseActivity {
     }
 
     private void setSubClassData(final CategoryInfo subClassData) {
-        Log.e(TAG, "setSubClassData " + subClassData.getDirs().size());
         subRecycleView.setAdapter(subClassAdapter = new RecyclerView.Adapter<ItemHolder>() {
 
             @Override
             public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                Log.e(TAG, "setSubClassData onCreateViewHolder ");
                 // 三级条目
                 if (viewType == 0) {
                     ItemHolder holder = new ItemHolder(LayoutInflater.from(Activity_Category.this).
@@ -205,12 +203,12 @@ public class Activity_Category extends BaseActivity {
                 Log.e(TAG, "setSubClassData onBindViewHolder ");
                 if (subClassData.getDirs().get(position).get(0).getInfo() == null) {
                     holder.item1.setText(subClassData.getDirs().get(position).get(0).getName());
-                    holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(0).getId(),subClassData.getDirs().get(position).get(0).getName()));
+                    holder.item1.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(0), Activity_Category.this));
 
                     if (subClassData.getDirs().get(position).size() >= 2) {
                         holder.item2.setVisibility(View.VISIBLE);
                         holder.item2.setText(subClassData.getDirs().get(position).get(1).getName());
-                        holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(1).getId(),subClassData.getDirs().get(position).get(1).getName()));
+                        holder.item2.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(1), Activity_Category.this));
 
                     } else {
                         holder.item2.setVisibility(View.INVISIBLE);
@@ -219,20 +217,20 @@ public class Activity_Category extends BaseActivity {
                     if (subClassData.getDirs().get(position).size() == 3) {
                         holder.item3.setVisibility(View.VISIBLE);
                         holder.item3.setText(subClassData.getDirs().get(position).get(2).getName());
-                        holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(2).getId(),subClassData.getDirs().get(position).get(2).getName()));
+                        holder.item3.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(2), Activity_Category.this));
+
                     } else {
                         holder.item3.setVisibility(View.INVISIBLE);
                         holder.item3.setOnClickListener(null);
                     }
                 } else {
-                    ((TextView) holder.itemView).setText(subClassData.getDirs().get(position).get(0).getName());
-                    holder.itemView.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(0).getId(),subClassData.getDirs().get(position).get(0).getName()));
+                    ((TextView) holder.itemView).setText(subClassData.getDirs().get(position).get(0).getName()+"1231");
+                    holder.itemView.setOnClickListener(new CategoryClick(subClassData.getDirs().get(position).get(0), Activity_Category.this));
                 }
             }
 
             @Override
             public int getItemViewType(int position) {
-                Log.e(TAG, "getItemViewType");
                 if (subClassData.getDirs().get(position).get(0).getInfo() == null) {
                     return 0;
                 }
@@ -241,24 +239,25 @@ public class Activity_Category extends BaseActivity {
 
             @Override
             public int getItemCount() {
-                Log.e(TAG, "getItemCount" + subClassData.getDirs().size());
                 return subClassData.getDirs().size();
             }
         });
     }
 
-    static class CategoryClick implements View.OnClickListener {
-        int id;
-        String title;
 
-        public CategoryClick(int id, String title) {
-            this.id = id;
-            this.title = title;
+    static class CategoryClick implements View.OnClickListener {
+        CategoryInfo.SubCategory info;
+        BaseActivity activity;
+
+        public CategoryClick(CategoryInfo.SubCategory info, BaseActivity activity) {
+            this.info = info;
+            this.activity = activity;
         }
 
         @Override
         public void onClick(View v) {
-            SearchActivity.startAct(id, title, (BaseActivity) v.getContext());
+            activity.DisplayToast("12313");
+            SearchActivity.startAct(info.getId(), info.getName(), activity);
         }
     }
 

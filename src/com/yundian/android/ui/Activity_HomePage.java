@@ -295,12 +295,12 @@ public class Activity_HomePage extends BaseActivity {
 
         Type type = new TypeToken<BaseResponse<List<ProductInfo>>>() {
         }.getType();
-        HttpServer.getHomePageItem(TAG, 0, indexPage, 0, null,new GenericCallBack<BaseResponse<List<ProductInfo>>>(type) {
+        HttpServer.getHomePageItem(TAG, 0, indexPage, 0, null, new GenericCallBack<BaseResponse<List<ProductInfo>>>(type) {
             @Override
             public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
                 if (response.body().isOK()) {
                     if (indexPage == 1) {
-                         productInfos.clear();
+                        productInfos.clear();
                     }
                     productInfos.addAll(response.body().getInfo());
                     adapter.notifyDataSetChanged();
@@ -323,16 +323,42 @@ public class Activity_HomePage extends BaseActivity {
         });
     }
 
-    public static void setItemData(ViewHolder holder, ProductInfo info, ProductInfo info2, BaseActivity activity) {
+    public static void setItemData(ViewHolder holder, final ProductInfo info, final ProductInfo info2, final BaseActivity activity) {
         activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info.getG_photo()), holder.image_1);
         holder.pdc_name_1.setText(info.getG_mc());
         holder.pdc_price_1.setText(String.valueOf(info.getG_mPrice()));
+        holder.pdc_cart_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.DisplayToast("加入购物车");
+                activity.addWithDelPdt2Bag(info, true);
+            }
+        });
+        holder.page_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity_Product_Info.startActivity(info.getG_ID(), activity);
+            }
+        });
         if (info2 != null) {
             holder.image_2.setVisibility(View.VISIBLE);
             holder.foot_2.setVisibility(View.VISIBLE);
             activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info2.getG_photo()), holder.image_2);
             holder.pdc_name_2.setText(info2.getG_mc());
             holder.pdc_price_2.setText(String.valueOf(info2.getG_mPrice()));
+            holder.pdc_cart_2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.DisplayToast("加入购物车");
+                    activity.addWithDelPdt2Bag(info2, true);
+                }
+            });
+            holder.page_2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity_Product_Info.startActivity(info2.getG_ID(), activity);
+                }
+            });
         } else {
             // 全部隐藏
             holder.image_2.setVisibility(View.INVISIBLE);
@@ -340,7 +366,7 @@ public class Activity_HomePage extends BaseActivity {
         }
     }
 
-   public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.page_1)
         View page_1;

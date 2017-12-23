@@ -1,143 +1,293 @@
 package com.yundian.android.ui;
 
-import com.yundian.android.R;
-
-import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import com.yundian.android.BaseApplication;
+import com.yundian.android.R;
+import com.yundian.android.bean.ProductInfo;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 购物车
- * 
- * @author ShaoZhen-PC
  *
+ * @author ShaoZhen-PC
  */
-public class Activity_Cart extends BaseActivity implements OnClickListener {
+public class Activity_Cart extends BaseActivity {
 
-	private ImageView image_return;
-	private TextView text_compile;
-	private Intent mIntent;
-	private ListView list_gouwuche;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cart);
-		findViewById();
-		initView();
+    @BindView(R.id.text_compile)
+    TextView text_compile;
 
-	}
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
 
-	@Override
-	protected void findViewById() {
-		image_return = (ImageView) this.findViewById(R.id.image_return);
-		text_compile = (TextView) this.findViewById(R.id.text_compile);
-		list_gouwuche = (ListView) findViewById(R.id.list_gouwuche);
-	}
+    @BindView(R.id.status)
+    ImageView status;
+    @BindView(R.id.total)
+    TextView total;
 
-	@Override
-	protected void initView() {
-		image_return.setOnClickListener(this);
-		text_compile.setOnClickListener(this);
-		list_gouwuche.setAdapter(new myAdapter(this));
+    @BindView(R.id.order)
+    View order;
 
-	}
+    @BindView(R.id.delete)
+    View delete;
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.image_return:
-			finish();
-			break;
+    @BindView(R.id.total_contain)
+    View total_contain;
+    private RecyclerView.Adapter<ViewHolder> adapter;
 
-		case R.id.text_compile:
+    // 编辑模式状态
+    volatile boolean isEdit = false;
 
-			break;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate");
+        setContentView(R.layout.activity_cart);
+        ButterKnife.bind(this);
+        recycler.setLayoutManager(new LinearLayoutManager(Activity_Cart.this));
+        adapter = new RecyclerView.Adapter<ViewHolder>() {
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                ViewHolder holder = new ViewHolder(LayoutInflater.from(Activity_Cart.this).
+                        inflate(R.layout.shop_cart_item, parent, false));
+                return holder;
+            }
 
-		default:
-			break;
-		}
+            @Override
+            public void onBindViewHolder(ViewHolder holder, int position) {
+                setDate(holder, position);
+            }
 
-	}
-	
-	public final class ViewHolder{
-        public Button button_reduce;
-        public TextView title;
-        public TextView info;
-        public Button viewBtn;
+            @Override
+            public int getItemCount() {
+                return BaseApplication.getApp().getShoppingBag().size();
+            }
+        };
+
+
+        recycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                Paint paint = new Paint();
+                paint.setColor(getResources().getColor(R.color.d4d4d4));
+                for (int i = 0; i < parent.getChildCount(); i++) {
+                    View v = parent.getChildAt(i);
+                    float value = v.getY() + v.getHeight();
+                    c.drawLine(0, value, parent.getWidth(), value, paint);
+                }
+            }
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            }
+        });
+        recycler.setAdapter(adapter);
     }
 
-	public class myAdapter extends BaseAdapter {
 
-		private LayoutInflater mInflater;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume");
+        adapter.notifyDataSetChanged();
+    }
 
-		public myAdapter(Context context) {
-			this.mInflater = LayoutInflater.from(context);
-		}
+    @Override
+    protected void findViewById() {
+    }
 
-		@Override
-		public int getCount() {
-			return 10;
-		}
+    @Override
+    protected void initView() {
 
-		@Override
-		public Object getItem(int arg0) {
-			return null;
-		}
+    }
 
-		@Override
-		public long getItemId(int arg0) {
-			return 0;
-		}
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+    public void delete(View v) {
+        if (isEdit && BaseApplication.getApp().getShoppingBag().size() > 0) {
+            ProductInfo[] arrays = BaseApplication.getApp().getShoppingBag().toArray(new ProductInfo[BaseApplication.getApp().getShoppingBag().size()]);
+            for (ProductInfo info : arrays) {
+                if (info.isMove) {
+                    BaseApplication.getApp().getShoppingBag().remove(info);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
 
-			ViewHolder holder = null;
-			if (convertView == null) {
+    public void editBag(View v) {
+        isEdit = !isEdit;
+        status.setSelected(false);
+        if (isEdit) {// 编辑模式
+            text_compile.setText("完成");
+            // 合计部分隐藏 去结算变成 删除
+            total_contain.setVisibility(View.INVISIBLE);
+            order.setVisibility(View.INVISIBLE);
+            delete.setVisibility(View.VISIBLE);
 
-				holder = new ViewHolder();
+        } else { // 正常模式
+            text_compile.setText("编辑");
+            total_contain.setVisibility(View.VISIBLE);
+            order.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.INVISIBLE);
+        }
+        adapter.notifyDataSetChanged();
+    }
 
-				convertView = mInflater.inflate(R.layout.item_cart_info, null);
-				holder.button_reduce = (Button) convertView.findViewById(R.id.button_reduce);
-//				holder.title = (TextView) convertView.findViewById(R.id.title);
-//				holder.info = (TextView) convertView.findViewById(R.id.info);
-//				holder.viewBtn = (Button) convertView.findViewById(R.id.view_btn);
-				convertView.setTag(holder);
+    public void selectAll(View v) {
+        boolean flag = !status.isSelected();
+        status.setSelected(flag);
+        if (isEdit) {
+            for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
+                info.isMove = flag;
+            }
+        } else {
+            for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
+                info.isSelected = flag;
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
-			} else {
+    private void setDate(final ViewHolder holder, int position) {
+        final ProductInfo info = BaseApplication.getApp().getShoppingBag().get(position);
+        loadImageNoHost(info.getG_photo(), holder.image);
+        holder.name.setText(info.getG_mc());
+        holder.price.setText(String.valueOf(info.getG_mPrice()));
+        holder.number.setText(String.valueOf(info.amount));
+        if (isEdit) {
+            holder.select.setSelected(info.isMove);
+        } else {
+            holder.select.setSelected(info.isSelected);
+        }
 
-				holder = (ViewHolder) convertView.getTag();
-			}
-			if(position == 1){
-				holder.button_reduce.setSelected(false);
-			}else{
-				holder.button_reduce.setSelected(true);
-			}
-//			holder.img.setBackgroundResource((Integer) mData.get(position).get("img"));
-//			holder.title.setText((String) mData.get(position).get("title"));
-//			holder.info.setText((String) mData.get(position).get("info"));
-//
-//			holder.viewBtn.setOnClickListener(new View.OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					showInfo();
-//				}
-//			});
+        holder.select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-			return convertView;
-		}
+                if (isEdit) {
+                    holder.select.setSelected(info.isMove = !holder.select.isSelected());
+                } else {
+                    holder.select.setSelected(info.isSelected = !holder.select.isSelected());
+                }
 
-	}
+            }
+        });
+        holder.increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.number.setText(String.valueOf(++info.amount));
+            }
+        });
+        holder.reduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                info.amount--;
+                if (info.amount <= 1) {
+                    info.amount = 1;
+                }
+                holder.number.setText(String.valueOf(info.amount));
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Activity_Cart.this, R.style.CustomDialog);
+
+                SpannableString title = new SpannableString("删除");
+                title.setSpan(new ForegroundColorSpan(Color.parseColor("#3a3a3a")), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                title.setSpan(new AbsoluteSizeSpan(20, true), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                title.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                String msg = "确定要删除此商品吗？";
+                SpannableString message = new SpannableString(msg);
+                message.setSpan(new ForegroundColorSpan(Color.parseColor("#3a3a3a")), 0, msg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                message.setSpan(new AbsoluteSizeSpan(20, true), 0, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                String confirm = "确定";
+
+                String cancle = "取消";
+
+                builder.setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                BaseApplication.getApp().getShoppingBag().remove(info);
+                                adapter.notifyDataSetChanged();
+                                // 重新计算价格
+                            }
+                        })
+                        .setNegativeButton(cancle, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                AlertDialog dialog = builder.show();
+                Button con = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                con.setTextColor(Color.parseColor("#e60012"));
+                con.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+                Button can = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                can.setTextColor(Color.parseColor("#3a3a3a"));
+
+                can.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+
+
+                return false;
+            }
+        });
+    }
+
+
+    public final class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.select)
+        ImageView select;
+        @BindView(R.id.image)
+        ImageView image;
+        @BindView(R.id.name)
+        TextView name;
+        @BindView(R.id.price)
+        TextView price;
+        @BindView(R.id.reduce)
+        View reduce;
+        @BindView(R.id.increase)
+        View increase;
+        @BindView(R.id.number)
+        TextView number;
+
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            Log.e("Activity_Cart", "ViewHolder");
+            ButterKnife.bind(this, itemView);
+        }
+    }
 
 }

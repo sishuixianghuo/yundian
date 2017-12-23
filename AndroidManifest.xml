@@ -72,19 +72,14 @@
         <activity
             android:name=".ui.SearchActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.Present"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.Activity_Login"
-            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".ui.Activity_Login" />
         <activity
             android:name=".ui.Activity_Forget_Password"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Forget_Password2"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:launchMode="singleTop" />
         <activity
             android:name=".ui.Activity_Register"
             android:launchMode="singleTop" />
@@ -137,27 +132,6 @@
         <activity
             android:name=".ui.IndexEbookActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".zxing.CaptureActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".zxing.CaptureResultActivity"
-            android:launchMode="singleTop" />
-
-        <!-- ↓↓↓↓↓银联相关↓↓↓↓↓ -->
-        <activity
-            android:name="com.unionpay.uppay.PayActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.unionpay.UPPayWapActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <!-- ↑↑↑↑↑银联相关↑↑↑↑↑ -->
     </application>
 
 </manifest>

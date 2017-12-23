@@ -8,10 +8,14 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.bean.UserInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.RestApi;
 import com.yundian.android.utils.SettingUtils;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class BaseApplication extends Application {
@@ -25,6 +29,8 @@ public class BaseApplication extends Application {
      */
     private String token;
     private UserInfo info;
+    // 存放所有的购物信息
+    private List<ProductInfo> shoppingBag = new CopyOnWriteArrayList<>();
 
     /**
      * 获取Application
@@ -47,7 +53,12 @@ public class BaseApplication extends Application {
         RestApi.initOkGO(this);
         token = SettingUtils.get(SettingUtils.TOKEN, null);
 
+        // 读取信息初始化购物袋
+
+
     }
+
+
 
     @Override
     public void onLowMemory() {
@@ -92,5 +103,9 @@ public class BaseApplication extends Application {
 
     public void setInfo(UserInfo info) {
         this.info = info;
+    }
+
+    public List<ProductInfo> getShoppingBag() {
+        return shoppingBag;
     }
 }

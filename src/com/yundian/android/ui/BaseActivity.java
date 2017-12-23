@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -21,6 +20,7 @@ import com.lzy.okgo.OkGo;
 import com.yundian.android.AppManager;
 import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
+import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.net.HttpServer;
 import com.yundian.android.task.AsyncCallable;
 import com.yundian.android.task.Callback;
@@ -30,14 +30,10 @@ import com.yundian.android.task.ProgressCallable;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
-import io.reactivex.disposables.CompositeDisposable;
-
 public abstract class BaseActivity extends AppCompatActivity {
 
     public String TAG = getClass().getSimpleName();
     protected String httpTag = getClass().getName();
-
-    protected Handler mHandler = null;
     protected InputMethodManager imm;
     private TelephonyManager tManager;
 
@@ -75,12 +71,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
     }
 
-    public CompositeDisposable composite = new CompositeDisposable();    // 管理订阅者者
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        composite.dispose();
         OkGo.getInstance().cancelTag(httpTag);
     }
 
@@ -193,9 +186,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     //獲得設備信息
     protected String getDeviceId() throws Exception {
         String deviceId = tManager.getDeviceId();
-
         return deviceId;
-
     }
 
     /**
@@ -308,5 +299,30 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected <T> void doAsync(final int pTitleResID, final int pMessageResID, final AsyncCallable<T> pAsyncCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
         EMobileTask.doAsync(this, pTitleResID, pMessageResID, pAsyncCallable, pCallback, pExceptionCallback);
+    }
+
+    /**
+     * 添加商品到购物袋
+     *
+     * @param pdt
+     */
+    public void addWithDelPdt2Bag(ProductInfo pdt, boolean isAdd) {
+        if (BaseApplication.getApp().getShoppingBag().contains(pdt)) {
+            for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
+                if (info.equals(pdt)) {
+                    if (isAdd) {
+                        info.amount++;
+                    } else {
+                        info.amount--;
+                    }
+                    if (info.amount <= 1) {
+                        info.amount = 1;
+                    }
+                    return;
+                }
+            }
+        }
+        pdt.amount = 1;
+        BaseApplication.getApp().getShoppingBag().add(pdt);
     }
 }

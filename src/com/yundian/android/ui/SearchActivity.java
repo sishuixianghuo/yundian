@@ -194,7 +194,7 @@ public class SearchActivity extends BaseActivity {
 
         Type type = new TypeToken<BaseResponse<List<ProductInfo>>>() {
         }.getType();
-        HttpServer.getHomePageItem(TAG, pid, indexPage, 0, keywrod, new GenericCallBack<BaseResponse<List<ProductInfo>>>(type) {
+        HttpServer.getHomePageItem(TAG, pid, indexPage, 0, pid > 0 ? "" : keywrod, new GenericCallBack<BaseResponse<List<ProductInfo>>>(type) {
             @Override
             public void onSuccess(Response<BaseResponse<List<ProductInfo>>> response) {
                 if (response.body().isOK()) {

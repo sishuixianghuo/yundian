@@ -271,4 +271,10 @@
 
     </style>
 
+    <!-- 自定义Dialog的Style -->
+    <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/c3a3a3a</item>
+    </style>
+
+
 </resources>

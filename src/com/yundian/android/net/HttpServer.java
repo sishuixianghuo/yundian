@@ -61,6 +61,28 @@ public final class HttpServer {
                 tag(tag).execute(callback);
     }
 
+    /**
+     * 获取 店铺商品信息 pid 不填为所有  shopid 店铺id
+     *
+     * @param tag
+     * @param pid
+     * @param shopid
+     * @param callback
+     * @param <T>
+     */
+    public static <T> void getShopItem(String tag, int pid, int shopid, int page, GenericCallBack<T> callback) {
+        HttpParams params = new HttpParams();
+        params.put("strP", pid < 0 ? "" : String.valueOf(pid));
+        params.put("strS", "");
+        params.put("strT", "");
+        params.put("keyword", "");
+        params.put("IPage", page);
+        params.put("shopid", shopid);
+
+        OkGo.<T>post(GET_PRODUCT).params(params).
+                tag(tag).execute(callback);
+    }
+
     //获取商品详情
     public static <T> void getProductInfo(String tag, int pid, GenericCallBack<T> callback) {
         HttpParams params = new HttpParams();

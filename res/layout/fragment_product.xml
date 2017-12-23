@@ -92,34 +92,8 @@
                 android:textColor="@color/c3a3a3a"
                 android:textSize="20dp" />
 
-            <ImageView
-                android:id="@+id/reduce"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/number"
-                android:background="@drawable/button_cart_item_quantity_reduce" />
+            <include layout="@layout/add_sub_btn" />
 
-            <TextView
-                android:id="@+id/number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/increase"
-                android:text="1"
-                android:textColor="@color/c3a3a3a"
-                android:textSize="20dp" />
-
-            <ImageView
-                android:id="@+id/increase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/button_cart_item_quantity_increase" />
         </RelativeLayout>
 
         <View
@@ -131,6 +105,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
+
             android:paddingLeft="24dp">
 
             <TextView
