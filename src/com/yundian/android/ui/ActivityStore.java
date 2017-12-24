@@ -188,6 +188,15 @@ public class ActivityStore extends BaseActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        storeId = getIntent().getIntExtra(STORE_ID, -1);
+        if (storeId < 0) {
+            finish();
+        }
+    }
+
+    @Override
     protected void findViewById() {
     }
 
@@ -250,7 +259,8 @@ public class ActivityStore extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // 跳转店铺详情页
-
+                DisPlay("跳转");
+                ActivityStoreDetail.startAct(storeInfo.getShop_id(), ActivityStore.this);
             }
         });
 
