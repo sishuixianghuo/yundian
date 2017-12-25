@@ -4,68 +4,37 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/personal_top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/white">
+    <include layout="@layout/sub_title_bar" />
 
-        <ImageView
-            android:id="@+id/image_return"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="15dp"
-            android:src="@drawable/navbar_ic_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/image_return"
-            android:text="地址管理"
-            android:textColor="@color/c262626"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/e6e6e6" />
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/list_dizhi"
-        android:layout_above="@+id/button_add_dizhi"
-        android:layout_below="@+id/personal_top_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/button_add_dizhi"
+        android:layout_below="@+id/sub_title_layout"
         android:background="@color/f6f6f6" />
 
     <View
         android:id="@+id/view_1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/e6e6e6"
         android:layout_above="@+id/button_add_dizhi"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@color/e6e6e6" />
 
     <Button
         android:id="@+id/button_add_dizhi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="新建地址"
-        android:padding="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/style_button_add_dizhi"
+        android:padding="5dp"
+        android:text="新建地址"
         android:textColor="@color/text_add_dizhi"
         android:textSize="18sp"
         android:textStyle="bold" />

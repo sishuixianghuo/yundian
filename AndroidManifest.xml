@@ -93,12 +93,7 @@
         <activity
             android:name=".ui.MoreActivity"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".ui.IndexShakeActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".ui.IndexClothingActivity"
-            android:launchMode="singleTop" />
+
         <activity
             android:name=".ui.IndexDigtalActivity"
             android:launchMode="singleTop" />
@@ -130,9 +125,7 @@
 
         <activity android:name=".ui.ActivityStore" android:launchMode="singleTask" android:taskAffinity=""/>
         <activity android:name=".ui.ActivityStoreDetail"  />
-        <activity
-            android:name=".ui.IndexEbookActivity"
-            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.yundian.android.R;
 import com.yundian.android.cascade.CascadeActivity;
@@ -17,12 +16,16 @@ import com.yundian.android.utils.LogUtils;
 
 /**
  * 修改我的信息
+ * 添加地址
  *
  * @author ShaoZhen-PC
  */
 public class Activity_Cascade_Address extends CascadeActivity implements View.OnClickListener, OnWheelChangedListener {
 
     public static String TAG = "Activity_Cascade_Address";
+    public static final String PROVICE_KEY = "provice";
+    public static final String CITY_KEY = "city";
+
 
     private int resultCode = 0;
 
@@ -48,7 +51,7 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
         mViewCity = (WheelView) findViewById(R.id.id_city);
         mViewDistrict = (WheelView) findViewById(R.id.id_district);
         mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
-        view_return = (View) findViewById(R.id.view_return);
+        view_return = findViewById(R.id.view_return);
     }
 
     private void setUpListener() {
@@ -61,7 +64,7 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
 
     private void setUpData() {
         initProvinceDatas();
-        mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(Activity_Cascade_Address.this, mProvinceDatas));
+        mViewProvince.setViewAdapter(new ArrayWheelAdapter<>(Activity_Cascade_Address.this, mProvinceDatas));
         // 设置可见条目数量
         mViewProvince.setVisibleItems(7);
         mViewCity.setVisibleItems(7);
@@ -92,10 +95,11 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
         String[] areas = mDistrictDatasMap.get(mCurrentCityName);
 
         if (areas == null) {
-            areas = new String[] { "" };
+            areas = new String[]{""};
         }
         mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
         mViewDistrict.setCurrentItem(0);
+        mCurrentDistrictName = areas[0];
     }
 
     /**
@@ -106,10 +110,11 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
         mCurrentProviceName = mProvinceDatas[pCurrent];
         String[] cities = mCitisDatasMap.get(mCurrentProviceName);
         if (cities == null) {
-            cities = new String[] { "" };
+            cities = new String[]{""};
         }
-        mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(this, cities));
+        mViewCity.setViewAdapter(new ArrayWheelAdapter<>(this, cities));
         mViewCity.setCurrentItem(0);
+        mCurrentCityName= cities[0];
         updateAreas();
     }
 
@@ -129,16 +134,15 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
 
     private void showSelectedResult() {
         Intent mIntent = new Intent();
-        mIntent.putExtra("address", mCurrentProviceName + "," + mCurrentCityName + "," + mCurrentDistrictName);
+        mIntent.putExtra(PROVICE_KEY, mCurrentProviceName);
+        mIntent.putExtra(CITY_KEY, mCurrentCityName + "" + mCurrentDistrictName);
         this.setResult(resultCode, mIntent);
         finish();
-//        Toast.makeText(Activity_Cascade_Address.this, "当前选中:"+mCurrentProviceName+","+mCurrentCityName+","
-//                +mCurrentDistrictName+","+mCurrentZipCode, Toast.LENGTH_SHORT).show();
     }
 
     public static Intent getIntent_Common(Context context) {
         Intent intent = new Intent(context, Activity_Cascade_Address.class);
-        LogUtils.e(TAG,"context : " + context.toString());
+        LogUtils.e(TAG, "context : " + context.toString());
         return intent;
     }
 }

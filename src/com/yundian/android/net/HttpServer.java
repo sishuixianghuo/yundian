@@ -9,6 +9,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.adapter.Call;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
+import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.UserInfo;
 
@@ -30,6 +31,8 @@ public final class HttpServer {
     public static final String USER_REG = HOST + "/WebService.asmx/Reg";
     public static final String GET_USER_INFO = HOST + "/WebService.asmx/getUserInfo";
     public static final String GET_STORE_INFO = HOST + "/WebService.asmx/getShopInfo";
+    public static final String ADD_USER_ADD = HOST + "/WebService.asmx/AddUserAddress";
+    public static final String GET_ADDRESS = HOST + "/WebService.asmx/getUserAddress";
 
     private HttpServer() {
         throw new RuntimeException("禁止创建对象");
@@ -154,5 +157,23 @@ public final class HttpServer {
     //获取店铺信息
     public static <T> void getShopInfo(String tag, int pid, GenericCallBack<T> callback) {
         OkGo.<T>post(GET_STORE_INFO).params("ShopID", pid).tag(tag).execute(callback);
+    }
+
+    // 获取用户地址
+    public static <T> void getAddress(String tag, GenericCallBack<T> callback) {
+        OkGo.<T>post(GET_ADDRESS).tag(tag).execute(callback);
+    }
+
+    // 添加用户地址
+    public static <T> void addUserAdd(String tag, Address address, GenericCallBack<T> callback) {
+        HttpParams params = new HttpParams();
+        params.put("shouhuoren", address.getShouhuoren());
+        params.put("provice", address.getProvice());
+        params.put("city", address.getCity());
+        params.put("addr", address.getAddr());
+        params.put("mobile", address.getMobile());
+        params.put("phone", address.getPhone());
+        params.put("email", address.getEmail());
+        OkGo.<T>post(ADD_USER_ADD).params(params).tag(tag).execute(callback);
     }
 }

@@ -1,209 +1,197 @@
 package com.yundian.android.ui;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
-import com.yundian.android.URLs;
-import com.yundian.android.bean.Site_Bean;
-import com.yundian.android.utils.JsonUtil;
-import com.yundian.android.utils.LogUtils;
-import com.yundian.android.utils.SettingUtils;
+import com.yundian.android.bean.Address;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 地址管理
  *
  * @author ShaoZhen-PC
  */
-public class Activity_Site_Manage extends BaseActivity implements OnClickListener {
+public class Activity_Site_Manage extends BaseActivity {
 
-    private ImageView image_return;
-    private Intent mIntent;
-    private ListView list_dizhi;
-    private Button button_add_dizhi;
-    private List<Site_Bean> site_been;
-    private myAdapter myAdapter;
+    ImageView image_return;
+    @BindView(R.id.recycler)
+    RecyclerView recyclerView;
+    private RecyclerView.Adapter<ViewHolder> adapter;
+    View.OnClickListener listener;
+
+
+    @OnClick(R.id.image_return)
+    public void back() {
+        finish();
+    }
+
+    @BindView(R.id.sub_title)
+    TextView sub_title;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.more)
+    View more;
+
+    @OnClick(R.id.button_add_dizhi)
+    public void addAddress() {
+        openActivity(Activity_Add_Site.class);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_manage);
+        ButterKnife.bind(this);
+        title.setVisibility(View.GONE);
+        more.setVisibility(View.GONE);
+        sub_title.setText("地址管理");
         findViewById();
         initView();
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+                Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                paint.setColor(Color.parseColor("#dcdcdc"));
+                paint.setStrokeWidth(1);
+                for (int i = 0; i < parent.getChildCount(); i++) {
+                    if (i > 0) {
+                        View v = parent.getChildAt(i);
+                        c.drawLine(v.getX(), v.getY(), v.getX() + v.getWidth(), v.getY(), paint);
+                    }
+                }
+            }
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                if (parent.getChildAdapterPosition(view) != 0) {
+                    outRect.top = 30;
+                }
+
+            }
+        });
+        recyclerView.setAdapter(adapter = new RecyclerView.Adapter<ViewHolder>() {
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                ViewHolder holder = new ViewHolder(LayoutInflater.from(Activity_Site_Manage.this).
+                        inflate(R.layout.item_site_manage, parent, false));
+                return holder;
+            }
+
+            @Override
+            public void onBindViewHolder(ViewHolder holder, int position) {
+                setData(holder, position);
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return BaseApplication.getApp().getAddresses().size();
+            }
+        });
+    }
+
+    private void setData(final ViewHolder holder, int postion) {
+        Address address = BaseApplication.getApp().getAddresses().get(postion);
+        holder.text_name.setText(address.getShouhuoren());
+        holder.text_phone.setText(address.getMobile());
+        holder.text_site.setText(address.getProvice());
+        holder.text_site.append(TextUtils.isEmpty(address.getCity()) ? "" : address.getCity());
+        holder.text_site.append(TextUtils.isEmpty(address.getAddr()) ? "" : address.getAddr());
+
+        if (listener == null) {
+            listener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DisplayToast(R.string.function_not_imp);
+                }
+            };
+        }
+        holder.text_delete.setOnClickListener(listener);
+        holder.text_compile.setOnClickListener(listener);
+        holder.rb_default.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.rb_default.setChecked(false);
+                DisplayToast(R.string.function_not_imp);
+            }
+        });
     }
 
     @Override
     protected void findViewById() {
-        image_return = (ImageView) this.findViewById(R.id.image_return);
-        list_dizhi = (ListView) findViewById(R.id.list_dizhi);
-        button_add_dizhi = (Button) findViewById(R.id.button_add_dizhi);
+
     }
+
 
     @Override
     protected void initView() {
-        image_return.setOnClickListener(this);
-        button_add_dizhi.setOnClickListener(this);
-        site_been = new ArrayList<Site_Bean>();
-//        for (int i=0;i<10;i++) {
-//            Site_Bean sb = new Site_Bean();
-//            sb.setName("邵震");
-//            sb.setPhone("1851500222" + i);
-//            sb.setRegion("北京市朝阳区" + i);
-//            sb.setSite("建外SOHO西区16号楼308" + i);
-//            sb.setTelephone("10010" + i);
-//            sb.setMailbox("123" + i + "@qq.com");
-//            site_been.add(sb);
-//        }
-            site_been = new Gson().fromJson(SettingUtils.get(URLs.LIST_SITE_JSON,"[]"), new TypeToken<List<Site_Bean>>() {}.getType());
-        LogUtils.e(TAG,"URLs.LIST_SITE_JSON : " + SettingUtils.get(URLs.LIST_SITE_JSON,""));
-        myAdapter = new myAdapter(this,site_been);
-        list_dizhi.setAdapter(myAdapter);
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        site_been = new Gson().fromJson(SettingUtils.get(URLs.LIST_SITE_JSON,"[]"), new TypeToken<List<Site_Bean>>() {}.getType());
-        LogUtils.e(TAG,"URLs.LIST_SITE_JSON : " + SettingUtils.get(URLs.LIST_SITE_JSON,""));
-        myAdapter.setList(site_been);
-        myAdapter.notifyDataSetChanged();
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.image_return:
-                finish();
-                break;
-            case R.id.button_add_dizhi:
-               startActivity(new Intent(this,Activity_Add_Site.class));
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    public final class ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public Button button_reduce;
+        @BindView(R.id.text_name)
         public TextView text_name;
+
+        @BindView(R.id.text_phone)
         public TextView text_phone;
+
+        @BindView(R.id.text_site)
         public TextView text_site;
+
+        @BindView(R.id.text_compile)
         public TextView text_compile;
+
+        @BindView(R.id.text_delete)
         public TextView text_delete;
+
+        @BindView(R.id.rb_default)
         public RadioButton rb_default;
-        public Button viewBtn;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 
-    public class myAdapter extends BaseAdapter {
 
-        private LayoutInflater mInflater;
-        private List<Site_Bean> site_been;
-        HashMap<String, Boolean> states = new HashMap<String, Boolean>();//用于记录每个RadioButton的状态，并保证只可选一个
-
-        public myAdapter(Context context,List<Site_Bean> site_beens) {
-            this.mInflater = LayoutInflater.from(context);
-            this.site_been = site_beens;
-        }
-
-        @Override
-        public int getCount() {
-            return site_been.size();
-        }
-
-        public void setList(List<Site_Bean> site_been){
-            this.site_been = site_been;
-        }
-
-        @Override
-        public Object getItem(int arg0) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, final ViewGroup parent) {
-
-            ViewHolder holder = null;
-            if (convertView == null) {
-
-                holder = new ViewHolder();
-
-                convertView = mInflater.inflate(R.layout.item_site_manage, null);
-                holder.text_name = (TextView) convertView.findViewById(R.id.text_name);
-                holder.text_phone = (TextView) convertView.findViewById(R.id.text_phone);
-                holder.text_site = (TextView) convertView.findViewById(R.id.text_site);
-                holder.text_compile = (TextView) convertView.findViewById(R.id.text_compile);
-                holder.text_delete = (TextView) convertView.findViewById(R.id.text_delete);
-                convertView.setTag(holder);
-
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            final RadioButton radio = (RadioButton) convertView.findViewById(R.id.rb_default);
-            holder.rb_default = radio;
-            holder.text_name.setText(site_been.get(position).getName());
-            holder.text_phone.setText(site_been.get(position).getPhone());
-            holder.text_site.setText(site_been.get(position).getSite());
-            //当RadioButton被选中时，将其状态记录进States中，并更新其他RadioButton的状态使它们不被选中
-            holder.rb_default.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //重置，确保最多只有一项被选中
-                    for (String key : states.keySet()) {
-                        states.put(key, false);
-                    }
-                    states.put(String.valueOf(position), radio.isChecked());
-                    myAdapter.this.notifyDataSetChanged();
-                }
-            });
-            holder.text_compile.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    LogUtils.e(TAG,"position : " + position );
-                    startActivity(Activity_Add_Site.getIntent_Common(getApplicationContext(),site_been,position));
-                }
-            });
-            holder.text_delete.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    LogUtils.e(TAG,"position : " + position);
-                    site_been.remove(position);
-                    SettingUtils.set(URLs.LIST_SITE_JSON, JsonUtil.toJson(site_been));
-                    LogUtils.e(TAG,"URLs.LIST_SITE_JSON : " + SettingUtils.get(URLs.LIST_SITE_JSON,""));
-                    myAdapter.notifyDataSetChanged();
-                }
-            });
-
-            boolean res = false;
-            if (states.get(String.valueOf(position)) == null || states.get(String.valueOf(position)) == false) {
-                res = false;
-                states.put(String.valueOf(position), false);
-            } else {
-                res = true;
-            }
-
-            holder.rb_default.setChecked(res);
-            return convertView;
-        }
+    /**
+     * 获取选择的地址
+     *
+     * @param activity
+     */
+    public static void startActiviyForResult(BaseActivity activity) {
+        activity.startActivityForResult(new Intent(activity, Activity_Site_Manage.class), 200);
     }
 }

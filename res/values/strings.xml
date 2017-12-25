@@ -152,4 +152,5 @@
     <string name="put_to_bag">已加入购物车</string>
     <string name="contact_store">请联系店家</string>
     <string name="loading">加载中...</string>
+    <string name="retry">请重试...</string>
 </resources>

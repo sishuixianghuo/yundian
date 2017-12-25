@@ -8,12 +8,18 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.model.Response;
+import com.yundian.android.bean.Address;
+import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.bean.UserInfo;
 import com.yundian.android.net.GenericCallBack;
+import com.yundian.android.net.HttpServer;
 import com.yundian.android.net.RestApi;
 import com.yundian.android.utils.SettingUtils;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -31,6 +37,8 @@ public class BaseApplication extends Application {
     private UserInfo info;
     // 存放所有的购物信息
     private List<ProductInfo> shoppingBag = new CopyOnWriteArrayList<>();
+    // 存放用户的地址信息
+    private List<Address> addresses = new CopyOnWriteArrayList<>();
 
     /**
      * 获取Application
@@ -50,14 +58,21 @@ public class BaseApplication extends Application {
         // TODO Auto-generated method stub
         super.onCreate();
         mAppApplication = this;
-        RestApi.initOkGO(this);
         token = SettingUtils.get(SettingUtils.TOKEN, null);
+        RestApi.initOkGO(this);
 
         // 读取信息初始化购物袋
+        if (!TextUtils.isEmpty(token)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    getAddress();
+                }
+            }).start();
+        }
 
 
     }
-
 
 
     @Override
@@ -93,8 +108,40 @@ public class BaseApplication extends Application {
             SettingUtils.remove(SettingUtils.TOKEN);
         } else {
             SettingUtils.set(SettingUtils.TOKEN, token);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    getAddress();
+                }
+            }).start();
         }
 
+    }
+
+    private void getAddress() {
+
+        Type type = new TypeToken<BaseResponse<List<Address>>>() {
+        }.getType();
+        HttpServer.getAddress(this.getClass().getName(), new GenericCallBack<BaseResponse<List<Address>>>(type) {
+            @Override
+            public void onSuccess(Response<BaseResponse<List<Address>>> response) {
+                if (response.body().isOK()) {
+                    addresses.clear();
+                    addresses.addAll(response.body().getInfo());
+                }
+            }
+        });
+
+        HttpServer.getUserinfo(this.getClass().getName(), BaseApplication.getApp().getToken(), new GenericCallBack<BaseResponse<List<UserInfo>>>(
+                new TypeToken<BaseResponse<List<UserInfo>>>() {
+                }.getType()) {
+            @Override
+            public void onSuccess(Response<BaseResponse<List<UserInfo>>> response) {
+                if (response.body().isOK() && response.body().getInfo().size() == 1) {
+                    info = response.body().getInfo().get(0);
+                }
+            }
+        });
     }
 
     public UserInfo getInfo() {
@@ -108,4 +155,9 @@ public class BaseApplication extends Application {
     public List<ProductInfo> getShoppingBag() {
         return shoppingBag;
     }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
 }

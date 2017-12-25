@@ -8,6 +8,8 @@ public class Site_Bean {
 	private String  telephone;
 	private String  mailbox;
 
+
+
 	public String getName() {
 		return name;
 	}
