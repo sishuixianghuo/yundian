@@ -153,4 +153,7 @@
     <string name="contact_store">请联系店家</string>
     <string name="loading">加载中...</string>
     <string name="retry">请重试...</string>
+    <string name="please_login">请先登陆</string>
+    <string name="select_pdts">您还没有选中商品</string>
+    <string name="no_net_work">当前网络不可用</string>
 </resources>

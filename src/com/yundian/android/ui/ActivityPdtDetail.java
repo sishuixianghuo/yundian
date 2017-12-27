@@ -20,6 +20,7 @@ import com.yundian.android.fragment.ProductFragment;
 import com.yundian.android.fragment.TestFragment;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.widgets.PageHorizontalScrollView;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
@@ -118,6 +119,10 @@ public class ActivityPdtDetail extends BaseActivity {
     }
 
     private void request() {
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, "加载中");
         Type type = new TypeToken<BaseResponse<List<ProductDetail>>>() {
         }.getType();
@@ -159,9 +164,13 @@ public class ActivityPdtDetail extends BaseActivity {
         addWithDelPdt2Bag(info, true);
     }
 
-
+    /**
+     * @param v
+     * @see HomeActivity#onNewIntent(Intent)
+     */
     public void cart(View v) {
 //        DisplayToast("去购物车");
+        // openActivity(HomeActivity.class); 在
         openActivity(Activity_Cart.class);
     }
 

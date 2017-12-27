@@ -32,6 +32,7 @@ import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
 import com.yundian.android.utils.CommonTools;
+import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.widgets.ADInfo;
 import com.yundian.android.widgets.BannerViewPager;
 import com.yundian.android.widgets.HomePageSelectView;
@@ -290,6 +291,10 @@ public class Activity_HomePage extends BaseActivity {
 
     /*获取数据*/
     private void requestInfo() {
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         if (!refreshLayout.isRefreshing() && indexPage == 1) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(Activity_HomePage.this, "加载中...");
         }
@@ -329,10 +334,9 @@ public class Activity_HomePage extends BaseActivity {
         if (info.getG_mPrice() < CommonTools.THRESHOLD_PRICE) {
             holder.pdc_price_1.setText(R.string.price_negotiable);
         } else {
-            holder.pdc_name_1.setText(info.getG_mc());
+            holder.pdc_price_1.setText(String.valueOf(info.getG_mPrice()));
         }
-
-        holder.pdc_price_1.setText(String.valueOf(info.getG_mPrice()));
+        holder.pdc_name_1.setText(info.getG_mc());
         holder.pdc_cart_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

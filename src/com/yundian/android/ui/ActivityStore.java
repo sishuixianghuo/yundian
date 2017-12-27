@@ -31,6 +31,7 @@ import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.bean.StoreInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.utils.RxSchedulers;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
@@ -268,6 +269,10 @@ public class ActivityStore extends BaseActivity {
     }
 
     private void refresh() {
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(ActivityStore.this, getString(R.string.loading));
         Flowable.create(new FlowableOnSubscribe<StoreInfo>() {
             @Override
@@ -359,6 +364,10 @@ public class ActivityStore extends BaseActivity {
     }
 
     private void loadMore() {
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         HttpServer.getHomePageItem(TAG, -1, indexPage, storeId, null, new GenericCallBack<BaseResponse<List<ProductInfo>>>(
                 new TypeToken<BaseResponse<List<ProductInfo>>>() {
                 }.getType()) {

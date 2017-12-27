@@ -26,6 +26,7 @@ import com.yundian.android.task.AsyncCallable;
 import com.yundian.android.task.Callback;
 import com.yundian.android.task.EMobileTask;
 import com.yundian.android.task.ProgressCallable;
+import com.yundian.android.utils.CommonTools;
 
 import java.util.Locale;
 import java.util.concurrent.Callable;
@@ -59,6 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(view);
     }
+
     public void loadImageNoHostWithError(String url, ImageView view) {
         Glide.with(this)
                 .load(String.format("%s%s", HttpServer.HOST_IMG, url))
@@ -316,7 +318,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param pdt
      */
     public void addWithDelPdt2Bag(ProductInfo pdt, boolean isAdd) {
-        if (pdt.getG_mPrice() < 2) {
+        if (pdt.getG_mPrice() < CommonTools.THRESHOLD_PRICE) {
             DisplayToast(R.string.contact_store);
             return;
         }

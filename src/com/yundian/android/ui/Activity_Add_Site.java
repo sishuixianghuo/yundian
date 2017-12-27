@@ -16,6 +16,7 @@ import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.Site_Bean;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.NetWorkUtil;
 
 import java.util.List;
 
@@ -43,7 +44,10 @@ public class Activity_Add_Site extends BaseActivity {
 
     @OnClick(R.id.button_add_dizhi)
     public void addAddress() {
-        DisplayToast("添加地址");
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         String mobile = edit_phone.getText().toString().trim();
         String phone = edit_telephone.getText().toString().trim();
         String person = edit_name.getText().toString().trim();

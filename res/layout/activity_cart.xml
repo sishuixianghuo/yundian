@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="¥ asdf asdf asdf "
+                    android:text="¥ "
                     android:textColor="@color/e60012"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -151,6 +151,7 @@
 
                 <TextView
                     android:id="@+id/order"
+                    android:onClick="payOrder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/e60012"

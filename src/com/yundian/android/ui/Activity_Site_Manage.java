@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -31,8 +30,10 @@ import butterknife.OnClick;
  * @author ShaoZhen-PC
  */
 public class Activity_Site_Manage extends BaseActivity {
+    public static final String OK_CODE = "ok_code";
+    public static final String INDEX_OF_ADDRESS = "index_of_address";
 
-    ImageView image_return;
+
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     private RecyclerView.Adapter<ViewHolder> adapter;
@@ -51,6 +52,8 @@ public class Activity_Site_Manage extends BaseActivity {
     @BindView(R.id.more)
     View more;
 
+    int code = -1;
+
     @OnClick(R.id.button_add_dizhi)
     public void addAddress() {
         openActivity(Activity_Add_Site.class);
@@ -61,12 +64,13 @@ public class Activity_Site_Manage extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_manage);
+
+        code = getIntent().getIntExtra(OK_CODE, -1);
+
         ButterKnife.bind(this);
         title.setVisibility(View.GONE);
         more.setVisibility(View.GONE);
         sub_title.setText("地址管理");
-        findViewById();
-        initView();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -115,7 +119,7 @@ public class Activity_Site_Manage extends BaseActivity {
         });
     }
 
-    private void setData(final ViewHolder holder, int postion) {
+    private void setData(final ViewHolder holder, final int postion) {
         Address address = BaseApplication.getApp().getAddresses().get(postion);
         holder.text_name.setText(address.getShouhuoren());
         holder.text_phone.setText(address.getMobile());
@@ -138,6 +142,18 @@ public class Activity_Site_Manage extends BaseActivity {
             public void onClick(View v) {
                 holder.rb_default.setChecked(false);
                 DisplayToast(R.string.function_not_imp);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (code != -1) {
+                    Intent mIntent = new Intent();
+                    mIntent.putExtra(INDEX_OF_ADDRESS, postion);
+                    // 设置结果，并进行传送
+                    Activity_Site_Manage.this.setResult(code, mIntent);
+                    finish();
+                }
             }
         });
     }
@@ -191,7 +207,9 @@ public class Activity_Site_Manage extends BaseActivity {
      *
      * @param activity
      */
-    public static void startActiviyForResult(BaseActivity activity) {
-        activity.startActivityForResult(new Intent(activity, Activity_Site_Manage.class), 200);
+    public static void startActiviyForResult(BaseActivity activity, int requestCode) {
+        Intent intent = new Intent(activity, Activity_Site_Manage.class);
+        intent.putExtra(OK_CODE, requestCode);
+        activity.startActivityForResult(intent, requestCode);
     }
 }

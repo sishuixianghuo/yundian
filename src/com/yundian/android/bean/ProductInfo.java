@@ -3,10 +3,18 @@ package com.yundian.android.bean;
 import java.io.Serializable;
 
 /**
- * Created by liushenghan on 2017/12/18.
+ * @author liushenghan Created on 2017/12/18.
  */
 
 public class ProductInfo implements Serializable {
+
+    private String shop_name;
+
+    private float Product_Weight;
+
+    private int Product_SupplierID;
+    private float Product_Tiji;
+
     // 商品id
     private int g_ID;
     //价格
@@ -76,6 +84,38 @@ public class ProductInfo implements Serializable {
     }
 
 
+    public float getProduct_Weight() {
+        return Product_Weight;
+    }
+
+    public void setProduct_Weight(float product_Weight) {
+        Product_Weight = product_Weight;
+    }
+
+    public int getProduct_SupplierID() {
+        return Product_SupplierID;
+    }
+
+    public void setProduct_SupplierID(int product_SupplierID) {
+        Product_SupplierID = product_SupplierID;
+    }
+
+    public float getProduct_Tiji() {
+        return Product_Tiji;
+    }
+
+    public void setProduct_Tiji(float product_Tiji) {
+        Product_Tiji = product_Tiji;
+    }
+
+    public String getShop_name() {
+        return shop_name;
+    }
+
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +126,7 @@ public class ProductInfo implements Serializable {
         return g_ID == that.g_ID;
     }
 
+
     @Override
     public int hashCode() {
         return g_ID;
@@ -94,12 +135,19 @@ public class ProductInfo implements Serializable {
     @Override
     public String toString() {
         return "ProductInfo{" +
-                "g_ID=" + g_ID +
+                "shop_name='" + shop_name + '\'' +
+                ", Product_Weight=" + Product_Weight +
+                ", Product_SupplierID=" + Product_SupplierID +
+                ", Product_Tiji=" + Product_Tiji +
+                ", g_ID=" + g_ID +
                 ", g_mPrice=" + g_mPrice +
                 ", g_parent=" + g_parent +
                 ", g_photo='" + g_photo + '\'' +
                 ", g_mc='" + g_mc + '\'' +
                 ", g_time='" + g_time + '\'' +
+                ", amount=" + amount +
+                ", isSelected=" + isSelected +
+                ", isMove=" + isMove +
                 '}';
     }
 }

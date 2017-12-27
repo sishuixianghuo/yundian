@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="127dp"
+    android:background="@drawable/address_bg_post">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:textColor="@color/c262626"
+        android:textSize="20dp"
+        tools:text="布鲁  fai*****@sina.com" />
+
+    <TextView
+        android:id="@+id/shr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:textColor="@color/c828282"
+        android:textSize="16dp"
+        tools:text="收货人: 东来顺之神" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shr"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="2"
+        android:textColor="@color/c828282"
+        android:textSize="16dp"
+        tools:text="收货地址: " />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/shr"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/account_list_ic_address" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/order_list_ic_arrow_r" />
+
+
+</RelativeLayout>

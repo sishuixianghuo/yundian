@@ -58,7 +58,24 @@ public class Activity_Cart extends BaseActivity {
 
     @BindView(R.id.total_contain)
     View total_contain;
+    private float value = 0;
     private RecyclerView.Adapter<ViewHolder> adapter;
+
+
+    public void payOrder(View v) {
+
+        if (BaseApplication.getApp().getInfo() == null) {
+            DisplayToast(R.string.please_login);
+            return;
+        }
+
+        if (value == 0) {
+            DisplayToast(R.string.select_pdts);
+            return;
+        }
+        openActivity(ActivityOrder.class);
+
+    }
 
     // 编辑模式状态
     volatile boolean isEdit = false;
@@ -80,6 +97,7 @@ public class Activity_Cart extends BaseActivity {
 
             @Override
             public void onBindViewHolder(ViewHolder holder, int position) {
+                // 获取拖慢 但是没啥事
                 setDate(holder, position);
             }
 
@@ -108,6 +126,7 @@ public class Activity_Cart extends BaseActivity {
             }
         });
         recycler.setAdapter(adapter);
+
     }
 
 
@@ -116,6 +135,7 @@ public class Activity_Cart extends BaseActivity {
         super.onResume();
         Log.e(TAG, "onResume");
         adapter.notifyDataSetChanged();
+        computeValue();
     }
 
     @Override
@@ -127,6 +147,16 @@ public class Activity_Cart extends BaseActivity {
 
     }
 
+
+    private void computeValue() {
+        value = 0f;
+        for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
+            if (info.isSelected) {
+                value += info.amount * info.getG_mPrice();
+            }
+        }
+        total.setText(String.format("￥ %.2f", value));
+    }
 
     public void delete(View v) {
         if (isEdit && BaseApplication.getApp().getShoppingBag().size() > 0) {
@@ -143,13 +173,13 @@ public class Activity_Cart extends BaseActivity {
     public void editBag(View v) {
         isEdit = !isEdit;
         status.setSelected(false);
-        if (isEdit) {// 编辑模式
+        //  编辑模式
+        if (isEdit) {
             text_compile.setText("完成");
             // 合计部分隐藏 去结算变成 删除
             total_contain.setVisibility(View.INVISIBLE);
             order.setVisibility(View.INVISIBLE);
             delete.setVisibility(View.VISIBLE);
-
         } else { // 正常模式
             text_compile.setText("编辑");
             total_contain.setVisibility(View.VISIBLE);
@@ -172,6 +202,7 @@ public class Activity_Cart extends BaseActivity {
             }
         }
         adapter.notifyDataSetChanged();
+        computeValue();
     }
 
     private void setDate(final ViewHolder holder, int position) {
@@ -195,6 +226,7 @@ public class Activity_Cart extends BaseActivity {
                 } else {
                     holder.select.setSelected(info.isSelected = !holder.select.isSelected());
                 }
+                computeValue();
 
             }
         });
@@ -202,6 +234,9 @@ public class Activity_Cart extends BaseActivity {
             @Override
             public void onClick(View v) {
                 holder.number.setText(String.valueOf(++info.amount));
+                info.isSelected = true;
+                computeValue();
+                adapter.notifyDataSetChanged();
             }
         });
         holder.reduce.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +247,10 @@ public class Activity_Cart extends BaseActivity {
                     info.amount = 1;
                 }
                 holder.number.setText(String.valueOf(info.amount));
+                info.isSelected = true;
+                computeValue();
+                adapter.notifyDataSetChanged();
+
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -241,7 +280,7 @@ public class Activity_Cart extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 BaseApplication.getApp().getShoppingBag().remove(info);
                                 adapter.notifyDataSetChanged();
-                                // 重新计算价格
+                                computeValue();
                             }
                         })
                         .setNegativeButton(cancle, new DialogInterface.OnClickListener() {
@@ -256,10 +295,7 @@ public class Activity_Cart extends BaseActivity {
                 con.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
                 Button can = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
                 can.setTextColor(Color.parseColor("#3a3a3a"));
-
                 can.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-
-
                 return false;
             }
         });

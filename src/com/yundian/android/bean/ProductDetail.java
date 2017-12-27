@@ -53,7 +53,7 @@ public class ProductDetail implements Serializable {
     private String Product_Addtime;
     private String Product_Img1;
     private String Product_Yongtu;
-    private String Product_Tiji;
+    private float Product_Tiji;
     private String Product_Xh;
 
     public int getProduct_ID() {
@@ -248,11 +248,11 @@ public class ProductDetail implements Serializable {
         Product_Yongtu = product_Yongtu;
     }
 
-    public String getProduct_Tiji() {
+    public float getProduct_Tiji() {
         return Product_Tiji;
     }
 
-    public void setProduct_Tiji(String product_Tiji) {
+    public void setProduct_Tiji(float product_Tiji) {
         Product_Tiji = product_Tiji;
     }
 
@@ -267,9 +267,13 @@ public class ProductDetail implements Serializable {
 
     public ProductInfo getPdt() {
         ProductInfo info = new ProductInfo();
-        info.setG_ID(getProduct_ID());
-        info.setG_mc(getProduct_Name());
-        info.setG_mPrice(getProduct_Price());
+        info.setG_ID(Product_ID);
+        info.setG_mc(Product_Name);
+        info.setG_mPrice(Product_Price);
+        info.setProduct_SupplierID(Product_SupplierID);
+        info.setProduct_Weight(Product_Weight);
+        info.setProduct_Tiji(Product_Tiji);
+        info.setG_photo(Product_Img);
         return info;
     }
 

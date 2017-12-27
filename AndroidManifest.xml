@@ -123,8 +123,12 @@
             android:name=".ui.Activity_Add_Site"
             android:launchMode="singleTop" />
 
-        <activity android:name=".ui.ActivityStore" android:launchMode="singleTask" android:taskAffinity=""/>
-        <activity android:name=".ui.ActivityStoreDetail"  />
+        <activity
+            android:name=".ui.ActivityStore"
+            android:launchMode="singleTask"
+            android:taskAffinity="" />
+        <activity android:name=".ui.ActivityStoreDetail" />
+        <activity android:name=".ui.ActivityOrder" />
 
     </application>
 

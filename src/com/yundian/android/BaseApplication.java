@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.model.Response;
 import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.PayMethod;
 import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.bean.UserInfo;
 import com.yundian.android.net.GenericCallBack;
@@ -39,6 +40,8 @@ public class BaseApplication extends Application {
     private List<ProductInfo> shoppingBag = new CopyOnWriteArrayList<>();
     // 存放用户的地址信息
     private List<Address> addresses = new CopyOnWriteArrayList<>();
+    // 存放系统支付方式
+    private List<PayMethod> payMethods = new CopyOnWriteArrayList<>();
 
     /**
      * 获取Application
@@ -71,6 +74,14 @@ public class BaseApplication extends Application {
             }).start();
         }
 
+        if (payMethods.isEmpty()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    getPayMethod();
+                }
+            }).start();
+        }
 
     }
 
@@ -142,6 +153,24 @@ public class BaseApplication extends Application {
                 }
             }
         });
+
+        if (payMethods.isEmpty()) {
+            getPayMethod();
+        }
+    }
+
+    private void getPayMethod() {
+        HttpServer.getPayMethod(this.getClass().getName(), new GenericCallBack<BaseResponse<List<PayMethod>>>(
+                new TypeToken<BaseResponse<List<PayMethod>>>() {
+                }.getType()) {
+            @Override
+            public void onSuccess(Response<BaseResponse<List<PayMethod>>> response) {
+                if (response.body().isOK() && !response.body().getInfo().isEmpty()) {
+                    payMethods.clear();
+                    payMethods.addAll(response.body().getInfo());
+                }
+            }
+        });
     }
 
     public UserInfo getInfo() {
@@ -160,4 +189,7 @@ public class BaseApplication extends Application {
         return addresses;
     }
 
+    public List<PayMethod> getPayMethods() {
+        return payMethods;
+    }
 }

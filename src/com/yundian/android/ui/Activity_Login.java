@@ -25,6 +25,7 @@ import com.yundian.android.bean.Token;
 import com.yundian.android.bean.UserInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.utils.RxSchedulers;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
@@ -111,7 +112,10 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
 
     // 获取用户信息
     private void getUserInfo(final String userName, final String pwd) {
-
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         dialog = WeiboDialogUtils.createLoadingDialog(this, "正在登陆");
         Flowable.create(new FlowableOnSubscribe<Token>() {
             @Override

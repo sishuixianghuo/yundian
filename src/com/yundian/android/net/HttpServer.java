@@ -11,6 +11,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.OrderInfo;
 import com.yundian.android.bean.UserInfo;
 
 import java.util.List;
@@ -33,6 +34,11 @@ public final class HttpServer {
     public static final String GET_STORE_INFO = HOST + "/WebService.asmx/getShopInfo";
     public static final String ADD_USER_ADD = HOST + "/WebService.asmx/AddUserAddress";
     public static final String GET_ADDRESS = HOST + "/WebService.asmx/getUserAddress";
+    public static final String GET_DELIVERY = HOST + "/WebService.asmx/Get_SysDelivery";
+    public static final String GET_PAY_WAY = HOST + "/WebService.asmx/Get_SysPayWay";
+    public static final String SUBMIT_ORDER = HOST + "/WebService.asmx/DingDanSave";
+    public static final String GET_USER_ORDER = HOST + "/WebService.asmx/getUserOrder";
+    public static final String CONTACT_US = "http://www.yundian777.com/HelpCenter/ContactUs.aspx";
 
     private HttpServer() {
         throw new RuntimeException("禁止创建对象");
@@ -175,5 +181,50 @@ public final class HttpServer {
         params.put("phone", address.getPhone());
         params.put("email", address.getEmail());
         OkGo.<T>post(ADD_USER_ADD).params(params).tag(tag).execute(callback);
+    }
+
+
+    //获取店铺快递方式
+    public static <T> void getDeliveryMethod(String tag, int pid, GenericCallBack<T> callback) {
+        OkGo.<T>post(GET_DELIVERY).params("supplierid", pid).tag(tag).execute(callback);
+    }
+
+    //获取店铺快递方式
+    public static <T> void getPayMethod(String tag, GenericCallBack<T> callback) {
+        OkGo.<T>post(GET_PAY_WAY).tag(tag).execute(callback);
+    }
+
+    //提交订单
+    public static <T> void submitOrder(String tag, OrderInfo order, GenericCallBack<T> callback) {
+        /// DingDanSave 添加订单
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="Orders_Address_ID">收货地址ID(关联收货地址主键)</param>
+        /// <param name="Orders_Note">订单备注</param>
+        /// <param name="Orders_Payway">付款方式ID</param>
+        /// <param name="Orders_SupplierID">商家ID</param>
+        /// <param name="Delivery_Way_ID">配送方式ID</param>
+        /// <param name="product_id">购物车产品ID(多个产品以#相连)</param>
+        /// <param name="product_amount">产品数量(多个数量以#相连)</param>
+        /// <param name="total_price">产品总价</param>
+        /// <param name="total_priceFreight">运费总价</param>
+        /// <param name="total_allprice">订单总价</param>
+        HttpParams params = new HttpParams();
+        params.put("Orders_Address_ID", order.getOrders_Address_ID());
+        params.put("Orders_Note", order.getOrders_Note());
+        params.put("Orders_Payway", order.getOrders_Payway());
+        params.put("Orders_SupplierID", order.getOrders_SupplierID());
+        params.put("Delivery_Way_ID", order.getDelivery_Way_ID());
+        params.put("product_id", order.getProduct_id());
+        params.put("product_amount", order.getProduct_amount());
+        params.put("total_price", order.getTotal_price());
+        params.put("total_priceFreight", order.getTotal_priceFreight());
+        params.put("total_allprice", order.getTotal_allprice());
+        OkGo.<T>post(SUBMIT_ORDER).tag(tag).params(params).execute(callback);
+    }
+
+    /*获取用户订单*/
+    public static <T> void getUserOrder(String tag, GenericCallBack<T> callback) {
+        OkGo.<T>post(GET_USER_ORDER).tag(tag).execute(callback);
     }
 }

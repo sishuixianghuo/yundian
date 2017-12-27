@@ -1,6 +1,7 @@
 package com.yundian.android.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.bean.UserInfo;
+import com.yundian.android.net.HttpServer;
 import com.yundian.android.utils.CommonTools;
 
 
@@ -76,7 +78,7 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
         text_daipingjia.setOnClickListener(this);
         info = BaseApplication.getApp().getInfo();
         if (info != null) {
-        	user_name.setText(info.getNickname());
+            user_name.setText(info.getNickname());
             mLoginButton.setText(info.getEmail());
             mLoginButton.setBackground(null);
         } else {
@@ -95,6 +97,8 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
         //CommonTools.showShortToast(PersonalActivity.this, "稍后开放");
+
+
         switch (v.getId()) {
             case R.id.personal_login_button:
                 if (info == null) {
@@ -102,14 +106,25 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
                     startActivityForResult(mIntent, LOGIN_CODE);
                 }
                 break;
+        }
+
+        if (info == null) {
+            DisplayToast(R.string.please_login);
+            return;
+        }
+
+        switch (v.getId()) {
             case R.id.rl_site_manage:
+                // 地址管理
                 mIntent = new Intent(Activity_Personal.this, Activity_Site_Manage.class);
                 startActivity(mIntent);
                 break;
             case R.id.rl_wodexinxi:
+                // 我的信息
                 startActivity(Activity_Main_Info.getIntent_Common(this));
                 break;
             case R.id.rl_xiugaimima:
+                // 修改密码
                 startActivity(Activity_Revise_Password.getIntent_Common(this));
                 break;
             case R.id.text_daifukuan:   //代付款
@@ -119,10 +134,12 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
                 startActivity(Activity_Pay_Receive.getIntent_Common(this, 2));
                 break;
             case R.id.text_daiziti:
+                // 自提
                 break;
             case R.id.text_daipingjia:
+                // 评价
                 break;
-            case R.id.rl_dingdan:
+            case R.id.rl_dingdan: // 全部订单
                 startActivity(Activity_My_Order.getIntent_Common(this));
                 break;
 
@@ -132,9 +149,14 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
 
     }
 
+    public void contact_us(View v) {
+//        DisplayToast("联系我们");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(HttpServer.CONTACT_US));
+        startActivity(intent);
+    }
+
 
     public void logout(View v) {
-        DisplayToast("tuichu ");
         BaseApplication.getApp().setToken(null);
         BaseApplication.getApp().setInfo(null);
         initView();

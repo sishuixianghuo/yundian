@@ -27,6 +27,7 @@ import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
 import java.lang.reflect.Type;
@@ -188,6 +189,10 @@ public class SearchActivity extends BaseActivity {
 
     /*获取数据*/
     private void requestInfo() {
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         if (!refreshLayout.isRefreshing() && indexPage == 1) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(SearchActivity.this, "加载中...");
         }

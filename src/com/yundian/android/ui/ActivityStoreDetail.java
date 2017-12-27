@@ -27,6 +27,7 @@ import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.StoreInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
 import java.util.List;
@@ -166,6 +167,10 @@ public class ActivityStoreDetail extends BaseActivity {
     }
 
     private void request() {
+        if (!NetWorkUtil.isNetConnected(this)) {
+            DisplayToast(R.string.no_net_work);
+            return;
+        }
         if (mWeiboDialog == null) {
             mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, getString(R.string.loading));
         } else {
