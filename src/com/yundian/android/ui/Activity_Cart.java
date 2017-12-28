@@ -1,6 +1,8 @@
 package com.yundian.android.ui;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
@@ -30,6 +33,7 @@ import com.yundian.android.bean.ProductInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 购物车
@@ -38,6 +42,12 @@ import butterknife.ButterKnife;
  */
 public class Activity_Cart extends BaseActivity {
 
+    static final String KEY_TAG = "key_tag";
+
+    @OnClick(R.id.image_return)
+    public void close() {
+        finish();
+    }
 
     @BindView(R.id.text_compile)
     TextView text_compile;
@@ -55,6 +65,10 @@ public class Activity_Cart extends BaseActivity {
 
     @BindView(R.id.delete)
     View delete;
+
+    @BindView(R.id.image_return)
+    View image_return;
+
 
     @BindView(R.id.total_contain)
     View total_contain;
@@ -127,13 +141,15 @@ public class Activity_Cart extends BaseActivity {
         });
         recycler.setAdapter(adapter);
 
+        if (TextUtils.isEmpty(getIntent().getStringExtra(KEY_TAG))) {
+            image_return.setVisibility(View.GONE);
+        }
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume");
         adapter.notifyDataSetChanged();
         computeValue();
     }
@@ -299,6 +315,13 @@ public class Activity_Cart extends BaseActivity {
                 return false;
             }
         });
+    }
+
+
+    public static void startActivity(String tag, Activity activity) {
+        Intent intent = new Intent(activity, Activity_Cart.class);
+        intent.putExtra(KEY_TAG, tag);
+        activity.startActivity(intent);
     }
 
 

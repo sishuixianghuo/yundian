@@ -322,7 +322,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             DisplayToast(R.string.contact_store);
             return;
         }
-        DisplayToast(R.string.put_to_bag);
         if (BaseApplication.getApp().getShoppingBag().contains(pdt)) {
             for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
                 if (info.equals(pdt)) {

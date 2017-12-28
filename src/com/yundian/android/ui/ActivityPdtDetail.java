@@ -6,20 +6,25 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.model.Response;
+import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.ProductDetail;
 import com.yundian.android.bean.ProductInfo;
+import com.yundian.android.bean.StoreInfo;
 import com.yundian.android.fragment.EmptyFragment;
 import com.yundian.android.fragment.ProductFragment;
 import com.yundian.android.fragment.TestFragment;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.CommonTools;
 import com.yundian.android.utils.NetWorkUtil;
 import com.yundian.android.widgets.PageHorizontalScrollView;
 import com.yundian.android.widgets.WeiboDialogUtils;
@@ -46,12 +51,19 @@ public class ActivityPdtDetail extends BaseActivity {
     @BindView(R.id.user_scrollview)
     PageHorizontalScrollView scrollview;
 
+    @BindView(R.id.number)
+    TextView number;
+
 
     private List<Fragment> fragments;
     private String[] titleList = new String[]{"商品", "评价", "厂家", "售后"};
     public ProductDetail detail;
     private ProductFragment pay;
     private int amount = 1;
+    private StoreInfo info;
+    private int shop_id;
+
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +72,8 @@ public class ActivityPdtDetail extends BaseActivity {
 
         ButterKnife.bind(this);
         pid = getIntent().getIntExtra(SearchActivity.PID, -1);
-        if (pid <= 0) {
+        shop_id = getIntent().getIntExtra(SearchActivity.SHOP_ID, -1);
+        if (pid <= 0 || shop_id <= 0) {
             finish();
         } else {
             request();
@@ -79,9 +92,9 @@ public class ActivityPdtDetail extends BaseActivity {
             EmptyFragment shouhou = new EmptyFragment();
             shouhou.setArguments(args);
             fragments.add(pay);
-            fragments.add(free);
-            fragments.add(selling);
-            fragments.add(shouhou);
+//            fragments.add(free);
+//            fragments.add(selling);
+//            fragments.add(shouhou);
             viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
                 @Override
                 public Fragment getItem(int position) {
@@ -98,11 +111,16 @@ public class ActivityPdtDetail extends BaseActivity {
                     return fragments.size();
                 }
             });
-            viewPager.setOffscreenPageLimit(4);
+            viewPager.setOffscreenPageLimit(fragments.size());
             scrollview.setViewPager(viewPager);
             scrollview.setTextSize(50);
             scrollview.setTabPaddingLeftRight(24);
         }
+
+        for (ProductInfo info : BaseApplication.getApp().getShoppingBag()) {
+            count += info.amount;
+        }
+        number.setText(count > 99 ? "99+" : String.valueOf(count));
     }
 
     @Override
@@ -112,6 +130,15 @@ public class ActivityPdtDetail extends BaseActivity {
 
     @Override
     protected void initView() {
+    }
+
+
+    @Override
+    public void addWithDelPdt2Bag(ProductInfo pdt, boolean isAdd) {
+        super.addWithDelPdt2Bag(pdt, isAdd);
+        if (pdt.getG_mPrice() > CommonTools.THRESHOLD_PRICE) {
+            number.setText(++count > 99 ? "99+" : String.valueOf(count));
+        }
     }
 
     public void back(View v) {
@@ -124,6 +151,18 @@ public class ActivityPdtDetail extends BaseActivity {
             return;
         }
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, "加载中");
+        HttpServer.getShopInfo(TAG, shop_id, new GenericCallBack<BaseResponse<List<StoreInfo>>>(new TypeToken<BaseResponse<List<StoreInfo>>>() {
+        }.getType()) {
+            @Override
+            public void onSuccess(Response<BaseResponse<List<StoreInfo>>> response) {
+                if (response.body().isOK() && response.body().getInfo().size() > 0) {
+                    // 设置信息
+                    info = response.body().getInfo().get(0);
+                } else {
+                }
+            }
+        });
+
         Type type = new TypeToken<BaseResponse<List<ProductDetail>>>() {
         }.getType();
         HttpServer.getProductInfo(TAG, pid, new GenericCallBack<BaseResponse<List<ProductDetail>>>(type) {
@@ -133,6 +172,7 @@ public class ActivityPdtDetail extends BaseActivity {
                 if (response.body().isOK()) {
                     detail = response.body().getInfo().get(0);
                     pay.setData(detail);
+
                 } else {
                     DisplayToast(response.body().getMsg());
                 }
@@ -147,10 +187,18 @@ public class ActivityPdtDetail extends BaseActivity {
             }
         });
 
+
     }
 
     public void contact(View v) {
-        DisplayToast("拔打电话");
+        if (info == null || (TextUtils.isEmpty(info.getSupplier_Phone()) && TextUtils.isEmpty(info.getSupplier_mobile()))) {
+            DisplayToast("数据错误");
+            return;
+        }
+
+        final String msg = !TextUtils.isEmpty(info.getSupplier_Phone()) ? info.getSupplier_Phone() : info.getSupplier_mobile();
+
+        WeiboDialogUtils.CallPhone(this, msg);
     }
 
     public void shop(View v) {
@@ -171,12 +219,20 @@ public class ActivityPdtDetail extends BaseActivity {
     public void cart(View v) {
 //        DisplayToast("去购物车");
         // openActivity(HomeActivity.class); 在
-        openActivity(Activity_Cart.class);
+        Activity_Cart.startActivity(TAG, this);
     }
 
-    public static void startActivity(int pid, Activity activity) {
+    /**
+     * 商品id 店铺id
+     *
+     * @param pid
+     * @param shopid
+     * @param activity
+     */
+    public static void startActivity(int pid, int shopid, Activity activity) {
         Intent intent = new Intent(activity, ActivityPdtDetail.class);
         intent.putExtra(SearchActivity.PID, pid);
+        intent.putExtra(SearchActivity.SHOP_ID, shopid);
         activity.startActivity(intent);
     }
 }

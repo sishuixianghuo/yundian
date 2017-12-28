@@ -346,7 +346,7 @@ public class Activity_HomePage extends BaseActivity {
         holder.page_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityPdtDetail.startActivity(info.getG_ID(), activity);
+                ActivityPdtDetail.startActivity(info.getG_ID(), info.getProduct_SupplierID(), activity);
             }
         });
         if (info2 != null) {
@@ -368,7 +368,7 @@ public class Activity_HomePage extends BaseActivity {
             holder.page_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityPdtDetail.startActivity(info2.getG_ID(), activity);
+                    ActivityPdtDetail.startActivity(info2.getG_ID(), info2.getProduct_SupplierID(), activity);
                 }
             });
         } else {

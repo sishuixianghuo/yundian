@@ -58,6 +58,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ActivityStore extends BaseActivity {
     public static final String STORE_ID = "store_id";
+    public static final String STORE_NAME = "store_NAME";
     public static final int HEAD_TYPE = 1;
     public static final int ITEM_TYPE = 0;
 
@@ -91,6 +92,7 @@ public class ActivityStore extends BaseActivity {
 //            window.setNavigationBarColor(Color.TRANSPARENT);
 //        }
         storeId = getIntent().getIntExtra(STORE_ID, -1);
+        storeInfo = (StoreInfo) getIntent().getSerializableExtra(STORE_NAME);
         if (storeId < 0) {
             finish();
         }
@@ -214,6 +216,20 @@ public class ActivityStore extends BaseActivity {
         }
     }
 
+
+    public void goStore(View v) {
+        ActivityStoreDetail.startAct(storeId, this);
+    }
+
+    public void callPhone(View v) {
+        if (storeInfo == null) {
+            DisplayToast("数据错误");
+            return;
+        }
+        String msg = !TextUtils.isEmpty(storeInfo.getSupplier_Phone()) ? storeInfo.getSupplier_Phone() : storeInfo.getSupplier_mobile();
+        WeiboDialogUtils.CallPhone(this, msg);
+    }
+
     private void initHead(Activity_HomePage.ViewHolder holder) {
         holder.itemView.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,7 +276,6 @@ public class ActivityStore extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // 跳转店铺详情页
-                DisPlay("跳转");
                 ActivityStoreDetail.startAct(storeInfo.getShop_id(), ActivityStore.this);
             }
         });
@@ -274,6 +289,7 @@ public class ActivityStore extends BaseActivity {
             return;
         }
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(ActivityStore.this, getString(R.string.loading));
+
         Flowable.create(new FlowableOnSubscribe<StoreInfo>() {
             @Override
             public void subscribe(final FlowableEmitter<StoreInfo> e) throws Exception {
@@ -361,6 +377,8 @@ public class ActivityStore extends BaseActivity {
                         compelete();
                     }
                 });
+
+
     }
 
     private void loadMore() {

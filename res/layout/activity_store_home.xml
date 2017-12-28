@@ -37,23 +37,27 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
-        android:background="#88FFFFFF"
+        android:background="#60FFFFFF"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <TextView
+            android:onClick="goStore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="店铺介绍"
             android:textColor="@color/c3a3a3a"
             android:textSize="20dp" />
 
         <TextView
+            android:onClick="callPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:text="联系方式"
             android:textColor="@color/c3a3a3a"
             android:textSize="20dp" />
     </LinearLayout>

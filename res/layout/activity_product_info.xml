@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_weight="225"
+    android:background="@color/white"
+    android:clipChildren="false">
 
     <RelativeLayout
         android:id="@+id/personal_top_layout"
@@ -50,6 +52,7 @@
         android:layout_height="54dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
+
         android:orientation="vertical">
 
         <View
@@ -123,7 +126,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/cart"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -131,7 +134,9 @@
                 android:gravity="center"
                 android:onClick="cart">
 
+
                 <LinearLayout
+                    android:id="@+id/contain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -140,11 +145,14 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:src="@drawable/info_functionbar_ic_shoppingcart" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/icon"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="3dp"
                         android:text="购物车"
                         android:textColor="@color/c3a3a3a"
@@ -152,7 +160,23 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="-15dp"
+                    android:layout_marginTop="-5dp"
+                    android:layout_toRightOf="@+id/contain"
+                    android:background="@drawable/num_bg_red"
+                    android:gravity="center"
+                    android:minWidth="15dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:text="210"
+                    android:textColor="@color/e60012"
+                    android:textSize="10dp" />
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="1dp"

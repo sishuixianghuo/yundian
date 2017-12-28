@@ -111,10 +111,14 @@ public class ActivityOrderDetail extends BaseActivity {
             DisplayToast("数据错误请重试");
             finish();
         }
-        setStaticInfo();
         request();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setStaticInfo();
+    }
 
     private void request() {
         mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, getString(R.string.loading));

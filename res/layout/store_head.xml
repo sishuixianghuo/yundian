@@ -28,7 +28,8 @@
             android:layout_toLeftOf="@+id/store_class"
             android:layout_toRightOf="@+id/back"
             android:background="@drawable/shop_searchbar_bg_input"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/edit_seek"
@@ -63,7 +64,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:layout_toLeftOf="@+id/more"
-            android:src="@drawable/shop_banner_ic_classification" />
+            android:src="@drawable/shop_banner_ic_classification"
+            android:visibility="gone" />
 
 
         <ImageView
@@ -74,7 +76,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:src="@drawable/shop_banner_ic_more" />
+            android:src="@drawable/shop_banner_ic_more"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -90,7 +93,8 @@
             android:layout_width="67dp"
             android:layout_height="67dp"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/store_icon" />
+            android:src="@drawable/store_icon"
+            android:visibility="gone" />
 
 
         <TextView

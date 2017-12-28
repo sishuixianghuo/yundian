@@ -256,8 +256,7 @@
         android:id="@+id/bottom"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
+        android:layout_alignParentBottom="true">
 
         <View
             android:layout_width="match_parent"
@@ -273,7 +272,8 @@
             android:layout_marginRight="16dp"
             android:onClick="del"
             android:text="删除订单"
-            android:textColor="@color/c3a3a3a" />
+            android:textColor="@color/c3a3a3a"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/lianxi"
@@ -288,7 +288,8 @@
             android:onClick="lianxi"
             android:text="联系卖家"
             android:textColor="@color/c3a3a3a"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/pingjia"
@@ -301,7 +302,8 @@
             android:onClick="pingjia"
             android:text="评价"
             android:textColor="@color/c3a3a3a"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/btn_confirm"

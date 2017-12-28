@@ -71,10 +71,10 @@ public class Activity_My_Order extends BaseActivity {
         EmptyFragment shouhou = new EmptyFragment();
         shouhou.setArguments(args);
         fragments.add(all);
-        fragments.add(other);
-        fragments.add(free);
-        fragments.add(selling);
-        fragments.add(shouhou);
+//        fragments.add(other);
+//        fragments.add(free);
+//        fragments.add(selling);
+//        fragments.add(shouhou);
         view_page.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

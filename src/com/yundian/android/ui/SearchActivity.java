@@ -41,6 +41,7 @@ import butterknife.ButterKnife;
 public class SearchActivity extends BaseActivity {
 
     public static final String PID = "pid";
+    public static final String SHOP_ID = "shop_id";
     public static final String KEY_WORD = "key_word";
 
     @BindView(R.id.empty_image)

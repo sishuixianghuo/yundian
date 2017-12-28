@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
@@ -62,6 +61,7 @@ public class ActivityStoreDetail extends BaseActivity {
         DisplayToast(R.string.function_not_imp);
     }
 
+
     @OnClick(R.id.qualification)
     public void qualification() {
         DisplayToast(R.string.function_not_imp);
@@ -70,51 +70,12 @@ public class ActivityStoreDetail extends BaseActivity {
     @OnClick(R.id.hot_line_layout)
     public void dialing() {
         if (info == null || (TextUtils.isEmpty(info.getSupplier_Phone()) && TextUtils.isEmpty(info.getSupplier_mobile()))) {
-            DisplayToast("没有有效信息");
+            DisplayToast("数据错误");
             return;
         }
 
         final String msg = !TextUtils.isEmpty(info.getSupplier_Phone()) ? info.getSupplier_Phone() : info.getSupplier_mobile();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityStoreDetail.this, R.style.CustomDialog);
-
-        SpannableString title = new SpannableString("服务热线");
-        title.setSpan(new ForegroundColorSpan(Color.parseColor("#3a3a3a")), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        title.setSpan(new AbsoluteSizeSpan(20, true), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        title.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        SpannableString message = new SpannableString(msg);
-        message.setSpan(new ForegroundColorSpan(Color.parseColor("#3a3a3a")), 0, msg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        message.setSpan(new AbsoluteSizeSpan(20, true), 0, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        String confirm = "确定";
-
-        String cancle = "取消";
-
-        builder.setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        Uri data = Uri.parse("tel:" + msg);
-                        intent.setData(data);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton(cancle, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
-        AlertDialog dialog = builder.show();
-        Button con = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        con.setTextColor(Color.parseColor("#e60012"));
-        con.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-        Button can = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-        can.setTextColor(Color.parseColor("#3a3a3a"));
-        can.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        WeiboDialogUtils.CallPhone(this, msg);
     }
 
     @BindView(R.id.image)
@@ -130,6 +91,10 @@ public class ActivityStoreDetail extends BaseActivity {
     @BindView(R.id.address)
     TextView address;
 
+
+    @BindView(R.id.more)
+    View more;
+
     private StoreInfo info;
 
     @Override
@@ -137,12 +102,12 @@ public class ActivityStoreDetail extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_dsc);
         ButterKnife.bind(this);
-
         storeId = getIntent().getIntExtra(ActivityStore.STORE_ID, -1);
         if (storeId < 0) {
             finish();
         }
         title.setVisibility(View.GONE);
+        more.setVisibility(View.GONE);
         sub_title.setText("店铺简介");
 
     }
@@ -176,6 +141,8 @@ public class ActivityStoreDetail extends BaseActivity {
         } else {
             mWeiboDialog.show();
         }
+
+
         HttpServer.getShopInfo(TAG, storeId, new GenericCallBack<BaseResponse<List<StoreInfo>>>(new TypeToken<BaseResponse<List<StoreInfo>>>() {
         }.getType()) {
             @Override
