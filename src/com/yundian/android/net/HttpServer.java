@@ -37,7 +37,9 @@ public final class HttpServer {
     public static final String GET_DELIVERY = HOST + "/WebService.asmx/Get_SysDelivery";
     public static final String GET_PAY_WAY = HOST + "/WebService.asmx/Get_SysPayWay";
     public static final String SUBMIT_ORDER = HOST + "/WebService.asmx/DingDanSave";
-    public static final String GET_USER_ORDER = HOST + "/WebService.asmx/getUserOrder";
+    //    public static final String GET_USER_ORDER = HOST + "/WebService.asmx/getUserOrder";
+    public static final String GET_USER_ORDER = HOST + "/WebService.asmx/DingDanlist";
+    public static final String GET_ORDER_DETAIL = HOST + "/WebService.asmx/DingDanProductList";
     public static final String CONTACT_US = "http://www.yundian777.com/HelpCenter/ContactUs.aspx";
 
     private HttpServer() {
@@ -226,5 +228,11 @@ public final class HttpServer {
     /*获取用户订单*/
     public static <T> void getUserOrder(String tag, GenericCallBack<T> callback) {
         OkGo.<T>post(GET_USER_ORDER).tag(tag).execute(callback);
+    }
+
+
+    /*获取用户订单*/
+    public static <T> void getOrderDetail(String tag, int orderId, GenericCallBack<T> callback) {
+        OkGo.<T>post(GET_ORDER_DETAIL).tag(tag).params("orderid",orderId).execute(callback);
     }
 }

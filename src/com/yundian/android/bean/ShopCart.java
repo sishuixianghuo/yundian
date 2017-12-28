@@ -61,7 +61,7 @@ public class ShopCart implements Serializable {
         this.delivery = delivery;
         freight = delivery.getDelivery_Way_InitialFee();
         if (weight > delivery.getDelivery_Way_InitialWeight()) {
-            freight += (weight - delivery.getDelivery_Way_InitialWeight() + delivery.getDelivery_Way_UpWeight() - 1) / delivery.getDelivery_Way_UpWeight() * delivery.getDelivery_Way_UpFee();
+            freight += Math.ceil((weight - delivery.getDelivery_Way_InitialWeight() + delivery.getDelivery_Way_UpWeight() - 1) / delivery.getDelivery_Way_UpWeight()) * delivery.getDelivery_Way_UpFee();
         }
     }
 

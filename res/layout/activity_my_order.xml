@@ -1,85 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/f6f6f6">
+    android:background="@color/f6f6f6"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/personal_top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="2dp"
-        android:background="@color/white">
+    <include layout="@layout/sub_title_bar" />
 
-        <ImageView
-            android:id="@+id/image_return"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="15dp"
-            android:src="@drawable/navbar_ic_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/image_return"
-            android:text="我的订单"
-            android:textColor="@color/c262626"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/e6e6e6" />
-    </RelativeLayout>
-
-    <RadioGroup
-        android:id="@+id/rg_order_top"
-        android:layout_width="match_parent"
+    <com.yundian.android.widgets.PageHorizontalScrollView
+        android:id="@+id/user_scrollview"
         android:background="@color/white"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/personal_top_layout">
-
-        <RadioButton
-            style="@style/my_order_top"
-            android:id="@+id/rb_all"
-            android:checked="true"
-            android:text="全部\n5" />
-        <RadioButton
-            style="@style/my_order_top"
-            android:id="@+id/rb_daifukuan"
-            android:text="全部\n5" />
-        <RadioButton
-            style="@style/my_order_top"
-            android:id="@+id/rb_daishouhuo"
-            android:text="全部\n5" />
-        <RadioButton
-            style="@style/my_order_top"
-            android:id="@+id/rb_daiziti"
-            android:text="全部\n5" />
-        <RadioButton
-            style="@style/my_order_top"
-            android:id="@+id/rb_daipingjia"
-            android:text="全部\n5" />
-    </RadioGroup>
-
-    <RelativeLayout
-        android:id="@+id/rl_email"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/rg_order_top"
-        android:layout_marginTop="1px"
-        android:background="@color/white">
+        android:layout_height="50dp">
 
-    </RelativeLayout>
+    </com.yundian.android.widgets.PageHorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/e6e6e6" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
 
 
-</RelativeLayout>
+</LinearLayout>

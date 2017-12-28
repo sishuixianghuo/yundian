@@ -129,6 +129,7 @@
             android:taskAffinity="" />
         <activity android:name=".ui.ActivityStoreDetail" />
         <activity android:name=".ui.ActivityOrder" />
+        <activity android:name=".ui.ActivityOrderDetail" />
 
     </application>
 

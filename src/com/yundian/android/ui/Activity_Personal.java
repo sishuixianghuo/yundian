@@ -140,7 +140,7 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
                 // 评价
                 break;
             case R.id.rl_dingdan: // 全部订单
-                startActivity(Activity_My_Order.getIntent_Common(this));
+                openActivity(Activity_My_Order.class);
                 break;
 
             default:

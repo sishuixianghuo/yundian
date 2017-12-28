@@ -2,9 +2,7 @@ package com.yundian.android.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -414,7 +412,7 @@ public class ActivityOrder extends BaseActivity {
                         } else if (method.getPay_Way_Name().contains("银联")) {
                             icon.setImageResource(R.drawable.purchase_ic_unionpay);
                         } else if (method.getPay_Way_Name().contains("线下")) {
-                            icon.setImageDrawable(new ColorDrawable(Color.WHITE));
+                            icon.setImageResource(R.drawable.purchase_ic_payment);
                         }
                         TextView name = (TextView) view.findViewById(R.id.name);
                         name.setText(method.getPay_Way_Name());
