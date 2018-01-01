@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ImageView;
 
+import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
-import com.yundian.android.URLs;
-import com.yundian.android.utils.SettingUtils;
 
 /**
  * 我的信息
@@ -58,18 +57,15 @@ public class Activity_Main_Info extends BaseActivity implements OnClickListener 
         rl_email.setOnClickListener(this);
         rl_name.setOnClickListener(this);
         rl_phone.setOnClickListener(this);
-        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL, ""));
-        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME, ""));
-        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE, ""));
+
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        text_email.setText(SettingUtils.get(URLs.MAIN_INFO_EMAIL, ""));
-        text_name.setText(SettingUtils.get(URLs.MAIN_INFO_NAME, ""));
-        text_phone.setText(SettingUtils.get(URLs.MAIN_INFO_PHONE, ""));
+    protected void onResume() {
+        super.onResume();
+        text_email.setText(BaseApplication.getApp().getInfo().getEmail());
+        text_name.setText(BaseApplication.getApp().getInfo().getNickname());
+        text_phone.setText(BaseApplication.getApp().getInfo().getPhone());
     }
 
     @Override

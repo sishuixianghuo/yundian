@@ -8,7 +8,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +16,19 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.model.Response;
 import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.bean.Address;
+import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.Province;
+import com.yundian.android.net.GenericCallBack;
+import com.yundian.android.net.HttpServer;
+import com.yundian.android.widgets.WeiboDialogUtils;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +63,7 @@ public class Activity_Site_Manage extends BaseActivity {
     View more;
 
     int code = -1;
+    private List<Province> areas = BaseApplication.getApp().getCantons();
 
     @OnClick(R.id.button_add_dizhi)
     public void addAddress() {
@@ -71,9 +82,7 @@ public class Activity_Site_Manage extends BaseActivity {
         title.setVisibility(View.GONE);
         more.setVisibility(View.GONE);
         sub_title.setText("地址管理");
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
@@ -98,6 +107,7 @@ public class Activity_Site_Manage extends BaseActivity {
 
             }
         });
+        Log.e(TAG, " Address size = " + BaseApplication.getApp().getAddresses().size());
         recyclerView.setAdapter(adapter = new RecyclerView.Adapter<ViewHolder>() {
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -114,48 +124,63 @@ public class Activity_Site_Manage extends BaseActivity {
 
             @Override
             public int getItemCount() {
+//                return  10;
                 return BaseApplication.getApp().getAddresses().size();
             }
         });
     }
 
     private void setData(final ViewHolder holder, final int postion) {
-        Address address = BaseApplication.getApp().getAddresses().get(postion);
-        holder.text_name.setText(address.getShouhuoren());
-        holder.text_phone.setText(address.getMobile());
-        holder.text_site.setText(address.getProvice());
-        holder.text_site.append(TextUtils.isEmpty(address.getCity()) ? "" : address.getCity());
-        holder.text_site.append(TextUtils.isEmpty(address.getAddr()) ? "" : address.getAddr());
-
-        if (listener == null) {
-            listener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DisplayToast(R.string.function_not_imp);
-                }
-            };
-        }
-        holder.text_delete.setOnClickListener(listener);
-        holder.text_compile.setOnClickListener(listener);
-        holder.rb_default.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.rb_default.setChecked(false);
-                DisplayToast(R.string.function_not_imp);
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (code != -1) {
-                    Intent mIntent = new Intent();
-                    mIntent.putExtra(INDEX_OF_ADDRESS, postion);
-                    // 设置结果，并进行传送
-                    Activity_Site_Manage.this.setResult(code, mIntent);
-                    finish();
-                }
-            }
-        });
+//        Address address = BaseApplication.getApp().getAddresses().get(postion);
+//        holder.text_name.setText(address.getShouhuoren());
+//        holder.text_phone.setText(address.getMobile());
+//        holder.text_site.setText(areas.get(address.getProvice() - 1).getCity());
+//
+//        END:
+//        for (Province.Citys item : areas.get(address.getProvice() - 1).getAreas()) {
+//            if (item.getCity_id() == address.getCity()) {
+//                holder.text_site.append(item.getCity());
+//                for (Province.Areas area : item.getAreas()) {
+//                    if (area.getArea_id() == address.getCounty()) {
+//                        holder.text_site.append(area.getArea());
+//                        break END;
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//        holder.text_site.append(TextUtils.isEmpty(address.getAddr()) ? "" : address.getAddr());
+//
+//        if (listener == null) {
+//            listener = new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    DisplayToast(R.string.function_not_imp);
+//                }
+//            };
+//        }
+//        holder.text_delete.setOnClickListener(listener);
+//        holder.text_compile.setOnClickListener(listener);
+//        holder.rb_default.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                holder.rb_default.setChecked(false);
+//                DisplayToast(R.string.function_not_imp);
+//            }
+//        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (code != -1) {
+//                    Intent mIntent = new Intent();
+//                    mIntent.putExtra(INDEX_OF_ADDRESS, postion);
+//                    // 设置结果，并进行传送
+//                    Activity_Site_Manage.this.setResult(code, mIntent);
+//                    finish();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -172,6 +197,30 @@ public class Activity_Site_Manage extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (BaseApplication.getApp().getAddresses().isEmpty()) {
+            mWeiboDialog = WeiboDialogUtils.createLoadingDialog(this, getString(R.string.loading));
+
+            Type type = new TypeToken<BaseResponse<List<Address>>>() {
+            }.getType();
+            HttpServer.getAddress(this.getClass().getName(), new GenericCallBack<BaseResponse<List<Address>>>(type) {
+                @Override
+                public void onSuccess(Response<BaseResponse<List<Address>>> response) {
+                    if (response.body().isOK()) {
+                        BaseApplication.getApp().getAddresses().addAll(response.body().getInfo());
+                        adapter.notifyDataSetChanged();
+
+                    }
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                }
+
+                @Override
+                public void onError(Response<BaseResponse<List<Address>>> response) {
+                    super.onError(response);
+                    WeiboDialogUtils.closeDialog(mWeiboDialog);
+                }
+            });
+
+        }
         adapter.notifyDataSetChanged();
     }
 

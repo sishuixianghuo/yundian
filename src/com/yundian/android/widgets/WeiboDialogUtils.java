@@ -84,7 +84,6 @@ public class WeiboDialogUtils {
         title.setSpan(new ForegroundColorSpan(Color.parseColor("#3a3a3a")), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         title.setSpan(new AbsoluteSizeSpan(20, true), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         title.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         SpannableString message = new SpannableString(msg);
         message.setSpan(new ForegroundColorSpan(Color.parseColor("#3a3a3a")), 0, msg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         message.setSpan(new AbsoluteSizeSpan(20, true), 0, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

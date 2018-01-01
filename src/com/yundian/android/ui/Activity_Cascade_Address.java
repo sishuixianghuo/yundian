@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
+import com.yundian.android.bean.Province;
 import com.yundian.android.cascade.CascadeActivity;
 import com.yundian.android.cascade.OnWheelChangedListener;
 import com.yundian.android.cascade.WheelView;
 import com.yundian.android.cascade.adapters.ArrayWheelAdapter;
 import com.yundian.android.utils.LogUtils;
+
+import java.util.List;
 
 /**
  * 修改我的信息
@@ -25,6 +29,7 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
     public static String TAG = "Activity_Cascade_Address";
     public static final String PROVICE_KEY = "provice";
     public static final String CITY_KEY = "city";
+    public static final String COUNTY_KEY = "county";
 
 
     private int resultCode = 0;
@@ -35,12 +40,16 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
     private Button mBtnConfirm;
 
     private View view_return;
+    private List<Province> areas;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_cascade_address);
+
+        areas = BaseApplication.getApp().getCantons();
         setUpViews();
         setUpListener();
         setUpData();
@@ -63,8 +72,9 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
     }
 
     private void setUpData() {
-        initProvinceDatas();
-        mViewProvince.setViewAdapter(new ArrayWheelAdapter<>(Activity_Cascade_Address.this, mProvinceDatas));
+//        initProvinceDatas();
+
+        mViewProvince.setViewAdapter(new ArrayWheelAdapter<>(this, areas.toArray(new Province[areas.size()])));
         // 设置可见条目数量
         mViewProvince.setVisibleItems(7);
         mViewCity.setVisibleItems(7);
@@ -81,8 +91,9 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
         } else if (wheel == mViewCity) {
             updateAreas();
         } else if (wheel == mViewDistrict) {
-            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
-            mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
+
+//            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+//            mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
         }
     }
 
@@ -90,31 +101,23 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
      * 根据当前的市，更新区WheelView的信息
      */
     private void updateAreas() {
-        int pCurrent = mViewCity.getCurrentItem();
-        mCurrentCityName = mCitisDatasMap.get(mCurrentProviceName)[pCurrent];
-        String[] areas = mDistrictDatasMap.get(mCurrentCityName);
-
-        if (areas == null) {
-            areas = new String[]{""};
-        }
-        mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
+        int p = mViewProvince.getCurrentItem();
+        int c = mViewCity.getCurrentItem();
+        List<Province.Areas> diqu = areas.get(p).getAreas().get(c).getAreas();
+        mViewDistrict.setViewAdapter(new ArrayWheelAdapter<>(this, diqu.toArray(new Province.Areas[diqu.size()])));
         mViewDistrict.setCurrentItem(0);
-        mCurrentDistrictName = areas[0];
+        mCurrentDistrictName = diqu.get(0);
     }
 
     /**
      * 根据当前的省，更新市WheelView的信息
      */
     private void updateCities() {
-        int pCurrent = mViewProvince.getCurrentItem();
-        mCurrentProviceName = mProvinceDatas[pCurrent];
-        String[] cities = mCitisDatasMap.get(mCurrentProviceName);
-        if (cities == null) {
-            cities = new String[]{""};
-        }
-        mViewCity.setViewAdapter(new ArrayWheelAdapter<>(this, cities));
+        int p = mViewProvince.getCurrentItem();
+        List<Province.Citys> cities = areas.get(p).getAreas();
+        mViewCity.setViewAdapter(new ArrayWheelAdapter<>(this, cities.toArray(new Province.Citys[cities.size()])));
         mViewCity.setCurrentItem(0);
-        mCurrentCityName= cities[0];
+        mCurrentCityName = cities.get(0);
         updateAreas();
     }
 
@@ -134,8 +137,10 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
 
     private void showSelectedResult() {
         Intent mIntent = new Intent();
-        mIntent.putExtra(PROVICE_KEY, mCurrentProviceName);
-        mIntent.putExtra(CITY_KEY, mCurrentCityName + "" + mCurrentDistrictName);
+        mIntent.putExtra(PROVICE_KEY, mViewProvince.getCurrentItem());
+        mIntent.putExtra(CITY_KEY, mViewCity.getCurrentItem());
+        mIntent.putExtra(COUNTY_KEY, mViewDistrict.getCurrentItem());
+
         this.setResult(resultCode, mIntent);
         finish();
     }

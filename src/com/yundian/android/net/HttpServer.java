@@ -11,7 +11,17 @@ import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.CategoryInfo;
+import com.yundian.android.bean.DeliveryMethod;
 import com.yundian.android.bean.OrderInfo;
+import com.yundian.android.bean.OrderInfoDetail;
+import com.yundian.android.bean.OrderPdt;
+import com.yundian.android.bean.PayMethod;
+import com.yundian.android.bean.ProductDetail;
+import com.yundian.android.bean.ProductInfo;
+import com.yundian.android.bean.Province;
+import com.yundian.android.bean.StoreInfo;
+import com.yundian.android.bean.Token;
 import com.yundian.android.bean.UserInfo;
 
 import java.util.List;
@@ -30,6 +40,8 @@ public final class HttpServer {
     public static final String GET_PRODUCT_INFO = HOST + "/WebService.asmx/getProductInfo";
     public static final String USER_LOGIN = HOST + "/WebService.asmx/Login";
     public static final String USER_REG = HOST + "/WebService.asmx/Reg";
+    public static final String USER_UPDATE = HOST + "/WebService.asmx/UpdateUserInfo";
+    public static final String CHNAGE_PWD = HOST + "/WebService.asmx/ChangePwd";
     public static final String GET_USER_INFO = HOST + "/WebService.asmx/getUserInfo";
     public static final String GET_STORE_INFO = HOST + "/WebService.asmx/getShopInfo";
     public static final String ADD_USER_ADD = HOST + "/WebService.asmx/AddUserAddress";
@@ -37,9 +49,9 @@ public final class HttpServer {
     public static final String GET_DELIVERY = HOST + "/WebService.asmx/Get_SysDelivery";
     public static final String GET_PAY_WAY = HOST + "/WebService.asmx/Get_SysPayWay";
     public static final String SUBMIT_ORDER = HOST + "/WebService.asmx/DingDanSave";
-    //    public static final String GET_USER_ORDER = HOST + "/WebService.asmx/getUserOrder";
     public static final String GET_USER_ORDER = HOST + "/WebService.asmx/DingDanlist";
     public static final String GET_ORDER_DETAIL = HOST + "/WebService.asmx/DingDanProductList";
+    public static final String GET_SYS_ADD = HOST + "/WebService.asmx/SysAddress";
     public static final String CONTACT_US = "http://www.yundian777.com/HelpCenter/ContactUs.aspx";
 
     private HttpServer() {
@@ -47,8 +59,8 @@ public final class HttpServer {
     }
 
     // 获取分类信息
-    public static <T> void getCategory(String tag, GenericCallBack<T> callback) {
-        OkGo.<T>post(URL_CAT).tag(tag).execute(callback);
+    public static void getCategory(String tag, GenericCallBack<BaseResponse<List<CategoryInfo>>> callback) {
+        OkGo.<BaseResponse<List<CategoryInfo>>>post(URL_CAT).tag(tag).execute(callback);
     }
 
     //获取首页条目信息
@@ -58,9 +70,8 @@ public final class HttpServer {
      *
      * @param page   默认每页20  从 1 开始
      * @param shopid 如果查某个店铺下面的商品。shop_id为商家ID号。ipage为页码，其它可以不填。
-     * @param <T>
      */
-    public static <T> void getHomePageItem(String tag, int pid, int page, int shopid, String key, GenericCallBack<T> callback) {
+    public static void getHomePageItem(String tag, int pid, int page, int shopid, String key, GenericCallBack<BaseResponse<List<ProductInfo>>> callback) {
         HttpParams params = new HttpParams();
         params.put("strP", pid < 0 ? "" : String.valueOf(pid));
         params.put("strS", "");
@@ -69,7 +80,7 @@ public final class HttpServer {
         params.put("IPage", page);
         params.put("shopid", shopid);
 
-        OkGo.<T>post(GET_PRODUCT).params(params).
+        OkGo.<BaseResponse<List<ProductInfo>>>post(GET_PRODUCT).params(params).
                 tag(tag).execute(callback);
     }
 
@@ -96,29 +107,29 @@ public final class HttpServer {
     }
 
     //获取商品详情
-    public static <T> void getProductInfo(String tag, int pid, GenericCallBack<T> callback) {
+    public static void getProductInfo(String tag, int pid, GenericCallBack<BaseResponse<List<ProductDetail>>> callback) {
         HttpParams params = new HttpParams();
         params.put("strP", pid);
-        OkGo.<T>post(GET_PRODUCT_INFO).params(params).
+        OkGo.<BaseResponse<List<ProductDetail>>>post(GET_PRODUCT_INFO).params(params).
                 tag(tag).execute(callback);
     }
 
 
     //登陆
-    public static <T> void login(String tag, @NonNull String name, @NonNull String pwd, GenericCallBack<T> callback) {
+    public static void login(String tag, @NonNull String name, @NonNull String pwd, GenericCallBack<BaseResponse<Token>> callback) {
         HttpParams params = new HttpParams();
         params.put("strUserName", name);
         params.put("strUserPwd", pwd);
-        OkGo.<T>post(USER_LOGIN).params(params).
+        OkGo.<BaseResponse<Token>>post(USER_LOGIN).params(params).
                 tag(tag).execute(callback);
     }
 
 
     //获取用户信息异步
-    public static <T> void getUserinfo(String tag, String token, GenericCallBack<T> callback) {
+    public static void getUserinfo(String tag, String token, GenericCallBack<BaseResponse<List<UserInfo>>> callback) {
         HttpParams params = new HttpParams();
         params.put("token", token);
-        OkGo.<T>post(GET_USER_INFO).params(params).
+        OkGo.<BaseResponse<List<UserInfo>>>post(GET_USER_INFO).params(params).
                 tag(tag).execute(callback);
     }
 
@@ -141,63 +152,71 @@ public final class HttpServer {
 
 
     //获取注册账号
-    public static <T> void register(String tag, String email, String nick, String pwd, String phone, GenericCallBack<T> callback) {
+    public static void register(String tag, String email, String nick, String pwd, String phone, GenericCallBack<BaseResponse<Object>> callback) {
         HttpParams params = new HttpParams();
         params.put("strUserName", email);
         params.put("strUserPwd", pwd);
         params.put("strNickName", nick);
         params.put("strPhone", "");
-        OkGo.<T>post(USER_REG).params(params).tag(tag).execute(callback);
+        OkGo.<BaseResponse<Object>>post(USER_REG).params(params).tag(tag).execute(callback);
     }
 
 
     //更新用户信息接口比较错乱
     public static <T> void updateUser(String tag, UserInfo info, GenericCallBack<T> callback) {
         HttpParams params = new HttpParams();
-        params.put("strUserName", info.getEmail());
+        params.put("strEmail", info.getEmail());
 //        params.put("strUserPwd", pwd);
-//        params.put("strNickName", nick);
-        params.put("strPhone", "");
-        OkGo.<T>post(USER_REG).params(params).tag(tag).execute(callback);
+        params.put("strNickname", info.getNickname());
+        params.put("strPhone", info.getPhone());
+        OkGo.<T>post(USER_UPDATE).params(params).tag(tag).execute(callback);
+    }
+
+    public static <T> void updatePwd(String tag, String old, String newPwd, GenericCallBack<T> callback) {
+        HttpParams params = new HttpParams();
+        params.put("oldPwd", old);
+        params.put("newPwd", newPwd);
+        OkGo.<T>post(CHNAGE_PWD).params(params).tag(tag).execute(callback);
     }
 
 
     //获取店铺信息
-    public static <T> void getShopInfo(String tag, int pid, GenericCallBack<T> callback) {
-        OkGo.<T>post(GET_STORE_INFO).params("ShopID", pid).tag(tag).execute(callback);
+    public static <T> void getShopInfo(String tag, int pid, GenericCallBack<BaseResponse<List<StoreInfo>>> callback) {
+        OkGo.<BaseResponse<List<StoreInfo>>>post(GET_STORE_INFO).params("ShopID", pid).tag(tag).execute(callback);
     }
 
     // 获取用户地址
-    public static <T> void getAddress(String tag, GenericCallBack<T> callback) {
-        OkGo.<T>post(GET_ADDRESS).tag(tag).execute(callback);
+    public static void getAddress(String tag, GenericCallBack<BaseResponse<List<Address>>> callback) {
+        OkGo.<BaseResponse<List<Address>>>post(GET_ADDRESS).tag(tag).execute(callback);
     }
 
     // 添加用户地址
-    public static <T> void addUserAdd(String tag, Address address, GenericCallBack<T> callback) {
+    public static void addUserAdd(String tag, Address address, GenericCallBack<BaseResponse<Object>> callback) {
         HttpParams params = new HttpParams();
         params.put("shouhuoren", address.getShouhuoren());
         params.put("provice", address.getProvice());
         params.put("city", address.getCity());
+        params.put("County", address.getCounty());
         params.put("addr", address.getAddr());
         params.put("mobile", address.getMobile());
         params.put("phone", address.getPhone());
         params.put("email", address.getEmail());
-        OkGo.<T>post(ADD_USER_ADD).params(params).tag(tag).execute(callback);
+        OkGo.<BaseResponse<Object>>post(ADD_USER_ADD).params(params).tag(tag).execute(callback);
     }
 
 
     //获取店铺快递方式
-    public static <T> void getDeliveryMethod(String tag, int pid, GenericCallBack<T> callback) {
-        OkGo.<T>post(GET_DELIVERY).params("supplierid", pid).tag(tag).execute(callback);
+    public static void getDeliveryMethod(String tag, int pid, GenericCallBack<BaseResponse<List<DeliveryMethod>>> callback) {
+        OkGo.<BaseResponse<List<DeliveryMethod>>>post(GET_DELIVERY).params("supplierid", pid).tag(tag).execute(callback);
     }
 
     //获取店铺快递方式
-    public static <T> void getPayMethod(String tag, GenericCallBack<T> callback) {
-        OkGo.<T>post(GET_PAY_WAY).tag(tag).execute(callback);
+    public static void getPayMethod(String tag, GenericCallBack<BaseResponse<List<PayMethod>>> callback) {
+        OkGo.<BaseResponse<List<PayMethod>>>post(GET_PAY_WAY).tag(tag).execute(callback);
     }
 
     //提交订单
-    public static <T> void submitOrder(String tag, OrderInfo order, GenericCallBack<T> callback) {
+    public static void submitOrder(String tag, OrderInfo order, GenericCallBack<BaseResponse<Object>> callback) {
         /// DingDanSave 添加订单
         /// </summary>
         /// <param name="token"></param>
@@ -222,17 +241,23 @@ public final class HttpServer {
         params.put("total_price", order.getTotal_price());
         params.put("total_priceFreight", order.getTotal_priceFreight());
         params.put("total_allprice", order.getTotal_allprice());
-        OkGo.<T>post(SUBMIT_ORDER).tag(tag).params(params).execute(callback);
+        OkGo.<BaseResponse<Object>>post(SUBMIT_ORDER).tag(tag).params(params).execute(callback);
     }
 
     /*获取用户订单*/
-    public static <T> void getUserOrder(String tag, GenericCallBack<T> callback) {
-        OkGo.<T>post(GET_USER_ORDER).tag(tag).execute(callback);
+    public static void getUserOrder(String tag, GenericCallBack<BaseResponse<List<OrderInfoDetail>>> callback) {
+        OkGo.<BaseResponse<List<OrderInfoDetail>>>post(GET_USER_ORDER).tag(tag).execute(callback);
     }
 
 
     /*获取用户订单*/
-    public static <T> void getOrderDetail(String tag, int orderId, GenericCallBack<T> callback) {
-        OkGo.<T>post(GET_ORDER_DETAIL).tag(tag).params("orderid",orderId).execute(callback);
+    public static void getOrderDetail(String tag, int orderId, GenericCallBack<BaseResponse<List<OrderPdt>>> callback) {
+        OkGo.<BaseResponse<List<OrderPdt>>>post(GET_ORDER_DETAIL).tag(tag).params("orderid", orderId).execute(callback);
+    }
+
+
+    /*获取行政区*/
+    public static void getCantons(String tag, GenericCallBack<List<Province>> callback) {
+        OkGo.<List<Province>>post(GET_SYS_ADD).tag(tag).execute(callback);
     }
 }

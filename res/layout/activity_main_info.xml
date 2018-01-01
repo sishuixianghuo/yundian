@@ -43,7 +43,8 @@
         android:layout_height="48dp"
         android:layout_below="@+id/personal_top_layout"
         android:layout_marginTop="1px"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,19 +70,20 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="50dp"
-            android:text="11111111111111"
             android:background="@color/white"
             android:lines="1"
             android:singleLine="true"
+            android:text="11111111111111"
             android:textColor="@color/c3a3a3a"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/rl_email"
-        android:background="@color/d4d4d4"/>
+        android:background="@color/d4d4d4"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rl_name"
@@ -89,7 +91,8 @@
         android:layout_height="48dp"
         android:layout_below="@+id/rl_email"
         android:layout_marginTop="1px"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -115,19 +118,20 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="50dp"
-            android:text="11111111111111"
             android:background="@color/white"
             android:lines="1"
             android:singleLine="true"
+            android:text="11111111111111"
             android:textColor="@color/c3a3a3a"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/rl_name"
-        android:background="@color/d4d4d4"/>
+        android:background="@color/d4d4d4"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rl_phone"
@@ -161,19 +165,19 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="50dp"
-            android:inputType="number"
-            android:text="11111111111111"
             android:background="@color/white"
+            android:inputType="number"
             android:lines="1"
             android:singleLine="true"
+            android:text="11111111111111"
             android:textColor="@color/c3a3a3a"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/rl_phone"
-        android:background="@color/d4d4d4"/>
+        android:background="@color/d4d4d4" />
 
 </RelativeLayout>

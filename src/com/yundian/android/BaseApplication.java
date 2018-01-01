@@ -14,6 +14,7 @@ import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.PayMethod;
 import com.yundian.android.bean.ProductInfo;
+import com.yundian.android.bean.Province;
 import com.yundian.android.bean.UserInfo;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
@@ -21,6 +22,7 @@ import com.yundian.android.net.RestApi;
 import com.yundian.android.utils.SettingUtils;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -42,6 +44,8 @@ public class BaseApplication extends Application {
     private List<Address> addresses = new CopyOnWriteArrayList<>();
     // 存放系统支付方式
     private List<PayMethod> payMethods = new CopyOnWriteArrayList<>();
+    // 存放 行政区
+    private List<Province> cantons = new ArrayList<>();
 
     /**
      * 获取Application
@@ -83,6 +87,24 @@ public class BaseApplication extends Application {
             }).start();
         }
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Type type = new TypeToken<List<Province>>() {
+                }.getType();
+                HttpServer.getCantons(this.getClass().getName(), new GenericCallBack<List<Province>>(type) {
+                    @Override
+                    public void onSuccess(Response<List<Province>> response) {
+                        cantons = response.body();
+                    }
+
+                    @Override
+                    public void onError(Response<List<Province>> response) {
+                        super.onError(response);
+                    }
+                });
+            }
+        }).start();
     }
 
 
@@ -191,5 +213,10 @@ public class BaseApplication extends Application {
 
     public List<PayMethod> getPayMethods() {
         return payMethods;
+    }
+
+
+    public List<Province> getCantons() {
+        return cantons;
     }
 }

@@ -10,8 +10,9 @@ public class Address implements Serializable {
 
 
     private String shouhuoren;
-    private String provice;
-    private String city;
+    private int provice;
+    private int city;
+    private int County;
     private String addr;
     private String mobile;
     private String phone;
@@ -27,19 +28,19 @@ public class Address implements Serializable {
         this.shouhuoren = shouhuoren;
     }
 
-    public String getProvice() {
+    public int getProvice() {
         return provice;
     }
 
-    public void setProvice(String provice) {
+    public void setProvice(int provice) {
         this.provice = provice;
     }
 
-    public String getCity() {
+    public int getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(int city) {
         this.city = city;
     }
 
@@ -81,5 +82,13 @@ public class Address implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCounty() {
+        return County;
+    }
+
+    public void setCounty(int county) {
+        County = county;
     }
 }

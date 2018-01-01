@@ -151,8 +151,13 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
 
     public void contact_us(View v) {
 //        DisplayToast("联系我们");
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(HttpServer.CONTACT_US));
-        startActivity(intent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(HttpServer.CONTACT_US));
+                startActivity(intent);
+            }
+        }).start();
     }
 
 

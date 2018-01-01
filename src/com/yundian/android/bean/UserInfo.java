@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by liushenghan on 2017/12/18.
  */
 
-public class UserInfo implements Serializable {
+public class UserInfo implements Serializable, Cloneable {
     //UpdateUserInfo (string strUser, string strPwd, string strNickname, string strEmail, string strPhone)
     private String userName;
     private String phone;
@@ -52,6 +52,12 @@ public class UserInfo implements Serializable {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override

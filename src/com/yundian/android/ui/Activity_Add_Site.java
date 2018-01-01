@@ -13,6 +13,7 @@ import com.yundian.android.BaseApplication;
 import com.yundian.android.R;
 import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
+import com.yundian.android.bean.Province;
 import com.yundian.android.bean.Site_Bean;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
@@ -33,10 +34,12 @@ public class Activity_Add_Site extends BaseActivity {
 
 
     ImageView image_return;
-    private String provice;
-    private String city;
+    private int provice;
+    private int city;
+    private int country;
 
 
+    private List<Province> areas = BaseApplication.getApp().getCantons();
     @OnClick(R.id.image_return)
     public void back() {
         finish();
@@ -56,8 +59,12 @@ public class Activity_Add_Site extends BaseActivity {
         final Address address = new Address();
         address.setMobile(mobile);
         address.setPhone(phone);
-        address.setProvice(provice);
-        address.setCity(city);
+//        tv_diqu.setText(areas.get(provice).getCity());
+//        tv_diqu.append(areas.get(provice).getAreas().get(city).getCity());
+//        tv_diqu.append(areas.get(provice).getAreas().get(city).getAreas().get(country).getArea());
+
+        address.setProvice(areas.get(provice).getCity_id());
+        address.setCity(areas.get(provice).getAreas().get(city).getCity_id());
         address.setShouhuoren(person);
         address.setEmail(email);
         address.setAddr(addr);
@@ -157,10 +164,13 @@ public class Activity_Add_Site extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        provice = data.getStringExtra(Activity_Cascade_Address.PROVICE_KEY);
-        city = data.getStringExtra(Activity_Cascade_Address.CITY_KEY);
-        tv_diqu.setText(provice);
-        tv_diqu.append(city);
+        provice = data.getIntExtra(Activity_Cascade_Address.PROVICE_KEY, 0);
+        city = data.getIntExtra(Activity_Cascade_Address.CITY_KEY, 0);
+        country = data.getIntExtra(Activity_Cascade_Address.COUNTY_KEY, 0);
+
+        tv_diqu.setText(areas.get(provice).getCity());
+        tv_diqu.append(areas.get(provice).getAreas().get(city).getCity());
+        tv_diqu.append(areas.get(provice).getAreas().get(city).getAreas().get(country).getArea());
     }
 
     public static Intent getIntent_Common(Context context, List<Site_Bean> site_bean, int p) {
