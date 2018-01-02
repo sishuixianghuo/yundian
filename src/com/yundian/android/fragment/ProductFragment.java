@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public class ProductFragment extends Fragment {
 
     @BindView(R.id.pdt_args)
     TextView pdt_args;
+    @BindView(R.id.pdt_intro)
+    ImageView pdt_intro;
 
     @BindView(R.id.number)
     TextView number;
@@ -78,7 +81,6 @@ public class ProductFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         if (data != null) setData(data);
     }
 
@@ -106,6 +108,17 @@ public class ProductFragment extends Fragment {
         sb.append(" <font color=#9f9f9f >商品体积 : </font> <font color=#3a3a3a >" + info.getProduct_Tiji() + "</font> <br>");
         sb.append(" <font color=#9f9f9f >商品重量 : </font> <font color=#3a3a3a >" + info.getProduct_Weight() + "</font> <br> </big>");
         pdt_args.setText(Html.fromHtml(sb.toString()));
+        if (getActivity() instanceof BaseActivity) {
+            String str = info.getProduct_Intro();
+            if (str.contains("<img")) {
+                int index = str.indexOf("http");
+                int index2 = str.indexOf("alt");
+                Log.e("TAG URL", str.substring(index, index2 - 2));
+                ((BaseActivity) getActivity()).loadImage(str.substring(index, index2 - 2), pdt_intro);
+            } else {
+                pdt_intro.setVisibility(View.GONE);
+            }
+        }
         if (info.getProduct_StockAmount() > 0) {
             reduce.setOnClickListener(new View.OnClickListener() {
                 @Override

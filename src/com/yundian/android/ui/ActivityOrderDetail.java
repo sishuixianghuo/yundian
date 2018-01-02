@@ -198,7 +198,6 @@ public class ActivityOrderDetail extends BaseActivity {
     // 联系卖家
     public void lianxi(View v) {
         // 直接跳转 打你妹的电话啊
-
         DisplayToast(R.string.function_not_imp);
     }
 

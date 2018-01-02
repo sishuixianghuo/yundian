@@ -121,8 +121,9 @@ public class OrderListFragment extends Fragment {
             }
         });
 
-        request();
-
+        if (orders.isEmpty()) {
+            request();
+        }
     }
 
     private void request() {

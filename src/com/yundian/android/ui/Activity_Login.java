@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.model.Response;
 import com.yundian.android.BaseApplication;
-import com.yundian.android.BuildConfig;
 import com.yundian.android.R;
 import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.Token;
@@ -97,10 +96,6 @@ public class Activity_Login extends BaseActivity implements OnClickListener {
             }
         });
 
-        if (BuildConfig.DEBUG) {
-            edit_password.setText("1249324345");
-            edit_username.setText("123");
-        }
     }
 
     @Override

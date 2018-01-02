@@ -106,6 +106,13 @@ public class CommonTools {
         return dateString;
     }
 
+    public static String getDate(long time, String fmt) {
+        Date currentTime = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat(fmt);
+        String dateString = format.format(currentTime);
+        return dateString;
+    }
+
     public static long getLong(String str) {
         long num = 0;
         int value = 1;

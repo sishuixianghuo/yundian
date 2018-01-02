@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/personal_top_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/image_return"
@@ -27,16 +27,16 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/image_return"
             android:text="云电商城帐户注册"
-            android:textStyle="bold"
             android:textColor="@color/c262626"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_login"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="31dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" >
+            android:paddingRight="20dp">
 
             <TextView
                 android:id="@+id/text_user"
@@ -74,6 +74,7 @@
                 android:singleLine="true"
                 android:textColor="@color/c262626"
                 android:textColorHighlight="@color/e60012"
+                android:textColorHint="@color/d4d4d4"
                 android:textSize="17sp" />
 
             <ImageView
@@ -81,9 +82,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:visibility="invisible"
                 android:padding="10dp"
-                android:src="@drawable/input_ic_empty" />
+                android:src="@drawable/input_ic_empty"
+                android:visibility="invisible" />
 
             <View
                 android:id="@+id/view_1"
@@ -118,8 +119,10 @@
                 android:paddingBottom="6dp"
                 android:paddingTop="10dp"
                 android:singleLine="true"
+
                 android:textColor="@color/c262626"
                 android:textColorHighlight="@color/e60012"
+                android:textColorHint="@color/d4d4d4"
                 android:textSize="17sp" />
 
             <ImageView
@@ -128,10 +131,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/view_1"
-                android:visibility="invisible"
                 android:layout_marginTop="23dp"
                 android:padding="10dp"
-                android:src="@drawable/input_ic_empty" />
+                android:src="@drawable/input_ic_empty"
+                android:visibility="invisible" />
 
             <View
                 android:id="@+id/view_2"
@@ -162,11 +165,13 @@
                 android:layout_toRightOf="@+id/text_set_password_1"
                 android:background="@null"
                 android:hint="大于6位的字母和数字"
-                android:password="true"
                 android:paddingBottom="6dp"
                 android:paddingTop="10dp"
+                android:password="true"
                 android:singleLine="true"
+
                 android:textColor="@color/c262626"
+                android:textColorHint="@color/d4d4d4"
                 android:textSize="17sp" />
 
             <ImageView
@@ -177,9 +182,9 @@
                 android:layout_below="@+id/view_2"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="23dp"
-                android:visibility="invisible"
                 android:padding="10dp"
-                android:src="@drawable/input_ic_empty" />
+                android:src="@drawable/input_ic_empty"
+                android:visibility="invisible" />
 
             <View
                 android:id="@+id/view_3"
@@ -210,11 +215,13 @@
                 android:layout_toRightOf="@+id/text_set_password_1"
                 android:background="@null"
                 android:hint="再次输入密码"
-                android:password="true"
                 android:paddingBottom="6dp"
                 android:paddingTop="10dp"
+                android:password="true"
                 android:singleLine="true"
+
                 android:textColor="@color/c262626"
+                android:textColorHint="@color/d4d4d4"
                 android:textSize="17sp" />
 
             <ImageView
@@ -226,8 +233,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginTop="23dp"
                 android:padding="10dp"
-                android:visibility="invisible"
-                android:src="@drawable/input_ic_empty" />
+                android:src="@drawable/input_ic_empty"
+                android:visibility="invisible" />
 
             <View
                 android:id="@+id/view_4"
@@ -245,8 +252,8 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="23dp"
             android:background="@drawable/style_login_button_off"
-            android:text="完成注册"
             android:enabled="false"
+            android:text="完成注册"
             android:textColor="@color/b4b4b4"
             android:textSize="17sp"
             android:textStyle="bold" />

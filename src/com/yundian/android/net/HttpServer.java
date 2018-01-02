@@ -13,6 +13,7 @@ import com.yundian.android.bean.Address;
 import com.yundian.android.bean.BaseResponse;
 import com.yundian.android.bean.CategoryInfo;
 import com.yundian.android.bean.DeliveryMethod;
+import com.yundian.android.bean.Evaluate;
 import com.yundian.android.bean.OrderInfo;
 import com.yundian.android.bean.OrderInfoDetail;
 import com.yundian.android.bean.OrderPdt;
@@ -52,6 +53,7 @@ public final class HttpServer {
     public static final String GET_USER_ORDER = HOST + "/WebService.asmx/DingDanlist";
     public static final String GET_ORDER_DETAIL = HOST + "/WebService.asmx/DingDanProductList";
     public static final String GET_SYS_ADD = HOST + "/WebService.asmx/SysAddress";
+    public static final String GET_EVALUATE = HOST + "/WebService.asmx/getPinjia";
     public static final String CONTACT_US = "http://www.yundian777.com/HelpCenter/ContactUs.aspx";
 
     private HttpServer() {
@@ -259,5 +261,11 @@ public final class HttpServer {
     /*获取行政区*/
     public static void getCantons(String tag, GenericCallBack<List<Province>> callback) {
         OkGo.<List<Province>>post(GET_SYS_ADD).tag(tag).execute(callback);
+    }
+
+
+    /*获取商品评价*/
+    public static void getEvaluate(String tag, int pid, int page, GenericCallBack<BaseResponse<List<Evaluate>>> callback) {
+        OkGo.<BaseResponse<List<Evaluate>>>post(GET_EVALUATE).tag(tag).params("strp", 4038).params("IPage", page).execute(callback);
     }
 }

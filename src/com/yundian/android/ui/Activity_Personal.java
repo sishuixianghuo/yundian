@@ -1,6 +1,7 @@
 package com.yundian.android.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -80,7 +81,7 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
         if (info != null) {
             user_name.setText(info.getNickname());
             mLoginButton.setText(info.getEmail());
-            mLoginButton.setBackground(null);
+            mLoginButton.setBackgroundColor(Color.TRANSPARENT);
         } else {
             user_name.setText(R.string.personal_welcome);
             mLoginButton.setText(R.string.personal_login);
@@ -99,15 +100,13 @@ public class Activity_Personal extends BaseActivity implements OnClickListener {
         //CommonTools.showShortToast(PersonalActivity.this, "稍后开放");
 
 
-        switch (v.getId()) {
-            case R.id.personal_login_button:
-                if (info == null) {
-                    mIntent = new Intent(Activity_Personal.this, Activity_Login.class);
-                    startActivityForResult(mIntent, LOGIN_CODE);
-                }
-                break;
+        if (v.getId() == R.id.personal_login_button) {
+            if (info == null) {
+                mIntent = new Intent(Activity_Personal.this, Activity_Login.class);
+                startActivityForResult(mIntent, LOGIN_CODE);
+            }
+            return;
         }
-
         if (info == null) {
             DisplayToast(R.string.please_login);
             return;

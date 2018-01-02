@@ -33,13 +33,11 @@ import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
 import com.yundian.android.utils.CommonTools;
 import com.yundian.android.utils.NetWorkUtil;
-import com.yundian.android.widgets.ADInfo;
 import com.yundian.android.widgets.BannerViewPager;
 import com.yundian.android.widgets.HomePageSelectView;
 import com.yundian.android.widgets.WeiboDialogUtils;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -52,12 +50,9 @@ import butterknife.ButterKnife;
  * @author ShaoZhen-PC
  */
 public class Activity_HomePage extends BaseActivity {
-    private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
-    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-            "http://pic15.nipic.com/20110722/2912365_0912519919000_2.jpg",
-            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    private String[] imageUrls = {"http://img.yundian777.com/XC/2017/12/18/201712181538473.jpg",
+            "http://img.yundian777.com/XC/2017/12/18/201712181542562.jpg",
+            "http://img.yundian777.com/XC/2017/12/18/201712181543302.jpg"};
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
@@ -177,7 +172,8 @@ public class Activity_HomePage extends BaseActivity {
     private void initHeadView(final ViewHolder holder) {
         BannerViewPager viewPager = (BannerViewPager) holder.itemView.findViewById(R.id.common_banner_Layout);
         if (viewPager.getAdapter() == null) {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, BaseApplication.getApp().getMetrics().widthPixels * 388 / 1080);
+            // 443  238
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, BaseApplication.getApp().getMetrics().widthPixels * 238 / 443);
             viewPager.setLayoutParams(params);
             viewPager.setRootView(holder.itemView);
             viewPager.setVisibility(View.VISIBLE, 20);

@@ -20,8 +20,8 @@ import com.yundian.android.bean.ProductDetail;
 import com.yundian.android.bean.ProductInfo;
 import com.yundian.android.bean.StoreInfo;
 import com.yundian.android.fragment.EmptyFragment;
+import com.yundian.android.fragment.ProducdAppraiseFragment;
 import com.yundian.android.fragment.ProductFragment;
-import com.yundian.android.fragment.TestFragment;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
 import com.yundian.android.utils.CommonTools;
@@ -85,14 +85,14 @@ public class ActivityPdtDetail extends BaseActivity {
             args.putInt(SearchActivity.PID, pid);
             pay = new ProductFragment();
             pay.setArguments(args);
-            TestFragment free = new TestFragment();
-            free.setArguments(args);
+            ProducdAppraiseFragment appraise = new ProducdAppraiseFragment();
+            appraise.setArguments(args);
             EmptyFragment selling = new EmptyFragment();
             selling.setArguments(args);
             EmptyFragment shouhou = new EmptyFragment();
             shouhou.setArguments(args);
             fragments.add(pay);
-//            fragments.add(free);
+            fragments.add(appraise);
 //            fragments.add(selling);
 //            fragments.add(shouhou);
             viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

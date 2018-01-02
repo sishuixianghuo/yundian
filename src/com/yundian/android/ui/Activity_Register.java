@@ -39,6 +39,7 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
     private View view_4;
 
     private boolean edit1, edit2, edit3, edit4 = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +57,6 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
         edit_nickname = (EditText) findViewById(R.id.edit_nickname);
         edit_set_password_1 = (EditText) findViewById(R.id.edit_set_password_1);
         edit_set_password_2 = (EditText) findViewById(R.id.edit_set_password_2);
-
-        edit_username.setText("qweqwe123");
-        edit_nickname.setText("qweqwe");
-        edit_set_password_1.setText("qweqwe");
-        edit_set_password_2.setText("qweqwe");
 
         view_1 = findViewById(R.id.view_1);
         view_2 = findViewById(R.id.view_2);
@@ -255,6 +251,7 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
                                     DisplayToast(response.body().getMsg());
                                 }
                             }
+
                             @Override
                             public void onError(Response<BaseResponse<Object>> response) {
                                 super.onError(response);

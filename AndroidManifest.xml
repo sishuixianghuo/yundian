@@ -130,6 +130,9 @@
         <activity android:name=".ui.ActivityStoreDetail" />
         <activity android:name=".ui.ActivityOrder" />
         <activity android:name=".ui.ActivityOrderDetail" />
+        <activity
+            android:name=".ui.WebActivity"
+            android:exported="false" />
 
     </application>
 
