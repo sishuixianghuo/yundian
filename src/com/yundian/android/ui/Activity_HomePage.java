@@ -326,7 +326,7 @@ public class Activity_HomePage extends BaseActivity {
     }
 
     public static void setItemData(ViewHolder holder, final ProductInfo info, final ProductInfo info2, final BaseActivity activity) {
-        activity.loadImage(String.format("%s%s", HttpServer.HOST_IMG, info.getG_photo()), holder.image_1);
+        activity.loadImageNoHost(info.getG_photo(), holder.image_1);
         if (info.getG_mPrice() < CommonTools.THRESHOLD_PRICE) {
             holder.pdc_price_1.setText(R.string.price_negotiable);
         } else {

@@ -29,7 +29,7 @@ public class Address implements Serializable {
     }
 
     public int getProvice() {
-        return provice;
+        return provice < 1 ? 1 : provice;
     }
 
     public void setProvice(int provice) {
@@ -90,5 +90,21 @@ public class Address implements Serializable {
 
     public void setCounty(int county) {
         County = county;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "shouhuoren='" + shouhuoren + '\'' +
+                ", provice=" + provice +
+                ", city=" + city +
+                ", County=" + County +
+                ", addr='" + addr + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

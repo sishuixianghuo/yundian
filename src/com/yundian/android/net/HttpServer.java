@@ -159,7 +159,7 @@ public final class HttpServer {
         params.put("strUserName", email);
         params.put("strUserPwd", pwd);
         params.put("strNickName", nick);
-        params.put("strPhone", "");
+        params.put("strPhone", phone);
         OkGo.<BaseResponse<Object>>post(USER_REG).params(params).tag(tag).execute(callback);
     }
 

@@ -38,6 +38,7 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -119,7 +120,6 @@
                 android:paddingBottom="6dp"
                 android:paddingTop="10dp"
                 android:singleLine="true"
-
                 android:textColor="@color/c262626"
                 android:textColorHighlight="@color/e60012"
                 android:textColorHint="@color/d4d4d4"
@@ -136,18 +136,68 @@
                 android:src="@drawable/input_ic_empty"
                 android:visibility="invisible" />
 
+
             <View
                 android:id="@+id/view_2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_below="@+id/edit_nickname"
+                android:layout_below="@+id/text_nickname"
+                android:background="@color/e6e6e6" />
+
+            <TextView
+                android:id="@+id/phone_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_2"
+                android:layout_marginTop="23dp"
+                android:paddingTop="10dp"
+                android:text="联系方式"
+                android:textColor="@color/c3a3a3a"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/phone_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="23dp"
+                android:layout_toLeftOf="@+id/empty_phone"
+                android:layout_toRightOf="@+id/phone_text"
+                android:background="@null"
+                android:hint="输入正确的手机号码"
+                android:paddingBottom="6dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:textColor="@color/c262626"
+                android:textColorHint="@color/d4d4d4"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/empty_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/view_2"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="23dp"
+                android:padding="10dp"
+                android:src="@drawable/input_ic_empty"
+                android:visibility="invisible" />
+
+
+            <View
+                android:id="@+id/view_5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/phone_text"
                 android:background="@color/e6e6e6" />
 
             <TextView
                 android:id="@+id/text_set_password_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view_2"
+                android:layout_below="@+id/view_5"
                 android:layout_marginTop="23dp"
                 android:paddingTop="10dp"
                 android:text="设置密码"
@@ -158,7 +208,7 @@
                 android:id="@+id/edit_set_password_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view_2"
+                android:layout_below="@+id/view_5"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="23dp"
                 android:layout_toLeftOf="@+id/image_edit_set_password_delete_1"
@@ -179,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/view_2"
+                android:layout_below="@+id/view_5"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="23dp"
                 android:padding="10dp"
@@ -251,10 +301,10 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="23dp"
-            android:background="@drawable/style_login_button_off"
+            android:background="@drawable/style_register_button"
             android:enabled="false"
             android:text="完成注册"
-            android:textColor="@color/b4b4b4"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
 

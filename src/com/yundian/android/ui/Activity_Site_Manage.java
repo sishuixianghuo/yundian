@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,63 +125,62 @@ public class Activity_Site_Manage extends BaseActivity {
 
             @Override
             public int getItemCount() {
-//                return  10;
                 return BaseApplication.getApp().getAddresses().size();
             }
         });
     }
 
     private void setData(final ViewHolder holder, final int postion) {
-//        Address address = BaseApplication.getApp().getAddresses().get(postion);
-//        holder.text_name.setText(address.getShouhuoren());
-//        holder.text_phone.setText(address.getMobile());
-//        holder.text_site.setText(areas.get(address.getProvice() - 1).getCity());
-//
-//        END:
-//        for (Province.Citys item : areas.get(address.getProvice() - 1).getAreas()) {
-//            if (item.getCity_id() == address.getCity()) {
-//                holder.text_site.append(item.getCity());
-//                for (Province.Areas area : item.getAreas()) {
-//                    if (area.getArea_id() == address.getCounty()) {
-//                        holder.text_site.append(area.getArea());
-//                        break END;
-//                    }
-//                }
-//            }
-//        }
-//
-//
-//        holder.text_site.append(TextUtils.isEmpty(address.getAddr()) ? "" : address.getAddr());
-//
-//        if (listener == null) {
-//            listener = new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    DisplayToast(R.string.function_not_imp);
-//                }
-//            };
-//        }
-//        holder.text_delete.setOnClickListener(listener);
-//        holder.text_compile.setOnClickListener(listener);
-//        holder.rb_default.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                holder.rb_default.setChecked(false);
-//                DisplayToast(R.string.function_not_imp);
-//            }
-//        });
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (code != -1) {
-//                    Intent mIntent = new Intent();
-//                    mIntent.putExtra(INDEX_OF_ADDRESS, postion);
-//                    // 设置结果，并进行传送
-//                    Activity_Site_Manage.this.setResult(code, mIntent);
-//                    finish();
-//                }
-//            }
-//        });
+        Address address = BaseApplication.getApp().getAddresses().get(postion);
+        holder.text_name.setText(address.getShouhuoren());
+        holder.text_phone.setText(address.getMobile());
+        holder.text_site.setText(areas.get(address.getProvice() - 1).getCity());
+
+        END:
+        for (Province.Citys item : areas.get(address.getProvice() - 1).getAreas()) {
+            if (item.getCity_id() == address.getCity()) {
+                holder.text_site.append(item.getCity());
+                for (Province.Areas area : item.getAreas()) {
+                    if (area.getArea_id() == address.getCounty()) {
+                        holder.text_site.append(area.getArea());
+                        break END;
+                    }
+                }
+            }
+        }
+
+
+        holder.text_site.append(TextUtils.isEmpty(address.getAddr()) ? "" : address.getAddr());
+
+        if (listener == null) {
+            listener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DisplayToast(R.string.function_not_imp);
+                }
+            };
+        }
+        holder.text_delete.setOnClickListener(listener);
+        holder.text_compile.setOnClickListener(listener);
+        holder.rb_default.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.rb_default.setChecked(false);
+                DisplayToast(R.string.function_not_imp);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (code != -1) {
+                    Intent mIntent = new Intent();
+                    mIntent.putExtra(INDEX_OF_ADDRESS, postion);
+                    // 设置结果，并进行传送
+                    Activity_Site_Manage.this.setResult(code, mIntent);
+                    finish();
+                }
+            }
+        });
     }
 
     @Override

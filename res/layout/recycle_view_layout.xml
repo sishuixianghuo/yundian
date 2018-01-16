@@ -9,6 +9,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent"
         app:srlAccentColor="@android:color/white"
         app:srlEnablePreviewInEditMode="false"
@@ -28,6 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/empty_layout" />
 
 
 </LinearLayout>

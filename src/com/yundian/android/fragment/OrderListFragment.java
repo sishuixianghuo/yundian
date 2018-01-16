@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -55,10 +56,13 @@ public class OrderListFragment extends Fragment {
     View sub_title_layout;
 
     @BindView(R.id.refreshLayout)
-    RefreshLayout refreshLayout;
+    SmartRefreshLayout refreshLayout;
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+
+    @BindView(R.id.empty_view)
+    View empty_view;
 
     BaseActivity activity;
 
@@ -80,6 +84,7 @@ public class OrderListFragment extends Fragment {
         super.onResume();
         activity = (BaseActivity) getActivity();
         sub_title_layout.setVisibility(View.GONE);
+
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -142,6 +147,14 @@ public class OrderListFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                 } else {
                     activity.DisplayToast(response.body().getMsg());
+                }
+
+                if (orders.isEmpty()) {
+                    empty_view.setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
+                } else {
+                    empty_view.setVisibility(View.GONE);
+                    refreshLayout.setVisibility(View.VISIBLE);
                 }
             }
 
