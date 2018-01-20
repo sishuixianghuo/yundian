@@ -89,9 +89,8 @@ public class Activity_Register extends BaseActivity implements OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 // 有中文的正则匹配邮箱
-                String str1 = "^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
                 email = false;
-                if (isOK(s, str1)) {
+                if (CommonTools.checkEmail(s.toString().trim())) {
                     view_1.setBackgroundResource(R.color.c76c626);
                     email = true;
                 } else {

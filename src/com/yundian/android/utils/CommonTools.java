@@ -85,19 +85,6 @@ public class CommonTools {
         return statusBarHeight;
     }
 
-
-    /**
-     * 判断手机号码
-     */
-    public static boolean isMobileNO(String mobiles) {
-
-        Pattern pattern = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
-        Matcher matcher = pattern.matcher(mobiles);
-
-        return matcher.matches();
-
-    }
-
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static String getDate(long time) {
@@ -153,7 +140,7 @@ public class CommonTools {
      * @return
      */
     public static boolean checkCellphone(String cellphone) {
-        String regex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$";
+        String regex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9])||(17[0-9]))\\d{8}$";
         return check(cellphone, regex);
     }
 
@@ -166,6 +153,28 @@ public class CommonTools {
     public static boolean checkTelephone(String telephone) {
         String regex = "^(0\\d{2}-\\d{8}(-\\d{1,4})?)|(0\\d{3}-\\d{7,8}(-\\d{1,4})?)$";
         return check(telephone, regex);
+    }
+
+    public static boolean checkEmail(String telephone) {
+        String regex = "^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+        return check(telephone, regex);
+    }
+
+    public static boolean checkNickName(String telephone) {
+        String regex = "[a-zA-Z0-9\u4e00-\u9fa5\\s]{2,10}";
+        return check(telephone, regex);
+
+    }
+
+
+    public static boolean checkShouhuoren(String name) {
+        String reg ="^[\u0391-\uFFE5a-zA-Z·.&\\s]{0,}+$";
+        //^([a-zA-Z0-9\u4e00-\u9fa5\·]{1,20})$
+//        String regex = "^([a-zA-Z0-9\\u4e00-\\u9fa5\\·]{1,20})$";
+
+        return !check(name,reg);
+//        return name.matches(reg2);
+
     }
 
 

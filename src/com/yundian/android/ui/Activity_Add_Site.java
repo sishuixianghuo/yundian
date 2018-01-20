@@ -3,6 +3,7 @@ package com.yundian.android.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.yundian.android.bean.Province;
 import com.yundian.android.bean.Site_Bean;
 import com.yundian.android.net.GenericCallBack;
 import com.yundian.android.net.HttpServer;
+import com.yundian.android.utils.CommonTools;
 import com.yundian.android.utils.NetWorkUtil;
 
 import java.util.List;
@@ -40,6 +42,7 @@ public class Activity_Add_Site extends BaseActivity {
 
 
     private List<Province> areas = BaseApplication.getApp().getCantons();
+
     @OnClick(R.id.image_return)
     public void back() {
         finish();
@@ -56,6 +59,24 @@ public class Activity_Add_Site extends BaseActivity {
         String person = edit_name.getText().toString().trim();
         String email = edit_mailbox.getText().toString().trim();
         String addr = edit_site.getText().toString().trim();
+        if (CommonTools.checkShouhuoren(person)) {
+            DisplayToast(R.string.empty_person);
+            return;
+        }
+        if (!CommonTools.checkCellphone(mobile)) {
+            DisplayToast(R.string.correct_mobile);
+            return;
+        }
+
+        if (TextUtils.isEmpty(tv_diqu.getText().toString().trim()) || TextUtils.isEmpty(addr)) {
+            DisplayToast("选择收货地区或填写详细地址");
+            return;
+        }
+        if (!CommonTools.checkEmail(email)) {
+            DisplayToast(R.string.correct_email);
+            return;
+        }
+
         final Address address = new Address();
         address.setMobile(mobile);
         address.setPhone(phone);
@@ -65,6 +86,7 @@ public class Activity_Add_Site extends BaseActivity {
 
         address.setProvice(areas.get(provice).getCity_id());
         address.setCity(areas.get(provice).getAreas().get(city).getCity_id());
+        address.setCounty(areas.get(provice).getAreas().get(city).getAreas().get(country).getArea_id());
         address.setShouhuoren(person);
         address.setEmail(email);
         address.setAddr(addr);
@@ -164,6 +186,7 @@ public class Activity_Add_Site extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(data==null) return;
         provice = data.getIntExtra(Activity_Cascade_Address.PROVICE_KEY, 0);
         city = data.getIntExtra(Activity_Cascade_Address.CITY_KEY, 0);
         country = data.getIntExtra(Activity_Cascade_Address.COUNTY_KEY, 0);

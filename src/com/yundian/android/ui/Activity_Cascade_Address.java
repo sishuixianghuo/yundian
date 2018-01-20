@@ -137,6 +137,7 @@ public class Activity_Cascade_Address extends CascadeActivity implements View.On
 
     private void showSelectedResult() {
         Intent mIntent = new Intent();
+
         mIntent.putExtra(PROVICE_KEY, mViewProvince.getCurrentItem());
         mIntent.putExtra(CITY_KEY, mViewCity.getCurrentItem());
         mIntent.putExtra(COUNTY_KEY, mViewDistrict.getCurrentItem());

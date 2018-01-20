@@ -157,4 +157,7 @@
     <string name="select_pdts">您还没有选中商品</string>
     <string name="no_net_work">当前网络不可用</string>
     <string name="updating">正在更新...</string>
+    <string name="correct_mobile">请输入正确的手机号码</string>
+    <string name="empty_person">填写正确的收货人</string>
+    <string name="correct_email">正确的邮件地址</string>
 </resources>

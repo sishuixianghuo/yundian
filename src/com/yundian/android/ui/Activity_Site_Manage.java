@@ -131,6 +131,7 @@ public class Activity_Site_Manage extends BaseActivity {
     }
 
     private void setData(final ViewHolder holder, final int postion) {
+        if(areas.isEmpty()) return;
         Address address = BaseApplication.getApp().getAddresses().get(postion);
         holder.text_name.setText(address.getShouhuoren());
         holder.text_phone.setText(address.getMobile());
